@@ -1,4 +1,4 @@
-import 'package:hrana/src/database.dart';
+import 'package:hrana/hrana.dart';
 
 void main() async {
   final database = await Database.connect(
