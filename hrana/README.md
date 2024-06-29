@@ -1,3 +1,5 @@
+![Hrana Version](https://img.shields.io/pub/v/hrana)
+
 This package provides a Dart implementation for the Hrana protocol used by
 `libsql` servers to expose sqlite3 databases over web sockets.
 

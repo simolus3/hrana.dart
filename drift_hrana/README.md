@@ -1,39 +1,34 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+![Drift Hrana Version](https://img.shields.io/pub/v/drift_hrana)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+This package wraps `package:hrana` to access remote libsql or Turso
+databases from [drift](https://drift.simonbinder.eu), a database library
+for Dart and Flutter applications.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+To use this package, you need to run an sqld server somewhere, e.g. with
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```
+docker run -p 8080:8080 -ti -e SQLD_NODE=primary ghcr.io/tursodatabase/libsql-server:latest
 ```
 
-## Additional information
+Then, the `HranaDatabase` class from `package:drift_hrana/drift_hrana.dart` can
+be used to connect your database to such a server:
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+import 'package:drift/drift.dart';
+import 'package:drift_hrana/drift_hrana.dart';
+
+@DriftDatabase(...)
+class AppDatabase extends _$AppDatabase {
+  AppDatabase(super.e);
+
+  @override
+  int get schemaVersion => 1;
+}
+
+void main() async {
+  final database = AppDatabase(HranaDatabase(
+    Uri.parse('ws://localhost:8080/'),
+    jwtToken: null,
+  ));
+}
+```
