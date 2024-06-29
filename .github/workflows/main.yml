@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  schedule:
+    # Make sure everything is still working by running the CI weekly.
+    - cron: "0 5 * * 1"
+
+env:
+  PUB_ENVIRONMENT: bot.github
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.dart-sdk }}
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            hrana/pubspec.lock
+            drift_hrana/pubspec.lock
+          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys:
+            dart-packages-
+
+      - name: "Install hrana dependencies"
+        working-directory: hrana
+        run: dart pub upgrade
+      - name: "Install drift_hrana dependencies"
+        working-directory: drift_hrana
+        run: dart pub upgrade
+
+      - name: "Ensure formatted"
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: "Analyze project"
+        run: dart analyze --fatal-infos
+
+  test:
+    strategy:
+      matrix:
+        package: [hrana, drift_hrana]
+    runs-on: ubuntu-latest
+    # analyze creates the cache, avoid downloading dependencies again here
+    needs: analyze
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.dart-sdk }}
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            hrana/pubspec.lock
+            drift_hrana/pubspec.lock
+          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys:
+            dart-packages-
+
+      - name: "Get dependencies"
+        working-directory: ${{ matrix.package }}
+        run: dart pub get
+
+      - name: "Run tests"
+        working-directory: ${{ matrix.package }}
+        run: dart test

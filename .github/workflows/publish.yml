@@ -1,0 +1,25 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - 'hrana-[0-9]+.[0-9]+.[0-9]+*'
+      - 'drift_hrana-[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  publish_hrana:
+    if: "${{ startsWith(github.ref_name, 'hrana-') }}"
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: 'pub.dev'
+      working-directory: hrana
+  publish_drift_hrana:
+    if: "${{ startsWith(github.ref_name, 'drift_hrana-') }}"
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: 'pub.dev'
+      working-directory: drift_hrana

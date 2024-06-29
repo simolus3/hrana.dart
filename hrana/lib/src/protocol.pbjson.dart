@@ -37,8 +37,23 @@ const Stmt$json = {
     {'1': 'sql', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'sql', '17': true},
     {'1': 'sql_id', '3': 2, '4': 1, '5': 5, '9': 1, '10': 'sqlId', '17': true},
     {'1': 'args', '3': 3, '4': 3, '5': 11, '6': '.Value', '10': 'args'},
-    {'1': 'named_args', '3': 4, '4': 3, '5': 11, '6': '.NamedArg', '10': 'namedArgs'},
-    {'1': 'want_rows', '3': 5, '4': 1, '5': 8, '9': 2, '10': 'wantRows', '17': true},
+    {
+      '1': 'named_args',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.NamedArg',
+      '10': 'namedArgs'
+    },
+    {
+      '1': 'want_rows',
+      '3': 5,
+      '4': 1,
+      '5': 8,
+      '9': 2,
+      '10': 'wantRows',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_sql'},
@@ -74,8 +89,22 @@ const StmtResult$json = {
   '2': [
     {'1': 'cols', '3': 1, '4': 3, '5': 11, '6': '.Col', '10': 'cols'},
     {'1': 'rows', '3': 2, '4': 3, '5': 11, '6': '.Row', '10': 'rows'},
-    {'1': 'affected_row_count', '3': 3, '4': 1, '5': 4, '10': 'affectedRowCount'},
-    {'1': 'last_insert_rowid', '3': 4, '4': 1, '5': 18, '9': 0, '10': 'lastInsertRowid', '17': true},
+    {
+      '1': 'affected_row_count',
+      '3': 3,
+      '4': 1,
+      '5': 4,
+      '10': 'affectedRowCount'
+    },
+    {
+      '1': 'last_insert_rowid',
+      '3': 4,
+      '4': 1,
+      '5': 18,
+      '9': 0,
+      '10': 'lastInsertRowid',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_last_insert_rowid'},
@@ -94,7 +123,15 @@ const Col$json = {
   '1': 'Col',
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'name', '17': true},
-    {'1': 'decltype', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'decltype', '17': true},
+    {
+      '1': 'decltype',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '9': 1,
+      '10': 'decltype',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_name'},
@@ -116,8 +153,8 @@ const Row$json = {
 };
 
 /// Descriptor for `Row`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rowDescriptor = $convert.base64Decode(
-    'CgNSb3cSHgoGdmFsdWVzGAEgAygLMgYuVmFsdWVSBnZhbHVlcw==');
+final $typed_data.Uint8List rowDescriptor = $convert
+    .base64Decode('CgNSb3cSHgoGdmFsdWVzGAEgAygLMgYuVmFsdWVSBnZhbHVlcw==');
 
 @$core.Deprecated('Use batchDescriptor instead')
 const Batch$json = {
@@ -128,14 +165,23 @@ const Batch$json = {
 };
 
 /// Descriptor for `Batch`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List batchDescriptor = $convert.base64Decode(
-    'CgVCYXRjaBIgCgVzdGVwcxgBIAMoCzIKLkJhdGNoU3RlcFIFc3RlcHM=');
+final $typed_data.Uint8List batchDescriptor = $convert
+    .base64Decode('CgVCYXRjaBIgCgVzdGVwcxgBIAMoCzIKLkJhdGNoU3RlcFIFc3RlcHM=');
 
 @$core.Deprecated('Use batchStepDescriptor instead')
 const BatchStep$json = {
   '1': 'BatchStep',
   '2': [
-    {'1': 'condition', '3': 1, '4': 1, '5': 11, '6': '.BatchCond', '9': 0, '10': 'condition', '17': true},
+    {
+      '1': 'condition',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchCond',
+      '9': 0,
+      '10': 'condition',
+      '17': true
+    },
     {'1': 'stmt', '3': 2, '4': 1, '5': 11, '6': '.Stmt', '10': 'stmt'},
   ],
   '8': [
@@ -154,10 +200,42 @@ const BatchCond$json = {
   '2': [
     {'1': 'step_ok', '3': 1, '4': 1, '5': 13, '9': 0, '10': 'stepOk'},
     {'1': 'step_error', '3': 2, '4': 1, '5': 13, '9': 0, '10': 'stepError'},
-    {'1': 'not', '3': 3, '4': 1, '5': 11, '6': '.BatchCond', '9': 0, '10': 'not'},
-    {'1': 'and', '3': 4, '4': 1, '5': 11, '6': '.BatchCond.CondList', '9': 0, '10': 'and'},
-    {'1': 'or', '3': 5, '4': 1, '5': 11, '6': '.BatchCond.CondList', '9': 0, '10': 'or'},
-    {'1': 'is_autocommit', '3': 6, '4': 1, '5': 11, '6': '.BatchCond.IsAutocommit', '9': 0, '10': 'isAutocommit'},
+    {
+      '1': 'not',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchCond',
+      '9': 0,
+      '10': 'not'
+    },
+    {
+      '1': 'and',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchCond.CondList',
+      '9': 0,
+      '10': 'and'
+    },
+    {
+      '1': 'or',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchCond.CondList',
+      '9': 0,
+      '10': 'or'
+    },
+    {
+      '1': 'is_autocommit',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchCond.IsAutocommit',
+      '9': 0,
+      '10': 'isAutocommit'
+    },
   ],
   '3': [BatchCond_CondList$json, BatchCond_IsAutocommit$json],
   '8': [
@@ -191,8 +269,22 @@ final $typed_data.Uint8List batchCondDescriptor = $convert.base64Decode(
 const BatchResult$json = {
   '1': 'BatchResult',
   '2': [
-    {'1': 'step_results', '3': 1, '4': 3, '5': 11, '6': '.BatchResult.StepResultsEntry', '10': 'stepResults'},
-    {'1': 'step_errors', '3': 2, '4': 3, '5': 11, '6': '.BatchResult.StepErrorsEntry', '10': 'stepErrors'},
+    {
+      '1': 'step_results',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.BatchResult.StepResultsEntry',
+      '10': 'stepResults'
+    },
+    {
+      '1': 'step_errors',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.BatchResult.StepErrorsEntry',
+      '10': 'stepErrors'
+    },
   ],
   '3': [BatchResult_StepResultsEntry$json, BatchResult_StepErrorsEntry$json],
 };
@@ -230,11 +322,43 @@ final $typed_data.Uint8List batchResultDescriptor = $convert.base64Decode(
 const CursorEntry$json = {
   '1': 'CursorEntry',
   '2': [
-    {'1': 'step_begin', '3': 1, '4': 1, '5': 11, '6': '.StepBeginEntry', '9': 0, '10': 'stepBegin'},
-    {'1': 'step_end', '3': 2, '4': 1, '5': 11, '6': '.StepEndEntry', '9': 0, '10': 'stepEnd'},
-    {'1': 'step_error', '3': 3, '4': 1, '5': 11, '6': '.StepErrorEntry', '9': 0, '10': 'stepError'},
+    {
+      '1': 'step_begin',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.StepBeginEntry',
+      '9': 0,
+      '10': 'stepBegin'
+    },
+    {
+      '1': 'step_end',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.StepEndEntry',
+      '9': 0,
+      '10': 'stepEnd'
+    },
+    {
+      '1': 'step_error',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.StepErrorEntry',
+      '9': 0,
+      '10': 'stepError'
+    },
     {'1': 'row', '3': 4, '4': 1, '5': 11, '6': '.Row', '9': 0, '10': 'row'},
-    {'1': 'error', '3': 5, '4': 1, '5': 11, '6': '.Error', '9': 0, '10': 'error'},
+    {
+      '1': 'error',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.Error',
+      '9': 0,
+      '10': 'error'
+    },
   ],
   '8': [
     {'1': 'entry'},
@@ -267,8 +391,22 @@ final $typed_data.Uint8List stepBeginEntryDescriptor = $convert.base64Decode(
 const StepEndEntry$json = {
   '1': 'StepEndEntry',
   '2': [
-    {'1': 'affected_row_count', '3': 1, '4': 1, '5': 4, '10': 'affectedRowCount'},
-    {'1': 'last_insert_rowid', '3': 2, '4': 1, '5': 18, '9': 0, '10': 'lastInsertRowid', '17': true},
+    {
+      '1': 'affected_row_count',
+      '3': 1,
+      '4': 1,
+      '5': 4,
+      '10': 'affectedRowCount'
+    },
+    {
+      '1': 'last_insert_rowid',
+      '3': 2,
+      '4': 1,
+      '5': 18,
+      '9': 0,
+      '10': 'lastInsertRowid',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_last_insert_rowid'},
@@ -299,7 +437,14 @@ final $typed_data.Uint8List stepErrorEntryDescriptor = $convert.base64Decode(
 const DescribeResult$json = {
   '1': 'DescribeResult',
   '2': [
-    {'1': 'params', '3': 1, '4': 3, '5': 11, '6': '.DescribeParam', '10': 'params'},
+    {
+      '1': 'params',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.DescribeParam',
+      '10': 'params'
+    },
     {'1': 'cols', '3': 2, '4': 3, '5': 11, '6': '.DescribeCol', '10': 'cols'},
     {'1': 'is_explain', '3': 3, '4': 1, '5': 8, '10': 'isExplain'},
     {'1': 'is_readonly', '3': 4, '4': 1, '5': 8, '10': 'isReadonly'},
@@ -332,7 +477,15 @@ const DescribeCol$json = {
   '1': 'DescribeCol',
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'decltype', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'decltype', '17': true},
+    {
+      '1': 'decltype',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'decltype',
+      '17': true
+    },
   ],
   '8': [
     {'1': '_decltype'},
@@ -348,7 +501,15 @@ final $typed_data.Uint8List describeColDescriptor = $convert.base64Decode(
 const Value$json = {
   '1': 'Value',
   '2': [
-    {'1': 'null', '3': 1, '4': 1, '5': 11, '6': '.Value.Null', '9': 0, '10': 'null'},
+    {
+      '1': 'null',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.Value.Null',
+      '9': 0,
+      '10': 'null'
+    },
     {'1': 'integer', '3': 2, '4': 1, '5': 18, '9': 0, '10': 'integer'},
     {'1': 'float', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'float'},
     {'1': 'text', '3': 4, '4': 1, '5': 9, '9': 0, '10': 'text'},
@@ -375,8 +536,24 @@ final $typed_data.Uint8List valueDescriptor = $convert.base64Decode(
 const ClientMsg$json = {
   '1': 'ClientMsg',
   '2': [
-    {'1': 'hello', '3': 1, '4': 1, '5': 11, '6': '.HelloMsg', '9': 0, '10': 'hello'},
-    {'1': 'request', '3': 2, '4': 1, '5': 11, '6': '.RequestMsg', '9': 0, '10': 'request'},
+    {
+      '1': 'hello',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.HelloMsg',
+      '9': 0,
+      '10': 'hello'
+    },
+    {
+      '1': 'request',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.RequestMsg',
+      '9': 0,
+      '10': 'request'
+    },
   ],
   '8': [
     {'1': 'msg'},
@@ -392,10 +569,42 @@ final $typed_data.Uint8List clientMsgDescriptor = $convert.base64Decode(
 const ServerMsg$json = {
   '1': 'ServerMsg',
   '2': [
-    {'1': 'hello_ok', '3': 1, '4': 1, '5': 11, '6': '.HelloOkMsg', '9': 0, '10': 'helloOk'},
-    {'1': 'hello_error', '3': 2, '4': 1, '5': 11, '6': '.HelloErrorMsg', '9': 0, '10': 'helloError'},
-    {'1': 'response_ok', '3': 3, '4': 1, '5': 11, '6': '.ResponseOkMsg', '9': 0, '10': 'responseOk'},
-    {'1': 'response_error', '3': 4, '4': 1, '5': 11, '6': '.ResponseErrorMsg', '9': 0, '10': 'responseError'},
+    {
+      '1': 'hello_ok',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.HelloOkMsg',
+      '9': 0,
+      '10': 'helloOk'
+    },
+    {
+      '1': 'hello_error',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.HelloErrorMsg',
+      '9': 0,
+      '10': 'helloError'
+    },
+    {
+      '1': 'response_ok',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.ResponseOkMsg',
+      '9': 0,
+      '10': 'responseOk'
+    },
+    {
+      '1': 'response_error',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.ResponseErrorMsg',
+      '9': 0,
+      '10': 'responseError'
+    },
   ],
   '8': [
     {'1': 'msg'},
@@ -421,8 +630,8 @@ const HelloMsg$json = {
 };
 
 /// Descriptor for `HelloMsg`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List helloMsgDescriptor = $convert.base64Decode(
-    'CghIZWxsb01zZxIVCgNqd3QYASABKAlIAFIDand0iAEBQgYKBF9qd3Q=');
+final $typed_data.Uint8List helloMsgDescriptor = $convert
+    .base64Decode('CghIZWxsb01zZxIVCgNqd3QYASABKAlIAFIDand0iAEBQgYKBF9qd3Q=');
 
 @$core.Deprecated('Use helloOkMsgDescriptor instead')
 const HelloOkMsg$json = {
@@ -430,8 +639,8 @@ const HelloOkMsg$json = {
 };
 
 /// Descriptor for `HelloOkMsg`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List helloOkMsgDescriptor = $convert.base64Decode(
-    'CgpIZWxsb09rTXNn');
+final $typed_data.Uint8List helloOkMsgDescriptor =
+    $convert.base64Decode('CgpIZWxsb09rTXNn');
 
 @$core.Deprecated('Use helloErrorMsgDescriptor instead')
 const HelloErrorMsg$json = {
@@ -450,18 +659,114 @@ const RequestMsg$json = {
   '1': 'RequestMsg',
   '2': [
     {'1': 'request_id', '3': 1, '4': 1, '5': 5, '10': 'requestId'},
-    {'1': 'open_stream', '3': 2, '4': 1, '5': 11, '6': '.OpenStreamReq', '9': 0, '10': 'openStream'},
-    {'1': 'close_stream', '3': 3, '4': 1, '5': 11, '6': '.CloseStreamReq', '9': 0, '10': 'closeStream'},
-    {'1': 'execute', '3': 4, '4': 1, '5': 11, '6': '.ExecuteReq', '9': 0, '10': 'execute'},
-    {'1': 'batch', '3': 5, '4': 1, '5': 11, '6': '.BatchReq', '9': 0, '10': 'batch'},
-    {'1': 'open_cursor', '3': 6, '4': 1, '5': 11, '6': '.OpenCursorReq', '9': 0, '10': 'openCursor'},
-    {'1': 'close_cursor', '3': 7, '4': 1, '5': 11, '6': '.CloseCursorReq', '9': 0, '10': 'closeCursor'},
-    {'1': 'fetch_cursor', '3': 8, '4': 1, '5': 11, '6': '.FetchCursorReq', '9': 0, '10': 'fetchCursor'},
-    {'1': 'sequence', '3': 9, '4': 1, '5': 11, '6': '.SequenceReq', '9': 0, '10': 'sequence'},
-    {'1': 'describe', '3': 10, '4': 1, '5': 11, '6': '.DescribeReq', '9': 0, '10': 'describe'},
-    {'1': 'store_sql', '3': 11, '4': 1, '5': 11, '6': '.StoreSqlReq', '9': 0, '10': 'storeSql'},
-    {'1': 'close_sql', '3': 12, '4': 1, '5': 11, '6': '.CloseSqlReq', '9': 0, '10': 'closeSql'},
-    {'1': 'get_autocommit', '3': 13, '4': 1, '5': 11, '6': '.GetAutocommitReq', '9': 0, '10': 'getAutocommit'},
+    {
+      '1': 'open_stream',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.OpenStreamReq',
+      '9': 0,
+      '10': 'openStream'
+    },
+    {
+      '1': 'close_stream',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseStreamReq',
+      '9': 0,
+      '10': 'closeStream'
+    },
+    {
+      '1': 'execute',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecuteReq',
+      '9': 0,
+      '10': 'execute'
+    },
+    {
+      '1': 'batch',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchReq',
+      '9': 0,
+      '10': 'batch'
+    },
+    {
+      '1': 'open_cursor',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.OpenCursorReq',
+      '9': 0,
+      '10': 'openCursor'
+    },
+    {
+      '1': 'close_cursor',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseCursorReq',
+      '9': 0,
+      '10': 'closeCursor'
+    },
+    {
+      '1': 'fetch_cursor',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.FetchCursorReq',
+      '9': 0,
+      '10': 'fetchCursor'
+    },
+    {
+      '1': 'sequence',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.SequenceReq',
+      '9': 0,
+      '10': 'sequence'
+    },
+    {
+      '1': 'describe',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.DescribeReq',
+      '9': 0,
+      '10': 'describe'
+    },
+    {
+      '1': 'store_sql',
+      '3': 11,
+      '4': 1,
+      '5': 11,
+      '6': '.StoreSqlReq',
+      '9': 0,
+      '10': 'storeSql'
+    },
+    {
+      '1': 'close_sql',
+      '3': 12,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseSqlReq',
+      '9': 0,
+      '10': 'closeSql'
+    },
+    {
+      '1': 'get_autocommit',
+      '3': 13,
+      '4': 1,
+      '5': 11,
+      '6': '.GetAutocommitReq',
+      '9': 0,
+      '10': 'getAutocommit'
+    },
   ],
   '8': [
     {'1': 'request'},
@@ -488,18 +793,114 @@ const ResponseOkMsg$json = {
   '1': 'ResponseOkMsg',
   '2': [
     {'1': 'request_id', '3': 1, '4': 1, '5': 5, '10': 'requestId'},
-    {'1': 'open_stream', '3': 2, '4': 1, '5': 11, '6': '.OpenStreamResp', '9': 0, '10': 'openStream'},
-    {'1': 'close_stream', '3': 3, '4': 1, '5': 11, '6': '.CloseStreamResp', '9': 0, '10': 'closeStream'},
-    {'1': 'execute', '3': 4, '4': 1, '5': 11, '6': '.ExecuteResp', '9': 0, '10': 'execute'},
-    {'1': 'batch', '3': 5, '4': 1, '5': 11, '6': '.BatchResp', '9': 0, '10': 'batch'},
-    {'1': 'open_cursor', '3': 6, '4': 1, '5': 11, '6': '.OpenCursorResp', '9': 0, '10': 'openCursor'},
-    {'1': 'close_cursor', '3': 7, '4': 1, '5': 11, '6': '.CloseCursorResp', '9': 0, '10': 'closeCursor'},
-    {'1': 'fetch_cursor', '3': 8, '4': 1, '5': 11, '6': '.FetchCursorResp', '9': 0, '10': 'fetchCursor'},
-    {'1': 'sequence', '3': 9, '4': 1, '5': 11, '6': '.SequenceResp', '9': 0, '10': 'sequence'},
-    {'1': 'describe', '3': 10, '4': 1, '5': 11, '6': '.DescribeResp', '9': 0, '10': 'describe'},
-    {'1': 'store_sql', '3': 11, '4': 1, '5': 11, '6': '.StoreSqlResp', '9': 0, '10': 'storeSql'},
-    {'1': 'close_sql', '3': 12, '4': 1, '5': 11, '6': '.CloseSqlResp', '9': 0, '10': 'closeSql'},
-    {'1': 'get_autocommit', '3': 13, '4': 1, '5': 11, '6': '.GetAutocommitResp', '9': 0, '10': 'getAutocommit'},
+    {
+      '1': 'open_stream',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.OpenStreamResp',
+      '9': 0,
+      '10': 'openStream'
+    },
+    {
+      '1': 'close_stream',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseStreamResp',
+      '9': 0,
+      '10': 'closeStream'
+    },
+    {
+      '1': 'execute',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecuteResp',
+      '9': 0,
+      '10': 'execute'
+    },
+    {
+      '1': 'batch',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchResp',
+      '9': 0,
+      '10': 'batch'
+    },
+    {
+      '1': 'open_cursor',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.OpenCursorResp',
+      '9': 0,
+      '10': 'openCursor'
+    },
+    {
+      '1': 'close_cursor',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseCursorResp',
+      '9': 0,
+      '10': 'closeCursor'
+    },
+    {
+      '1': 'fetch_cursor',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.FetchCursorResp',
+      '9': 0,
+      '10': 'fetchCursor'
+    },
+    {
+      '1': 'sequence',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.SequenceResp',
+      '9': 0,
+      '10': 'sequence'
+    },
+    {
+      '1': 'describe',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.DescribeResp',
+      '9': 0,
+      '10': 'describe'
+    },
+    {
+      '1': 'store_sql',
+      '3': 11,
+      '4': 1,
+      '5': 11,
+      '6': '.StoreSqlResp',
+      '9': 0,
+      '10': 'storeSql'
+    },
+    {
+      '1': 'close_sql',
+      '3': 12,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseSqlResp',
+      '9': 0,
+      '10': 'closeSql'
+    },
+    {
+      '1': 'get_autocommit',
+      '3': 13,
+      '4': 1,
+      '5': 11,
+      '6': '.GetAutocommitResp',
+      '9': 0,
+      '10': 'getAutocommit'
+    },
   ],
   '8': [
     {'1': 'response'},
@@ -553,8 +954,8 @@ const OpenStreamResp$json = {
 };
 
 /// Descriptor for `OpenStreamResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List openStreamRespDescriptor = $convert.base64Decode(
-    'Cg5PcGVuU3RyZWFtUmVzcA==');
+final $typed_data.Uint8List openStreamRespDescriptor =
+    $convert.base64Decode('Cg5PcGVuU3RyZWFtUmVzcA==');
 
 @$core.Deprecated('Use closeStreamReqDescriptor instead')
 const CloseStreamReq$json = {
@@ -574,8 +975,8 @@ const CloseStreamResp$json = {
 };
 
 /// Descriptor for `CloseStreamResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List closeStreamRespDescriptor = $convert.base64Decode(
-    'Cg9DbG9zZVN0cmVhbVJlc3A=');
+final $typed_data.Uint8List closeStreamRespDescriptor =
+    $convert.base64Decode('Cg9DbG9zZVN0cmVhbVJlc3A=');
 
 @$core.Deprecated('Use executeReqDescriptor instead')
 const ExecuteReq$json = {
@@ -595,7 +996,14 @@ final $typed_data.Uint8List executeReqDescriptor = $convert.base64Decode(
 const ExecuteResp$json = {
   '1': 'ExecuteResp',
   '2': [
-    {'1': 'result', '3': 1, '4': 1, '5': 11, '6': '.StmtResult', '10': 'result'},
+    {
+      '1': 'result',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.StmtResult',
+      '10': 'result'
+    },
   ],
 };
 
@@ -621,7 +1029,14 @@ final $typed_data.Uint8List batchReqDescriptor = $convert.base64Decode(
 const BatchResp$json = {
   '1': 'BatchResp',
   '2': [
-    {'1': 'result', '3': 1, '4': 1, '5': 11, '6': '.BatchResult', '10': 'result'},
+    {
+      '1': 'result',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchResult',
+      '10': 'result'
+    },
   ],
 };
 
@@ -650,8 +1065,8 @@ const OpenCursorResp$json = {
 };
 
 /// Descriptor for `OpenCursorResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List openCursorRespDescriptor = $convert.base64Decode(
-    'Cg5PcGVuQ3Vyc29yUmVzcA==');
+final $typed_data.Uint8List openCursorRespDescriptor =
+    $convert.base64Decode('Cg5PcGVuQ3Vyc29yUmVzcA==');
 
 @$core.Deprecated('Use closeCursorReqDescriptor instead')
 const CloseCursorReq$json = {
@@ -671,8 +1086,8 @@ const CloseCursorResp$json = {
 };
 
 /// Descriptor for `CloseCursorResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List closeCursorRespDescriptor = $convert.base64Decode(
-    'Cg9DbG9zZUN1cnNvclJlc3A=');
+final $typed_data.Uint8List closeCursorRespDescriptor =
+    $convert.base64Decode('Cg9DbG9zZUN1cnNvclJlc3A=');
 
 @$core.Deprecated('Use fetchCursorReqDescriptor instead')
 const FetchCursorReq$json = {
@@ -692,7 +1107,14 @@ final $typed_data.Uint8List fetchCursorReqDescriptor = $convert.base64Decode(
 const FetchCursorResp$json = {
   '1': 'FetchCursorResp',
   '2': [
-    {'1': 'entries', '3': 1, '4': 3, '5': 11, '6': '.CursorEntry', '10': 'entries'},
+    {
+      '1': 'entries',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.CursorEntry',
+      '10': 'entries'
+    },
     {'1': 'done', '3': 2, '4': 1, '5': 8, '10': 'done'},
   ],
 };
@@ -721,8 +1143,8 @@ const StoreSqlResp$json = {
 };
 
 /// Descriptor for `StoreSqlResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storeSqlRespDescriptor = $convert.base64Decode(
-    'CgxTdG9yZVNxbFJlc3A=');
+final $typed_data.Uint8List storeSqlRespDescriptor =
+    $convert.base64Decode('CgxTdG9yZVNxbFJlc3A=');
 
 @$core.Deprecated('Use closeSqlReqDescriptor instead')
 const CloseSqlReq$json = {
@@ -733,8 +1155,8 @@ const CloseSqlReq$json = {
 };
 
 /// Descriptor for `CloseSqlReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List closeSqlReqDescriptor = $convert.base64Decode(
-    'CgtDbG9zZVNxbFJlcRIVCgZzcWxfaWQYASABKAVSBXNxbElk');
+final $typed_data.Uint8List closeSqlReqDescriptor =
+    $convert.base64Decode('CgtDbG9zZVNxbFJlcRIVCgZzcWxfaWQYASABKAVSBXNxbElk');
 
 @$core.Deprecated('Use closeSqlRespDescriptor instead')
 const CloseSqlResp$json = {
@@ -742,8 +1164,8 @@ const CloseSqlResp$json = {
 };
 
 /// Descriptor for `CloseSqlResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List closeSqlRespDescriptor = $convert.base64Decode(
-    'CgxDbG9zZVNxbFJlc3A=');
+final $typed_data.Uint8List closeSqlRespDescriptor =
+    $convert.base64Decode('CgxDbG9zZVNxbFJlc3A=');
 
 @$core.Deprecated('Use sequenceReqDescriptor instead')
 const SequenceReq$json = {
@@ -771,8 +1193,8 @@ const SequenceResp$json = {
 };
 
 /// Descriptor for `SequenceResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sequenceRespDescriptor = $convert.base64Decode(
-    'CgxTZXF1ZW5jZVJlc3A=');
+final $typed_data.Uint8List sequenceRespDescriptor =
+    $convert.base64Decode('CgxTZXF1ZW5jZVJlc3A=');
 
 @$core.Deprecated('Use describeReqDescriptor instead')
 const DescribeReq$json = {
@@ -798,7 +1220,14 @@ final $typed_data.Uint8List describeReqDescriptor = $convert.base64Decode(
 const DescribeResp$json = {
   '1': 'DescribeResp',
   '2': [
-    {'1': 'result', '3': 1, '4': 1, '5': 11, '6': '.DescribeResult', '10': 'result'},
+    {
+      '1': 'result',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.DescribeResult',
+      '10': 'result'
+    },
   ],
 };
 
@@ -831,4 +1260,3 @@ const GetAutocommitResp$json = {
 final $typed_data.Uint8List getAutocommitRespDescriptor = $convert.base64Decode(
     'ChFHZXRBdXRvY29tbWl0UmVzcBIjCg1pc19hdXRvY29tbWl0GAEgASgIUgxpc0F1dG9jb21taX'
     'Q=');
-
