@@ -4,15 +4,20 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:stream_channel/stream_channel.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+
+import 'exception.dart';
 import 'protocol.pb.dart' as proto;
 
 final class HranaClient {
   final StreamChannel<dynamic> _channel;
+  bool _closed = false;
+  final Completer<void> _streamClosed = Completer();
 
   Completer<void>? _helloCompleter;
   final Map<int, Completer<proto.ResponseOkMsg>> _pendingRequests = {};
   int _nextRequestId = 0;
   int _nextStreamId = 0;
+  int _nextSqlTextId = 0;
 
   HranaClient._(this._channel) {
     _channel.stream.listen((data) {
@@ -21,7 +26,26 @@ final class HranaClient {
       } else {
         throw 'Unexpected message: $data';
       }
-    });
+    }, onDone: _closedByRemote);
+  }
+
+  void _closedByRemote() {
+    _closed = true;
+    for (final pending in _pendingRequests.values) {
+      pending.completeError(const ConnectionClosed());
+    }
+    _streamClosed.complete();
+  }
+
+  Future<void> close() async {
+    _closed = true;
+    if (_channel case WebSocketChannel ws) {
+      await ws.sink.close(1000, 'connection closed');
+    } else {
+      await _channel.sink.close();
+    }
+
+    await _streamClosed.future;
   }
 
   Future<SqlStreamId> openStream() async {
@@ -41,11 +65,29 @@ final class HranaClient {
     final response = await _request(proto.RequestMsg(
       execute: proto.ExecuteReq(
         streamId: stream.id,
-        stmt: stmt._toStatement(),
+        stmt: stmt.toStatement(),
       ),
     ));
 
-    return StatementResult._fromProto(response.execute.result);
+    return StatementResult.fromProto(response.execute.result);
+  }
+
+  Future<SqlTextId> storeSql(String sql) async {
+    final textId = _nextSqlTextId++;
+    await _request(
+        proto.RequestMsg(storeSql: proto.StoreSqlReq(sqlId: textId, sql: sql)));
+    return SqlTextId(textId);
+  }
+
+  Future<void> closeSql(SqlTextId id) async {
+    await _request(proto.RequestMsg(closeSql: proto.CloseSqlReq(sqlId: id.id)));
+  }
+
+  Future<proto.BatchResult> runBatch(
+      SqlStreamId stream, proto.Batch batch) async {
+    final response = await _request(proto.RequestMsg(
+        batch: proto.BatchReq(batch: batch, streamId: stream.id)));
+    return response.batch.result;
   }
 
   Future<void> _hello(String? jwt) async {
@@ -65,6 +107,10 @@ final class HranaClient {
   }
 
   void _send(proto.ClientMsg msg) {
+    if (_closed) {
+      throw const ConnectionClosed();
+    }
+
     _channel.sink.add(msg.writeToBuffer());
   }
 
@@ -74,7 +120,7 @@ final class HranaClient {
     if (msg.hasHelloOk()) {
       _helloCompleter?.complete();
     } else if (msg.hasHelloError()) {
-      _helloCompleter?.completeError(_createError(msg.helloError.error));
+      _helloCompleter?.completeError(createError(msg.helloError.error));
     } else if (msg.hasResponseOk()) {
       final id = msg.responseOk.requestId;
       final completer = _pendingRequests.remove(id);
@@ -82,12 +128,12 @@ final class HranaClient {
     } else if (msg.hasResponseError()) {
       final id = msg.responseError.requestId;
       final completer = _pendingRequests.remove(id);
-      completer?.completeError(_createError(msg.responseError.error));
+      completer?.completeError(createError(msg.responseError.error));
     }
   }
 
-  HranaException _createError(proto.Error error) {
-    return HranaException(message: error.message, code: error.code);
+  static HranaException createError(proto.Error error) {
+    return ServerException(message: error.message, code: error.code);
   }
 
   static Future<HranaClient> connect(Uri uri, {String? jwtToken}) async {
@@ -103,17 +149,7 @@ final class HranaClient {
 
 extension type SqlStreamId(int id) {}
 
-final class HranaException implements Exception {
-  final String message;
-  final String? code;
-
-  HranaException({required this.message, required this.code});
-
-  @override
-  String toString() {
-    return 'HranaException($code): $message';
-  }
-}
+extension type SqlTextId(int id) {}
 
 extension type Value(Object? value) {
   factory Value._fromProto(proto.Value value) {
@@ -155,7 +191,7 @@ sealed class StatementDescription {
     required this.wantRows,
   });
 
-  proto.Stmt _toStatement();
+  proto.Stmt toStatement();
 
   Iterable<proto.Value> _encodeArgs() {
     return args.map((e) => e._toProto());
@@ -178,9 +214,30 @@ final class SqlStatement extends StatementDescription {
   });
 
   @override
-  proto.Stmt _toStatement() {
+  proto.Stmt toStatement() {
     return proto.Stmt(
       sql: sql,
+      args: _encodeArgs(),
+      namedArgs: _encodeNamedArgs(),
+      wantRows: wantRows,
+    );
+  }
+}
+
+final class StoredStatement extends StatementDescription {
+  final SqlTextId id;
+
+  StoredStatement({
+    required super.args,
+    required super.namedArgs,
+    required super.wantRows,
+    required this.id,
+  });
+
+  @override
+  proto.Stmt toStatement() {
+    return proto.Stmt(
+      sqlId: id.id,
       args: _encodeArgs(),
       namedArgs: _encodeNamedArgs(),
       wantRows: wantRows,
@@ -220,7 +277,7 @@ final class StatementResult {
     required this.lastInsertRowId,
   });
 
-  factory StatementResult._fromProto(proto.StmtResult result) {
+  factory StatementResult.fromProto(proto.StmtResult result) {
     return StatementResult(
       columns: [
         for (final col in result.cols) Column._fromProto(col),
