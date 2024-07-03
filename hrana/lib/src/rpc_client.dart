@@ -29,6 +29,9 @@ final class HranaClient {
     }, onDone: _closedByRemote);
   }
 
+  bool get isClosed => _closed;
+  Future<void> get closed => _streamClosed.future;
+
   void _closedByRemote() {
     _closed = true;
     for (final pending in _pendingRequests.values) {

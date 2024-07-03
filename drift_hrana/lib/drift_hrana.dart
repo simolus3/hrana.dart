@@ -17,6 +17,8 @@ final class HranaDatabase extends DelegatedDatabase {
 
 final class _HranaDelegate extends DatabaseDelegate {
   Database? _database;
+  var _isClosed = false;
+
   final Uri uri;
   final String? jwtToken;
 
@@ -46,11 +48,19 @@ final class _HranaDelegate extends DatabaseDelegate {
   }
 
   @override
-  FutureOr<bool> get isOpen => Future.value(_database != null);
+  FutureOr<bool> get isOpen => Future.value(!_isClosed && _database != null);
 
   @override
   Future<void> open(QueryExecutorUser db) async {
-    _database = await Database.connect(uri, jwtToken: jwtToken);
+    if (_database != null) {
+      throw const ConnectionClosed();
+    }
+
+    final database =
+        _database = await Database.connect(uri, jwtToken: jwtToken);
+    database.closed.whenComplete(() {
+      _isClosed = true;
+    });
   }
 
   @override

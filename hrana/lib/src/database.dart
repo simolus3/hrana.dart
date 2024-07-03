@@ -120,10 +120,20 @@ final class Database {
     return BatchResult._(response);
   }
 
+  /// Returns a future that completes with a value when this database has
+  /// closed.
+  ///
+  /// The database may close due to [close] being called, but it may also close
+  /// due to a fatal server error or the websocket loosing connectivity.
+  Future<void> get closed => _client.closed;
+
   /// Closes the database connection and the underlying socket to a libsql
   /// server.
   Future<void> close() async {
-    await _client.closeStream(_stream);
+    if (!_client.isClosed) {
+      await _client.closeStream(_stream);
+    }
+
     await _client.close();
   }
 }
