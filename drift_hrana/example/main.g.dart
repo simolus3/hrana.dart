@@ -106,6 +106,13 @@ class Note extends DataClass implements Insertable<Note> {
         id: id ?? this.id,
         content: content ?? this.content,
       );
+  Note copyWithCompanion(NotesCompanion data) {
+    return Note(
+      id: data.id.present ? data.id.value : this.id,
+      content: data.content.present ? data.content.value : this.content,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Note(')
@@ -175,7 +182,7 @@ class NotesCompanion extends UpdateCompanion<Note> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
-  _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $NotesTable notes = $NotesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -184,7 +191,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [notes];
 }
 
-typedef $$NotesTableInsertCompanionBuilder = NotesCompanion Function({
+typedef $$NotesTableCreateCompanionBuilder = NotesCompanion Function({
   Value<int> id,
   required String content,
 });
@@ -199,8 +206,7 @@ class $$NotesTableTableManager extends RootTableManager<
     Note,
     $$NotesTableFilterComposer,
     $$NotesTableOrderingComposer,
-    $$NotesTableProcessedTableManager,
-    $$NotesTableInsertCompanionBuilder,
+    $$NotesTableCreateCompanionBuilder,
     $$NotesTableUpdateCompanionBuilder> {
   $$NotesTableTableManager(_$AppDatabase db, $NotesTable table)
       : super(TableManagerState(
@@ -210,8 +216,7 @@ class $$NotesTableTableManager extends RootTableManager<
               $$NotesTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$NotesTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) => $$NotesTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> content = const Value.absent(),
           }) =>
@@ -219,7 +224,7 @@ class $$NotesTableTableManager extends RootTableManager<
             id: id,
             content: content,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String content,
           }) =>
@@ -228,18 +233,6 @@ class $$NotesTableTableManager extends RootTableManager<
             content: content,
           ),
         ));
-}
-
-class $$NotesTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $NotesTable,
-    Note,
-    $$NotesTableFilterComposer,
-    $$NotesTableOrderingComposer,
-    $$NotesTableProcessedTableManager,
-    $$NotesTableInsertCompanionBuilder,
-    $$NotesTableUpdateCompanionBuilder> {
-  $$NotesTableProcessedTableManager(super.$state);
 }
 
 class $$NotesTableFilterComposer
@@ -270,9 +263,9 @@ class $$NotesTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class _$AppDatabaseManager {
+class $AppDatabaseManager {
   final _$AppDatabase _db;
-  _$AppDatabaseManager(this._db);
+  $AppDatabaseManager(this._db);
   $$NotesTableTableManager get notes =>
       $$NotesTableTableManager(_db, _db.notes);
 }
