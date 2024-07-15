@@ -18,9 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: ${{ matrix.dart-sdk }}
-      - uses: actions/cache@v4
+      # We would like to update the cache if the pubspec.lock file changes after running
+      # pub upgrade. That requires including the pubspec.lock in the key, but it's not part
+      # of the repository. So, we only restore here and then upload the cache if there was a
+      # miss or if the pubspec.lock files have changed.
+      - uses: actions/cache/restore@v4
         with:
           path: |
             ${{ env.PUB_CACHE }}
@@ -29,6 +31,10 @@ jobs:
           key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
           restore-keys:
             dart-packages-
+      - name: "Hash pubspec lockfiles before pub upgrade"
+        id: deps-before
+        run: |
+          echo "lockfiles=${{ hashFiles('**/pubspec.lock') }}" >> $GITHUB_OUTPUT
 
       - name: "Install hrana dependencies"
         working-directory: hrana
@@ -43,6 +49,16 @@ jobs:
       - name: "Analyze project"
         run: dart analyze --fatal-infos
 
+      - name: "Update cache due to changed pubspec.lock"
+        if: ${{ hashFiles('**/pubspec.lock') != steps.deps-before.outputs.lockfiles }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            hrana/pubspec.lock
+            drift_hrana/pubspec.lock
+          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
+
   test:
     strategy:
       matrix:
@@ -54,9 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: ${{ matrix.dart-sdk }}
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         with:
           path: |
             ${{ env.PUB_CACHE }}
@@ -68,7 +82,7 @@ jobs:
 
       - name: "Get dependencies"
         working-directory: ${{ matrix.package }}
-        run: dart pub get
+        run: dart pub get --offline
 
       - name: "Run tests"
         working-directory: ${{ matrix.package }}
