@@ -14,10 +14,14 @@ env:
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    outputs:
+      dart-version: ${{ steps.setup-dart.outputs.dart-version }}
+      cache-key: dart-packages-${{ steps.deps-after.outputs.lockfiles }}
 
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
+        id: setup-dart
       # We would like to update the cache if the pubspec.lock file changes after running
       # pub upgrade. That requires including the pubspec.lock in the key, but it's not part
       # of the repository. So, we only restore here and then upload the cache if there was a
@@ -28,8 +32,9 @@ jobs:
             ${{ env.PUB_CACHE }}
             hrana/pubspec.lock
             drift_hrana/pubspec.lock
-          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys:
+          # We can only use fallback keys here since we don't know the lockfile contents yet.
+          key: dart-packages-stub
+          restore-keys: |
             dart-packages-
       - name: "Hash pubspec lockfiles before pub upgrade"
         id: deps-before
@@ -43,6 +48,11 @@ jobs:
         working-directory: drift_hrana
         run: dart pub upgrade
 
+      - name: "Hash pubspec lockfiles after pub upgrade"
+        id: deps-after
+        run: |
+          echo "lockfiles=${{ hashFiles('**/pubspec.lock') }}" >> $GITHUB_OUTPUT
+
       - name: "Ensure formatted"
         run: dart format --output=none --set-exit-if-changed .
 
@@ -50,14 +60,14 @@ jobs:
         run: dart analyze --fatal-infos
 
       - name: "Update cache due to changed pubspec.lock"
-        if: ${{ hashFiles('**/pubspec.lock') != steps.deps-before.outputs.lockfiles }}
+        if: ${{ !failure() && ( steps.deps-after.outputs.lockfiles != steps.deps-before.outputs.lockfiles) }}
         uses: actions/cache/save@v4
         with:
           path: |
             ${{ env.PUB_CACHE }}
             hrana/pubspec.lock
             drift_hrana/pubspec.lock
-          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
+          key: dart-packages-${{ steps.deps-after.outputs.lockfiles }}
 
   test:
     strategy:
@@ -70,15 +80,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ needs.analyze.outputs.dart-version }}
       - uses: actions/cache/restore@v4
         with:
           path: |
             ${{ env.PUB_CACHE }}
             hrana/pubspec.lock
             drift_hrana/pubspec.lock
-          key: dart-packages-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys:
-            dart-packages-
+          key: ${{ needs.analyze.outputs.cache-key }}
+          fail-on-cache-miss: true
 
       - name: "Get dependencies"
         working-directory: ${{ matrix.package }}
