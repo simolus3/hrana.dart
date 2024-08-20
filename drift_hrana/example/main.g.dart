@@ -200,41 +200,6 @@ typedef $$NotesTableUpdateCompanionBuilder = NotesCompanion Function({
   Value<String> content,
 });
 
-class $$NotesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $NotesTable,
-    Note,
-    $$NotesTableFilterComposer,
-    $$NotesTableOrderingComposer,
-    $$NotesTableCreateCompanionBuilder,
-    $$NotesTableUpdateCompanionBuilder> {
-  $$NotesTableTableManager(_$AppDatabase db, $NotesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$NotesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$NotesTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> content = const Value.absent(),
-          }) =>
-              NotesCompanion(
-            id: id,
-            content: content,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String content,
-          }) =>
-              NotesCompanion.insert(
-            id: id,
-            content: content,
-          ),
-        ));
-}
-
 class $$NotesTableFilterComposer
     extends FilterComposer<_$AppDatabase, $NotesTable> {
   $$NotesTableFilterComposer(super.$state);
@@ -262,6 +227,60 @@ class $$NotesTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
+
+class $$NotesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $NotesTable,
+    Note,
+    $$NotesTableFilterComposer,
+    $$NotesTableOrderingComposer,
+    $$NotesTableCreateCompanionBuilder,
+    $$NotesTableUpdateCompanionBuilder,
+    (Note, BaseReferences<_$AppDatabase, $NotesTable, Note>),
+    Note,
+    PrefetchHooks Function()> {
+  $$NotesTableTableManager(_$AppDatabase db, $NotesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$NotesTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$NotesTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> content = const Value.absent(),
+          }) =>
+              NotesCompanion(
+            id: id,
+            content: content,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String content,
+          }) =>
+              NotesCompanion.insert(
+            id: id,
+            content: content,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$NotesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $NotesTable,
+    Note,
+    $$NotesTableFilterComposer,
+    $$NotesTableOrderingComposer,
+    $$NotesTableCreateCompanionBuilder,
+    $$NotesTableUpdateCompanionBuilder,
+    (Note, BaseReferences<_$AppDatabase, $NotesTable, Note>),
+    Note,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
