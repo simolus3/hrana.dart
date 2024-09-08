@@ -282,6 +282,10 @@ class StmtResult extends $pb.GeneratedMessage {
     $core.Iterable<Row>? rows,
     $fixnum.Int64? affectedRowCount,
     $fixnum.Int64? lastInsertRowid,
+    $fixnum.Int64? replicationIndex,
+    $fixnum.Int64? rowsRead,
+    $fixnum.Int64? rowsWritten,
+    $core.double? queryDurationMs,
   }) {
     final $result = create();
     if (cols != null) {
@@ -295,6 +299,18 @@ class StmtResult extends $pb.GeneratedMessage {
     }
     if (lastInsertRowid != null) {
       $result.lastInsertRowid = lastInsertRowid;
+    }
+    if (replicationIndex != null) {
+      $result.replicationIndex = replicationIndex;
+    }
+    if (rowsRead != null) {
+      $result.rowsRead = rowsRead;
+    }
+    if (rowsWritten != null) {
+      $result.rowsWritten = rowsWritten;
+    }
+    if (queryDurationMs != null) {
+      $result.queryDurationMs = queryDurationMs;
     }
     return $result;
   }
@@ -319,6 +335,17 @@ class StmtResult extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(
         4, _omitFieldNames ? '' : 'lastInsertRowid', $pb.PbFieldType.OS6,
         defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(
+        5, _omitFieldNames ? '' : 'replicationIndex', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(
+        6, _omitFieldNames ? '' : 'rowsRead', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(
+        7, _omitFieldNames ? '' : 'rowsWritten', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.double>(
+        8, _omitFieldNames ? '' : 'queryDurationMs', $pb.PbFieldType.OD)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -371,6 +398,54 @@ class StmtResult extends $pb.GeneratedMessage {
   $core.bool hasLastInsertRowid() => $_has(3);
   @$pb.TagNumber(4)
   void clearLastInsertRowid() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get replicationIndex => $_getI64(4);
+  @$pb.TagNumber(5)
+  set replicationIndex($fixnum.Int64 v) {
+    $_setInt64(4, v);
+  }
+
+  @$pb.TagNumber(5)
+  $core.bool hasReplicationIndex() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearReplicationIndex() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get rowsRead => $_getI64(5);
+  @$pb.TagNumber(6)
+  set rowsRead($fixnum.Int64 v) {
+    $_setInt64(5, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasRowsRead() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRowsRead() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get rowsWritten => $_getI64(6);
+  @$pb.TagNumber(7)
+  set rowsWritten($fixnum.Int64 v) {
+    $_setInt64(6, v);
+  }
+
+  @$pb.TagNumber(7)
+  $core.bool hasRowsWritten() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearRowsWritten() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.double get queryDurationMs => $_getN(7);
+  @$pb.TagNumber(8)
+  set queryDurationMs($core.double v) {
+    $_setDouble(7, v);
+  }
+
+  @$pb.TagNumber(8)
+  $core.bool hasQueryDurationMs() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearQueryDurationMs() => clearField(8);
 }
 
 class Col extends $pb.GeneratedMessage {
@@ -4364,6 +4439,998 @@ class GetAutocommitResp extends $pb.GeneratedMessage {
   $core.bool hasIsAutocommit() => $_has(0);
   @$pb.TagNumber(1)
   void clearIsAutocommit() => clearField(1);
+}
+
+class PipelineReq extends $pb.GeneratedMessage {
+  factory PipelineReq({
+    $core.String? baton,
+    $core.Iterable<StreamRequest>? requests,
+  }) {
+    final $result = create();
+    if (baton != null) {
+      $result.baton = baton;
+    }
+    if (requests != null) {
+      $result.requests.addAll(requests);
+    }
+    return $result;
+  }
+  PipelineReq._() : super();
+  factory PipelineReq.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PipelineReq.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PipelineReq',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'baton')
+    ..pc<StreamRequest>(
+        2, _omitFieldNames ? '' : 'requests', $pb.PbFieldType.PM,
+        subBuilder: StreamRequest.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  PipelineReq clone() => PipelineReq()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  PipelineReq copyWith(void Function(PipelineReq) updates) =>
+      super.copyWith((message) => updates(message as PipelineReq))
+          as PipelineReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PipelineReq create() => PipelineReq._();
+  PipelineReq createEmptyInstance() => create();
+  static $pb.PbList<PipelineReq> createRepeated() => $pb.PbList<PipelineReq>();
+  @$core.pragma('dart2js:noInline')
+  static PipelineReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PipelineReq>(create);
+  static PipelineReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get baton => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set baton($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasBaton() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBaton() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<StreamRequest> get requests => $_getList(1);
+}
+
+enum StreamRequest_Request {
+  close,
+  execute,
+  batch,
+  sequence,
+  describe,
+  storeSql,
+  closeSql,
+  getAutocommit,
+  notSet
+}
+
+class StreamRequest extends $pb.GeneratedMessage {
+  factory StreamRequest({
+    CloseStreamReq? close,
+    ExecuteStreamReq? execute,
+    BatchStreamReq? batch,
+    SequenceStreamReq? sequence,
+    DescribeStreamReq? describe,
+    StoreSqlReq? storeSql,
+    CloseSqlReq? closeSql,
+    GetAutocommitReq? getAutocommit,
+  }) {
+    final $result = create();
+    if (close != null) {
+      $result.close = close;
+    }
+    if (execute != null) {
+      $result.execute = execute;
+    }
+    if (batch != null) {
+      $result.batch = batch;
+    }
+    if (sequence != null) {
+      $result.sequence = sequence;
+    }
+    if (describe != null) {
+      $result.describe = describe;
+    }
+    if (storeSql != null) {
+      $result.storeSql = storeSql;
+    }
+    if (closeSql != null) {
+      $result.closeSql = closeSql;
+    }
+    if (getAutocommit != null) {
+      $result.getAutocommit = getAutocommit;
+    }
+    return $result;
+  }
+  StreamRequest._() : super();
+  factory StreamRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StreamRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, StreamRequest_Request>
+      _StreamRequest_RequestByTag = {
+    1: StreamRequest_Request.close,
+    2: StreamRequest_Request.execute,
+    3: StreamRequest_Request.batch,
+    4: StreamRequest_Request.sequence,
+    5: StreamRequest_Request.describe,
+    6: StreamRequest_Request.storeSql,
+    7: StreamRequest_Request.closeSql,
+    8: StreamRequest_Request.getAutocommit,
+    0: StreamRequest_Request.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamRequest',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
+    ..aOM<CloseStreamReq>(1, _omitFieldNames ? '' : 'close',
+        subBuilder: CloseStreamReq.create)
+    ..aOM<ExecuteStreamReq>(2, _omitFieldNames ? '' : 'execute',
+        subBuilder: ExecuteStreamReq.create)
+    ..aOM<BatchStreamReq>(3, _omitFieldNames ? '' : 'batch',
+        subBuilder: BatchStreamReq.create)
+    ..aOM<SequenceStreamReq>(4, _omitFieldNames ? '' : 'sequence',
+        subBuilder: SequenceStreamReq.create)
+    ..aOM<DescribeStreamReq>(5, _omitFieldNames ? '' : 'describe',
+        subBuilder: DescribeStreamReq.create)
+    ..aOM<StoreSqlReq>(6, _omitFieldNames ? '' : 'storeSql',
+        subBuilder: StoreSqlReq.create)
+    ..aOM<CloseSqlReq>(7, _omitFieldNames ? '' : 'closeSql',
+        subBuilder: CloseSqlReq.create)
+    ..aOM<GetAutocommitReq>(8, _omitFieldNames ? '' : 'getAutocommit',
+        subBuilder: GetAutocommitReq.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  StreamRequest clone() => StreamRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  StreamRequest copyWith(void Function(StreamRequest) updates) =>
+      super.copyWith((message) => updates(message as StreamRequest))
+          as StreamRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StreamRequest create() => StreamRequest._();
+  StreamRequest createEmptyInstance() => create();
+  static $pb.PbList<StreamRequest> createRepeated() =>
+      $pb.PbList<StreamRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StreamRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamRequest>(create);
+  static StreamRequest? _defaultInstance;
+
+  StreamRequest_Request whichRequest() =>
+      _StreamRequest_RequestByTag[$_whichOneof(0)]!;
+  void clearRequest() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  CloseStreamReq get close => $_getN(0);
+  @$pb.TagNumber(1)
+  set close(CloseStreamReq v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasClose() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearClose() => clearField(1);
+  @$pb.TagNumber(1)
+  CloseStreamReq ensureClose() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ExecuteStreamReq get execute => $_getN(1);
+  @$pb.TagNumber(2)
+  set execute(ExecuteStreamReq v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasExecute() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExecute() => clearField(2);
+  @$pb.TagNumber(2)
+  ExecuteStreamReq ensureExecute() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  BatchStreamReq get batch => $_getN(2);
+  @$pb.TagNumber(3)
+  set batch(BatchStreamReq v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasBatch() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBatch() => clearField(3);
+  @$pb.TagNumber(3)
+  BatchStreamReq ensureBatch() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  SequenceStreamReq get sequence => $_getN(3);
+  @$pb.TagNumber(4)
+  set sequence(SequenceStreamReq v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasSequence() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSequence() => clearField(4);
+  @$pb.TagNumber(4)
+  SequenceStreamReq ensureSequence() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  DescribeStreamReq get describe => $_getN(4);
+  @$pb.TagNumber(5)
+  set describe(DescribeStreamReq v) {
+    setField(5, v);
+  }
+
+  @$pb.TagNumber(5)
+  $core.bool hasDescribe() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDescribe() => clearField(5);
+  @$pb.TagNumber(5)
+  DescribeStreamReq ensureDescribe() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  StoreSqlReq get storeSql => $_getN(5);
+  @$pb.TagNumber(6)
+  set storeSql(StoreSqlReq v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasStoreSql() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStoreSql() => clearField(6);
+  @$pb.TagNumber(6)
+  StoreSqlReq ensureStoreSql() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  CloseSqlReq get closeSql => $_getN(6);
+  @$pb.TagNumber(7)
+  set closeSql(CloseSqlReq v) {
+    setField(7, v);
+  }
+
+  @$pb.TagNumber(7)
+  $core.bool hasCloseSql() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCloseSql() => clearField(7);
+  @$pb.TagNumber(7)
+  CloseSqlReq ensureCloseSql() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  GetAutocommitReq get getAutocommit => $_getN(7);
+  @$pb.TagNumber(8)
+  set getAutocommit(GetAutocommitReq v) {
+    setField(8, v);
+  }
+
+  @$pb.TagNumber(8)
+  $core.bool hasGetAutocommit() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearGetAutocommit() => clearField(8);
+  @$pb.TagNumber(8)
+  GetAutocommitReq ensureGetAutocommit() => $_ensure(7);
+}
+
+class ExecuteStreamReq extends $pb.GeneratedMessage {
+  factory ExecuteStreamReq({
+    Stmt? stmt,
+  }) {
+    final $result = create();
+    if (stmt != null) {
+      $result.stmt = stmt;
+    }
+    return $result;
+  }
+  ExecuteStreamReq._() : super();
+  factory ExecuteStreamReq.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ExecuteStreamReq.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ExecuteStreamReq',
+      createEmptyInstance: create)
+    ..aOM<Stmt>(1, _omitFieldNames ? '' : 'stmt', subBuilder: Stmt.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ExecuteStreamReq clone() => ExecuteStreamReq()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ExecuteStreamReq copyWith(void Function(ExecuteStreamReq) updates) =>
+      super.copyWith((message) => updates(message as ExecuteStreamReq))
+          as ExecuteStreamReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ExecuteStreamReq create() => ExecuteStreamReq._();
+  ExecuteStreamReq createEmptyInstance() => create();
+  static $pb.PbList<ExecuteStreamReq> createRepeated() =>
+      $pb.PbList<ExecuteStreamReq>();
+  @$core.pragma('dart2js:noInline')
+  static ExecuteStreamReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExecuteStreamReq>(create);
+  static ExecuteStreamReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Stmt get stmt => $_getN(0);
+  @$pb.TagNumber(1)
+  set stmt(Stmt v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasStmt() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStmt() => clearField(1);
+  @$pb.TagNumber(1)
+  Stmt ensureStmt() => $_ensure(0);
+}
+
+class BatchStreamReq extends $pb.GeneratedMessage {
+  factory BatchStreamReq({
+    Batch? batch,
+  }) {
+    final $result = create();
+    if (batch != null) {
+      $result.batch = batch;
+    }
+    return $result;
+  }
+  BatchStreamReq._() : super();
+  factory BatchStreamReq.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory BatchStreamReq.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BatchStreamReq',
+      createEmptyInstance: create)
+    ..aOM<Batch>(1, _omitFieldNames ? '' : 'batch', subBuilder: Batch.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  BatchStreamReq clone() => BatchStreamReq()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  BatchStreamReq copyWith(void Function(BatchStreamReq) updates) =>
+      super.copyWith((message) => updates(message as BatchStreamReq))
+          as BatchStreamReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static BatchStreamReq create() => BatchStreamReq._();
+  BatchStreamReq createEmptyInstance() => create();
+  static $pb.PbList<BatchStreamReq> createRepeated() =>
+      $pb.PbList<BatchStreamReq>();
+  @$core.pragma('dart2js:noInline')
+  static BatchStreamReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<BatchStreamReq>(create);
+  static BatchStreamReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Batch get batch => $_getN(0);
+  @$pb.TagNumber(1)
+  set batch(Batch v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasBatch() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBatch() => clearField(1);
+  @$pb.TagNumber(1)
+  Batch ensureBatch() => $_ensure(0);
+}
+
+class SequenceStreamReq extends $pb.GeneratedMessage {
+  factory SequenceStreamReq({
+    $core.String? sql,
+    $core.int? sqlId,
+  }) {
+    final $result = create();
+    if (sql != null) {
+      $result.sql = sql;
+    }
+    if (sqlId != null) {
+      $result.sqlId = sqlId;
+    }
+    return $result;
+  }
+  SequenceStreamReq._() : super();
+  factory SequenceStreamReq.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SequenceStreamReq.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SequenceStreamReq',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sql')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'sqlId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  SequenceStreamReq clone() => SequenceStreamReq()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SequenceStreamReq copyWith(void Function(SequenceStreamReq) updates) =>
+      super.copyWith((message) => updates(message as SequenceStreamReq))
+          as SequenceStreamReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SequenceStreamReq create() => SequenceStreamReq._();
+  SequenceStreamReq createEmptyInstance() => create();
+  static $pb.PbList<SequenceStreamReq> createRepeated() =>
+      $pb.PbList<SequenceStreamReq>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceStreamReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SequenceStreamReq>(create);
+  static SequenceStreamReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sql => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sql($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasSql() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSql() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get sqlId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set sqlId($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasSqlId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSqlId() => clearField(2);
+}
+
+class DescribeStreamReq extends $pb.GeneratedMessage {
+  factory DescribeStreamReq({
+    $core.String? sql,
+    $core.int? sqlId,
+  }) {
+    final $result = create();
+    if (sql != null) {
+      $result.sql = sql;
+    }
+    if (sqlId != null) {
+      $result.sqlId = sqlId;
+    }
+    return $result;
+  }
+  DescribeStreamReq._() : super();
+  factory DescribeStreamReq.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory DescribeStreamReq.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'DescribeStreamReq',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sql')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'sqlId', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  DescribeStreamReq clone() => DescribeStreamReq()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  DescribeStreamReq copyWith(void Function(DescribeStreamReq) updates) =>
+      super.copyWith((message) => updates(message as DescribeStreamReq))
+          as DescribeStreamReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DescribeStreamReq create() => DescribeStreamReq._();
+  DescribeStreamReq createEmptyInstance() => create();
+  static $pb.PbList<DescribeStreamReq> createRepeated() =>
+      $pb.PbList<DescribeStreamReq>();
+  @$core.pragma('dart2js:noInline')
+  static DescribeStreamReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DescribeStreamReq>(create);
+  static DescribeStreamReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sql => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sql($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasSql() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSql() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get sqlId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set sqlId($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasSqlId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSqlId() => clearField(2);
+}
+
+class PipelineResp extends $pb.GeneratedMessage {
+  factory PipelineResp({
+    $core.String? baton,
+    $core.String? baseUrl,
+    $core.Iterable<StreamResult>? results,
+  }) {
+    final $result = create();
+    if (baton != null) {
+      $result.baton = baton;
+    }
+    if (baseUrl != null) {
+      $result.baseUrl = baseUrl;
+    }
+    if (results != null) {
+      $result.results.addAll(results);
+    }
+    return $result;
+  }
+  PipelineResp._() : super();
+  factory PipelineResp.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PipelineResp.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PipelineResp',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'baton')
+    ..aOS(2, _omitFieldNames ? '' : 'baseUrl')
+    ..pc<StreamResult>(3, _omitFieldNames ? '' : 'results', $pb.PbFieldType.PM,
+        subBuilder: StreamResult.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  PipelineResp clone() => PipelineResp()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  PipelineResp copyWith(void Function(PipelineResp) updates) =>
+      super.copyWith((message) => updates(message as PipelineResp))
+          as PipelineResp;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PipelineResp create() => PipelineResp._();
+  PipelineResp createEmptyInstance() => create();
+  static $pb.PbList<PipelineResp> createRepeated() =>
+      $pb.PbList<PipelineResp>();
+  @$core.pragma('dart2js:noInline')
+  static PipelineResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PipelineResp>(create);
+  static PipelineResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get baton => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set baton($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasBaton() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBaton() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get baseUrl => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set baseUrl($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasBaseUrl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBaseUrl() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<StreamResult> get results => $_getList(2);
+}
+
+enum StreamResult_Result { ok, error, notSet }
+
+class StreamResult extends $pb.GeneratedMessage {
+  factory StreamResult({
+    StreamResponse? ok,
+    Error? error,
+  }) {
+    final $result = create();
+    if (ok != null) {
+      $result.ok = ok;
+    }
+    if (error != null) {
+      $result.error = error;
+    }
+    return $result;
+  }
+  StreamResult._() : super();
+  factory StreamResult.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StreamResult.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, StreamResult_Result>
+      _StreamResult_ResultByTag = {
+    1: StreamResult_Result.ok,
+    2: StreamResult_Result.error,
+    0: StreamResult_Result.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamResult',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<StreamResponse>(1, _omitFieldNames ? '' : 'ok',
+        subBuilder: StreamResponse.create)
+    ..aOM<Error>(2, _omitFieldNames ? '' : 'error', subBuilder: Error.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  StreamResult clone() => StreamResult()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  StreamResult copyWith(void Function(StreamResult) updates) =>
+      super.copyWith((message) => updates(message as StreamResult))
+          as StreamResult;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StreamResult create() => StreamResult._();
+  StreamResult createEmptyInstance() => create();
+  static $pb.PbList<StreamResult> createRepeated() =>
+      $pb.PbList<StreamResult>();
+  @$core.pragma('dart2js:noInline')
+  static StreamResult getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamResult>(create);
+  static StreamResult? _defaultInstance;
+
+  StreamResult_Result whichResult() =>
+      _StreamResult_ResultByTag[$_whichOneof(0)]!;
+  void clearResult() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  StreamResponse get ok => $_getN(0);
+  @$pb.TagNumber(1)
+  set ok(StreamResponse v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasOk() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearOk() => clearField(1);
+  @$pb.TagNumber(1)
+  StreamResponse ensureOk() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  Error get error => $_getN(1);
+  @$pb.TagNumber(2)
+  set error(Error v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasError() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearError() => clearField(2);
+  @$pb.TagNumber(2)
+  Error ensureError() => $_ensure(1);
+}
+
+enum StreamResponse_Response {
+  close,
+  execute,
+  batch,
+  sequence,
+  describe,
+  storeSql,
+  closeSql,
+  getAutocommit,
+  notSet
+}
+
+class StreamResponse extends $pb.GeneratedMessage {
+  factory StreamResponse({
+    CloseStreamResp? close,
+    ExecuteResp? execute,
+    BatchResp? batch,
+    SequenceResp? sequence,
+    DescribeResp? describe,
+    StoreSqlResp? storeSql,
+    CloseSqlResp? closeSql,
+    GetAutocommitResp? getAutocommit,
+  }) {
+    final $result = create();
+    if (close != null) {
+      $result.close = close;
+    }
+    if (execute != null) {
+      $result.execute = execute;
+    }
+    if (batch != null) {
+      $result.batch = batch;
+    }
+    if (sequence != null) {
+      $result.sequence = sequence;
+    }
+    if (describe != null) {
+      $result.describe = describe;
+    }
+    if (storeSql != null) {
+      $result.storeSql = storeSql;
+    }
+    if (closeSql != null) {
+      $result.closeSql = closeSql;
+    }
+    if (getAutocommit != null) {
+      $result.getAutocommit = getAutocommit;
+    }
+    return $result;
+  }
+  StreamResponse._() : super();
+  factory StreamResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StreamResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, StreamResponse_Response>
+      _StreamResponse_ResponseByTag = {
+    1: StreamResponse_Response.close,
+    2: StreamResponse_Response.execute,
+    3: StreamResponse_Response.batch,
+    4: StreamResponse_Response.sequence,
+    5: StreamResponse_Response.describe,
+    6: StreamResponse_Response.storeSql,
+    7: StreamResponse_Response.closeSql,
+    8: StreamResponse_Response.getAutocommit,
+    0: StreamResponse_Response.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StreamResponse',
+      createEmptyInstance: create)
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
+    ..aOM<CloseStreamResp>(1, _omitFieldNames ? '' : 'close',
+        subBuilder: CloseStreamResp.create)
+    ..aOM<ExecuteResp>(2, _omitFieldNames ? '' : 'execute',
+        subBuilder: ExecuteResp.create)
+    ..aOM<BatchResp>(3, _omitFieldNames ? '' : 'batch',
+        subBuilder: BatchResp.create)
+    ..aOM<SequenceResp>(4, _omitFieldNames ? '' : 'sequence',
+        subBuilder: SequenceResp.create)
+    ..aOM<DescribeResp>(5, _omitFieldNames ? '' : 'describe',
+        subBuilder: DescribeResp.create)
+    ..aOM<StoreSqlResp>(6, _omitFieldNames ? '' : 'storeSql',
+        subBuilder: StoreSqlResp.create)
+    ..aOM<CloseSqlResp>(7, _omitFieldNames ? '' : 'closeSql',
+        subBuilder: CloseSqlResp.create)
+    ..aOM<GetAutocommitResp>(8, _omitFieldNames ? '' : 'getAutocommit',
+        subBuilder: GetAutocommitResp.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  StreamResponse clone() => StreamResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  StreamResponse copyWith(void Function(StreamResponse) updates) =>
+      super.copyWith((message) => updates(message as StreamResponse))
+          as StreamResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StreamResponse create() => StreamResponse._();
+  StreamResponse createEmptyInstance() => create();
+  static $pb.PbList<StreamResponse> createRepeated() =>
+      $pb.PbList<StreamResponse>();
+  @$core.pragma('dart2js:noInline')
+  static StreamResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StreamResponse>(create);
+  static StreamResponse? _defaultInstance;
+
+  StreamResponse_Response whichResponse() =>
+      _StreamResponse_ResponseByTag[$_whichOneof(0)]!;
+  void clearResponse() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  CloseStreamResp get close => $_getN(0);
+  @$pb.TagNumber(1)
+  set close(CloseStreamResp v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasClose() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearClose() => clearField(1);
+  @$pb.TagNumber(1)
+  CloseStreamResp ensureClose() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ExecuteResp get execute => $_getN(1);
+  @$pb.TagNumber(2)
+  set execute(ExecuteResp v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasExecute() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExecute() => clearField(2);
+  @$pb.TagNumber(2)
+  ExecuteResp ensureExecute() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  BatchResp get batch => $_getN(2);
+  @$pb.TagNumber(3)
+  set batch(BatchResp v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasBatch() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBatch() => clearField(3);
+  @$pb.TagNumber(3)
+  BatchResp ensureBatch() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  SequenceResp get sequence => $_getN(3);
+  @$pb.TagNumber(4)
+  set sequence(SequenceResp v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasSequence() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSequence() => clearField(4);
+  @$pb.TagNumber(4)
+  SequenceResp ensureSequence() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  DescribeResp get describe => $_getN(4);
+  @$pb.TagNumber(5)
+  set describe(DescribeResp v) {
+    setField(5, v);
+  }
+
+  @$pb.TagNumber(5)
+  $core.bool hasDescribe() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDescribe() => clearField(5);
+  @$pb.TagNumber(5)
+  DescribeResp ensureDescribe() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  StoreSqlResp get storeSql => $_getN(5);
+  @$pb.TagNumber(6)
+  set storeSql(StoreSqlResp v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasStoreSql() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStoreSql() => clearField(6);
+  @$pb.TagNumber(6)
+  StoreSqlResp ensureStoreSql() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  CloseSqlResp get closeSql => $_getN(6);
+  @$pb.TagNumber(7)
+  set closeSql(CloseSqlResp v) {
+    setField(7, v);
+  }
+
+  @$pb.TagNumber(7)
+  $core.bool hasCloseSql() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCloseSql() => clearField(7);
+  @$pb.TagNumber(7)
+  CloseSqlResp ensureCloseSql() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  GetAutocommitResp get getAutocommit => $_getN(7);
+  @$pb.TagNumber(8)
+  set getAutocommit(GetAutocommitResp v) {
+    setField(8, v);
+  }
+
+  @$pb.TagNumber(8)
+  $core.bool hasGetAutocommit() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearGetAutocommit() => clearField(8);
+  @$pb.TagNumber(8)
+  GetAutocommitResp ensureGetAutocommit() => $_ensure(7);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

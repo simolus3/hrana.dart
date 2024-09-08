@@ -1,3 +1,7 @@
+// Adapted from: 
+// - https://github.com/tursodatabase/libsql/blob/main/docs/HRANA_3_SPEC.md
+// - https://github.com/tursodatabase/libsql/blob/main/libsql-hrana/src/proto.rs
+
 syntax = "proto3";
 
 message Error {
@@ -23,6 +27,10 @@ message StmtResult {
   repeated Row rows = 2;
   uint64 affected_row_count = 3;
   optional sint64 last_insert_rowid = 4;
+  optional uint64 replication_index = 5;
+  uint64 rows_read = 6;
+  uint64 rows_written = 7;
+  double query_duration_ms = 8;
 }
 
 message Col {
@@ -206,6 +214,10 @@ message ExecuteReq {
   Stmt stmt = 2;
 }
 
+message ExecuteStreamReq {
+  Stmt stmt = 1;
+}
+
 message ExecuteResp {
   StmtResult result = 1;
 }
@@ -213,6 +225,10 @@ message ExecuteResp {
 message BatchReq {
   int32 stream_id = 1;
   Batch batch = 2;
+}
+
+message BatchStreamReq {
+  Batch batch = 1;
 }
 
 message BatchResp {
@@ -266,6 +282,11 @@ message SequenceReq {
   optional int32 sql_id = 3;
 }
 
+message SequenceStreamReq {
+  optional string sql = 1;
+  optional int32 sql_id = 2;
+}
+
 message SequenceResp {
 }
 
@@ -273,6 +294,11 @@ message DescribeReq {
   int32 stream_id = 1;
   optional string sql = 2;
   optional int32 sql_id = 3;
+}
+
+message DescribeStreamReq {
+  optional string sql = 1;
+  optional int32 sql_id = 2;
 }
 
 message DescribeResp {
@@ -283,6 +309,52 @@ message GetAutocommitReq {
   int32 stream_id = 1;
 }
 
+message GetAutocommitStreamReq {}
+
 message GetAutocommitResp {
   bool is_autocommit = 1;
+}
+
+message PipelineReq {
+  optional string baton = 1;
+  repeated StreamRequest requests = 2;
+}
+
+message StreamRequest {
+  oneof request {
+    CloseStreamReq close = 1;
+    ExecuteStreamReq execute = 2;
+    BatchStreamReq batch = 3;
+    SequenceStreamReq sequence = 4;
+    DescribeStreamReq describe = 5;
+    StoreSqlReq store_sql = 6;
+    CloseSqlReq close_sql = 7;
+    GetAutocommitStreamReq get_autocommit = 8;
+  }
+}
+
+message PipelineResp {
+  optional string baton = 1;
+  optional string base_url = 2;
+  repeated StreamResult results = 3;
+}
+
+message StreamResult {
+  oneof result {
+    StreamResponse ok = 1;
+    Error error = 2;
+  }
+}
+
+message StreamResponse {
+  oneof response {
+    CloseStreamResp close = 1;
+    ExecuteResp execute = 2;
+    BatchResp batch = 3;
+    SequenceResp sequence = 4;
+    DescribeResp describe = 5;
+    StoreSqlResp store_sql = 6;
+    CloseSqlResp close_sql = 7;
+    GetAutocommitResp get_autocommit = 8;
+  }
 }
