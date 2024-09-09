@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Support the HTTP protocol for hrana databases.
+
 ## 0.2.1
 
 - Lower min SDK version to `3.4.0`.
