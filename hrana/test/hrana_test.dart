@@ -10,17 +10,17 @@ void main() {
 
   late Database database;
 
+  setUpAll(() async {
+    port = await selectFreePort();
+    server = await startSqld(port);
+  });
+
+  tearDownAll(() async {
+    await server.stop();
+  });
+
   for (final scheme in const ['http', 'ws']) {
     group(scheme, () {
-      setUpAll(() async {
-        port = await selectFreePort();
-        server = await startSqld(port);
-      });
-
-      tearDownAll(() async {
-        await server.stop();
-      });
-
       setUp(() async {
         database = await Database.connect(
           Uri.parse('$scheme://localhost:$port/'),
@@ -59,6 +59,7 @@ void main() {
               await database.storeSql('INSERT INTO users (name) VALUES (?);');
           final result = await stored.execute(arguments: ['Stored']);
           expect(result.affectedRows, 1);
+          expect(result.lastInsertRowId, 1);
         });
 
         test('can be selected', () async {

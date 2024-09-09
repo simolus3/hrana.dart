@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:hrana/src/exception.dart';
-import 'package:hrana/src/protocol.pb.dart' as proto;
-import 'package:hrana/src/rpc_client.dart';
 import 'package:http/http.dart' as http;
+
+import 'exception.dart';
+import 'protocol.pb.dart' as proto;
+import 'rpc_client.dart';
 
 final class HranaHttpClient implements HranaClient {
   HranaHttpClient._(
@@ -50,7 +51,7 @@ final class HranaHttpClient implements HranaClient {
   Future<void> _ensureProtocolSupport() async {
     final url = _uri.resolve('./v3-protobuf');
     final response = await _httpClient.get(url);
-    if (response.statusCode >= 300) {
+    if (response.statusCode case < 200 || >= 300) {
       throw ServerException(
         message: 'Server does not support Hrana V3 Protobuf protocol: '
             '"${response.body}"',
@@ -79,7 +80,7 @@ final class HranaHttpClient implements HranaClient {
       },
       body: pipelineReq.writeToBuffer(),
     );
-    if (piplineResp.statusCode >= 300) {
+    if (piplineResp.statusCode case < 200 || >= 300) {
       throw ServerException(
         message: 'Failed to run pipeline: "${piplineResp.body}"',
         code: piplineResp.statusCode.toString(),
@@ -227,9 +228,15 @@ final class HranaHttpClient implements HranaClient {
       return;
     }
     _isClosed = true;
-    _streams.clear();
-    _httpClient.close();
-    _closed.complete();
+    try {
+      await Future.wait(_streams.keys.map(closeStream));
+    } on ConnectionClosed {
+      // OK
+    } finally {
+      _streams.clear();
+      _httpClient.close();
+      _closed.complete();
+    }
   }
 }
 

@@ -1,9 +1,9 @@
-import 'package:hrana/src/rpc_http_client.dart';
 import 'package:sqlite3/common.dart';
 
 import 'exception.dart';
 import 'protocol.pb.dart' as proto;
 import 'rpc_client.dart';
+import 'rpc_http_client.dart';
 import 'rpc_ws_client.dart';
 
 /// A connection to a remote sqlite3 database following the hrana protocol.
