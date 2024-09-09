@@ -105,9 +105,22 @@ const StmtResult$json = {
       '10': 'lastInsertRowid',
       '17': true
     },
+    {
+      '1': 'replication_index',
+      '3': 5,
+      '4': 1,
+      '5': 4,
+      '9': 1,
+      '10': 'replicationIndex',
+      '17': true
+    },
+    {'1': 'rows_read', '3': 6, '4': 1, '5': 4, '10': 'rowsRead'},
+    {'1': 'rows_written', '3': 7, '4': 1, '5': 4, '10': 'rowsWritten'},
+    {'1': 'query_duration_ms', '3': 8, '4': 1, '5': 1, '10': 'queryDurationMs'},
   ],
   '8': [
     {'1': '_last_insert_rowid'},
+    {'1': '_replication_index'},
   ],
 };
 
@@ -115,8 +128,11 @@ const StmtResult$json = {
 final $typed_data.Uint8List stmtResultDescriptor = $convert.base64Decode(
     'CgpTdG10UmVzdWx0EhgKBGNvbHMYASADKAsyBC5Db2xSBGNvbHMSGAoEcm93cxgCIAMoCzIELl'
     'Jvd1IEcm93cxIsChJhZmZlY3RlZF9yb3dfY291bnQYAyABKARSEGFmZmVjdGVkUm93Q291bnQS'
-    'LwoRbGFzdF9pbnNlcnRfcm93aWQYBCABKBJIAFIPbGFzdEluc2VydFJvd2lkiAEBQhQKEl9sYX'
-    'N0X2luc2VydF9yb3dpZA==');
+    'LwoRbGFzdF9pbnNlcnRfcm93aWQYBCABKBJIAFIPbGFzdEluc2VydFJvd2lkiAEBEjAKEXJlcG'
+    'xpY2F0aW9uX2luZGV4GAUgASgESAFSEHJlcGxpY2F0aW9uSW5kZXiIAQESGwoJcm93c19yZWFk'
+    'GAYgASgEUghyb3dzUmVhZBIhCgxyb3dzX3dyaXR0ZW4YByABKARSC3Jvd3NXcml0dGVuEioKEX'
+    'F1ZXJ5X2R1cmF0aW9uX21zGAggASgBUg9xdWVyeUR1cmF0aW9uTXNCFAoSX2xhc3RfaW5zZXJ0'
+    'X3Jvd2lkQhQKEl9yZXBsaWNhdGlvbl9pbmRleA==');
 
 @$core.Deprecated('Use colDescriptor instead')
 const Col$json = {
@@ -1260,3 +1276,341 @@ const GetAutocommitResp$json = {
 final $typed_data.Uint8List getAutocommitRespDescriptor = $convert.base64Decode(
     'ChFHZXRBdXRvY29tbWl0UmVzcBIjCg1pc19hdXRvY29tbWl0GAEgASgIUgxpc0F1dG9jb21taX'
     'Q=');
+
+@$core.Deprecated('Use pipelineReqDescriptor instead')
+const PipelineReq$json = {
+  '1': 'PipelineReq',
+  '2': [
+    {'1': 'baton', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'baton', '17': true},
+    {
+      '1': 'requests',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.StreamRequest',
+      '10': 'requests'
+    },
+  ],
+  '8': [
+    {'1': '_baton'},
+  ],
+};
+
+/// Descriptor for `PipelineReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pipelineReqDescriptor = $convert.base64Decode(
+    'CgtQaXBlbGluZVJlcRIZCgViYXRvbhgBIAEoCUgAUgViYXRvbogBARIqCghyZXF1ZXN0cxgCIA'
+    'MoCzIOLlN0cmVhbVJlcXVlc3RSCHJlcXVlc3RzQggKBl9iYXRvbg==');
+
+@$core.Deprecated('Use streamRequestDescriptor instead')
+const StreamRequest$json = {
+  '1': 'StreamRequest',
+  '2': [
+    {
+      '1': 'close',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseStreamReq',
+      '9': 0,
+      '10': 'close'
+    },
+    {
+      '1': 'execute',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecuteStreamReq',
+      '9': 0,
+      '10': 'execute'
+    },
+    {
+      '1': 'batch',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchStreamReq',
+      '9': 0,
+      '10': 'batch'
+    },
+    {
+      '1': 'sequence',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.SequenceStreamReq',
+      '9': 0,
+      '10': 'sequence'
+    },
+    {
+      '1': 'describe',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.DescribeStreamReq',
+      '9': 0,
+      '10': 'describe'
+    },
+    {
+      '1': 'store_sql',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.StoreSqlReq',
+      '9': 0,
+      '10': 'storeSql'
+    },
+    {
+      '1': 'close_sql',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseSqlReq',
+      '9': 0,
+      '10': 'closeSql'
+    },
+    {
+      '1': 'get_autocommit',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.GetAutocommitReq',
+      '9': 0,
+      '10': 'getAutocommit'
+    },
+  ],
+  '8': [
+    {'1': 'request'},
+  ],
+};
+
+/// Descriptor for `StreamRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamRequestDescriptor = $convert.base64Decode(
+    'Cg1TdHJlYW1SZXF1ZXN0EicKBWNsb3NlGAEgASgLMg8uQ2xvc2VTdHJlYW1SZXFIAFIFY2xvc2'
+    'USLQoHZXhlY3V0ZRgCIAEoCzIRLkV4ZWN1dGVTdHJlYW1SZXFIAFIHZXhlY3V0ZRInCgViYXRj'
+    'aBgDIAEoCzIPLkJhdGNoU3RyZWFtUmVxSABSBWJhdGNoEjAKCHNlcXVlbmNlGAQgASgLMhIuU2'
+    'VxdWVuY2VTdHJlYW1SZXFIAFIIc2VxdWVuY2USMAoIZGVzY3JpYmUYBSABKAsyEi5EZXNjcmli'
+    'ZVN0cmVhbVJlcUgAUghkZXNjcmliZRIrCglzdG9yZV9zcWwYBiABKAsyDC5TdG9yZVNxbFJlcU'
+    'gAUghzdG9yZVNxbBIrCgljbG9zZV9zcWwYByABKAsyDC5DbG9zZVNxbFJlcUgAUghjbG9zZVNx'
+    'bBI6Cg5nZXRfYXV0b2NvbW1pdBgIIAEoCzIRLkdldEF1dG9jb21taXRSZXFIAFINZ2V0QXV0b2'
+    'NvbW1pdEIJCgdyZXF1ZXN0');
+
+@$core.Deprecated('Use executeStreamReqDescriptor instead')
+const ExecuteStreamReq$json = {
+  '1': 'ExecuteStreamReq',
+  '2': [
+    {'1': 'stmt', '3': 1, '4': 1, '5': 11, '6': '.Stmt', '10': 'stmt'},
+  ],
+};
+
+/// Descriptor for `ExecuteStreamReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List executeStreamReqDescriptor = $convert.base64Decode(
+    'ChBFeGVjdXRlU3RyZWFtUmVxEhkKBHN0bXQYASABKAsyBS5TdG10UgRzdG10');
+
+@$core.Deprecated('Use batchStreamReqDescriptor instead')
+const BatchStreamReq$json = {
+  '1': 'BatchStreamReq',
+  '2': [
+    {'1': 'batch', '3': 1, '4': 1, '5': 11, '6': '.Batch', '10': 'batch'},
+  ],
+};
+
+/// Descriptor for `BatchStreamReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List batchStreamReqDescriptor = $convert.base64Decode(
+    'Cg5CYXRjaFN0cmVhbVJlcRIcCgViYXRjaBgBIAEoCzIGLkJhdGNoUgViYXRjaA==');
+
+@$core.Deprecated('Use sequenceStreamReqDescriptor instead')
+const SequenceStreamReq$json = {
+  '1': 'SequenceStreamReq',
+  '2': [
+    {'1': 'sql', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'sql', '17': true},
+    {'1': 'sql_id', '3': 2, '4': 1, '5': 5, '9': 1, '10': 'sqlId', '17': true},
+  ],
+  '8': [
+    {'1': '_sql'},
+    {'1': '_sql_id'},
+  ],
+};
+
+/// Descriptor for `SequenceStreamReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceStreamReqDescriptor = $convert.base64Decode(
+    'ChFTZXF1ZW5jZVN0cmVhbVJlcRIVCgNzcWwYASABKAlIAFIDc3FsiAEBEhoKBnNxbF9pZBgCIA'
+    'EoBUgBUgVzcWxJZIgBAUIGCgRfc3FsQgkKB19zcWxfaWQ=');
+
+@$core.Deprecated('Use describeStreamReqDescriptor instead')
+const DescribeStreamReq$json = {
+  '1': 'DescribeStreamReq',
+  '2': [
+    {'1': 'sql', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'sql', '17': true},
+    {'1': 'sql_id', '3': 2, '4': 1, '5': 5, '9': 1, '10': 'sqlId', '17': true},
+  ],
+  '8': [
+    {'1': '_sql'},
+    {'1': '_sql_id'},
+  ],
+};
+
+/// Descriptor for `DescribeStreamReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List describeStreamReqDescriptor = $convert.base64Decode(
+    'ChFEZXNjcmliZVN0cmVhbVJlcRIVCgNzcWwYASABKAlIAFIDc3FsiAEBEhoKBnNxbF9pZBgCIA'
+    'EoBUgBUgVzcWxJZIgBAUIGCgRfc3FsQgkKB19zcWxfaWQ=');
+
+@$core.Deprecated('Use pipelineRespDescriptor instead')
+const PipelineResp$json = {
+  '1': 'PipelineResp',
+  '2': [
+    {'1': 'baton', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'baton', '17': true},
+    {
+      '1': 'base_url',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '9': 1,
+      '10': 'baseUrl',
+      '17': true
+    },
+    {
+      '1': 'results',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.StreamResult',
+      '10': 'results'
+    },
+  ],
+  '8': [
+    {'1': '_baton'},
+    {'1': '_base_url'},
+  ],
+};
+
+/// Descriptor for `PipelineResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pipelineRespDescriptor = $convert.base64Decode(
+    'CgxQaXBlbGluZVJlc3ASGQoFYmF0b24YASABKAlIAFIFYmF0b26IAQESHgoIYmFzZV91cmwYAi'
+    'ABKAlIAVIHYmFzZVVybIgBARInCgdyZXN1bHRzGAMgAygLMg0uU3RyZWFtUmVzdWx0UgdyZXN1'
+    'bHRzQggKBl9iYXRvbkILCglfYmFzZV91cmw=');
+
+@$core.Deprecated('Use streamResultDescriptor instead')
+const StreamResult$json = {
+  '1': 'StreamResult',
+  '2': [
+    {
+      '1': 'ok',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.StreamResponse',
+      '9': 0,
+      '10': 'ok'
+    },
+    {
+      '1': 'error',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.Error',
+      '9': 0,
+      '10': 'error'
+    },
+  ],
+  '8': [
+    {'1': 'result'},
+  ],
+};
+
+/// Descriptor for `StreamResult`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamResultDescriptor = $convert.base64Decode(
+    'CgxTdHJlYW1SZXN1bHQSIQoCb2sYASABKAsyDy5TdHJlYW1SZXNwb25zZUgAUgJvaxIeCgVlcn'
+    'JvchgCIAEoCzIGLkVycm9ySABSBWVycm9yQggKBnJlc3VsdA==');
+
+@$core.Deprecated('Use streamResponseDescriptor instead')
+const StreamResponse$json = {
+  '1': 'StreamResponse',
+  '2': [
+    {
+      '1': 'close',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseStreamResp',
+      '9': 0,
+      '10': 'close'
+    },
+    {
+      '1': 'execute',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.ExecuteResp',
+      '9': 0,
+      '10': 'execute'
+    },
+    {
+      '1': 'batch',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.BatchResp',
+      '9': 0,
+      '10': 'batch'
+    },
+    {
+      '1': 'sequence',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.SequenceResp',
+      '9': 0,
+      '10': 'sequence'
+    },
+    {
+      '1': 'describe',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.DescribeResp',
+      '9': 0,
+      '10': 'describe'
+    },
+    {
+      '1': 'store_sql',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.StoreSqlResp',
+      '9': 0,
+      '10': 'storeSql'
+    },
+    {
+      '1': 'close_sql',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.CloseSqlResp',
+      '9': 0,
+      '10': 'closeSql'
+    },
+    {
+      '1': 'get_autocommit',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.GetAutocommitResp',
+      '9': 0,
+      '10': 'getAutocommit'
+    },
+  ],
+  '8': [
+    {'1': 'response'},
+  ],
+};
+
+/// Descriptor for `StreamResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamResponseDescriptor = $convert.base64Decode(
+    'Cg5TdHJlYW1SZXNwb25zZRIoCgVjbG9zZRgBIAEoCzIQLkNsb3NlU3RyZWFtUmVzcEgAUgVjbG'
+    '9zZRIoCgdleGVjdXRlGAIgASgLMgwuRXhlY3V0ZVJlc3BIAFIHZXhlY3V0ZRIiCgViYXRjaBgD'
+    'IAEoCzIKLkJhdGNoUmVzcEgAUgViYXRjaBIrCghzZXF1ZW5jZRgEIAEoCzINLlNlcXVlbmNlUm'
+    'VzcEgAUghzZXF1ZW5jZRIrCghkZXNjcmliZRgFIAEoCzINLkRlc2NyaWJlUmVzcEgAUghkZXNj'
+    'cmliZRIsCglzdG9yZV9zcWwYBiABKAsyDS5TdG9yZVNxbFJlc3BIAFIIc3RvcmVTcWwSLAoJY2'
+    'xvc2Vfc3FsGAcgASgLMg0uQ2xvc2VTcWxSZXNwSABSCGNsb3NlU3FsEjsKDmdldF9hdXRvY29t'
+    'bWl0GAggASgLMhIuR2V0QXV0b2NvbW1pdFJlc3BIAFINZ2V0QXV0b2NvbW1pdEIKCghyZXNwb2'
+    '5zZQ==');

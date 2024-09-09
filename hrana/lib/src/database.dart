@@ -1,8 +1,10 @@
 import 'package:sqlite3/common.dart';
 
 import 'exception.dart';
-import 'rpc_client.dart';
 import 'protocol.pb.dart' as proto;
+import 'rpc_client.dart';
+import 'rpc_http_client.dart';
+import 'rpc_ws_client.dart';
 
 /// A connection to a remote sqlite3 database following the hrana protocol.
 ///
@@ -19,12 +21,31 @@ final class Database {
 
   Database._(this._client, this._stream);
 
-  /// Connects to a hrana server under the given websocket [uri].
+  /// Connects to a hrana server under the given [uri].
   ///
-  /// The `scheme` of [uri] should be either `ws` or `wss`.
+  /// The `scheme` of [uri] should be one of: `libsql`, `http`, `https`, `ws`
+  /// or `wss`.
+  ///
   /// Optionally, a [jwtToken] can be passed for authentication purposes.
   static Future<Database> connect(Uri uri, {String? jwtToken}) async {
-    final client = await HranaClient.connect(uri, jwtToken: jwtToken);
+    if (uri.scheme == 'libsql') {
+      uri = uri.replace(scheme: 'https');
+    }
+    final client = switch (uri.scheme) {
+      'ws' || 'wss' => await HranaWebsocketClient.connect(
+          uri,
+          jwtToken: jwtToken,
+        ),
+      'http' || 'https' => await HranaHttpClient.connect(
+          uri,
+          jwtToken: jwtToken,
+        ),
+      _ => throw ArgumentError.value(
+          uri,
+          'uri',
+          'Scheme must be one of: "libsql", "http", "https", "ws" or "wss"',
+        ),
+    };
     final stream = await client.openStream();
 
     return Database._(client, stream);
@@ -93,8 +114,8 @@ final class Database {
   /// [StoredSql.execute].
   /// After using it, it must be closed with [StoredSql.close].
   Future<StoredSql> storeSql(String sql) async {
-    final id = await _client.storeSql(sql);
-    return StoredSql._(id, this);
+    final id = await _client.storeSql(_stream, sql);
+    return StoredSql._(_stream, id, this);
   }
 
   /// Collects statements to run in a batch (via [BatchBuilder]) and then runs
@@ -146,11 +167,12 @@ final class Database {
 /// After the [StoredSql] instance is no longer used, it must be [close]d to
 /// free up resources on the server.
 final class StoredSql {
+  final SqlStreamId _streamId;
   final SqlTextId _id;
   final Database _database;
   bool _closed = false;
 
-  StoredSql._(this._id, this._database);
+  StoredSql._(this._streamId, this._id, this._database);
 
   void _checkNotClosed() {
     if (_closed) {
@@ -194,7 +216,7 @@ final class StoredSql {
   Future<void> close() async {
     if (!_closed) {
       _closed = true;
-      await _database._client.closeSql(_id);
+      await _database._client.closeSql(_streamId, _id);
     }
   }
 }
@@ -292,7 +314,7 @@ final class BatchResult {
 
   StatementResult? _rawResult(BatchRequest request) {
     if (_result.stepErrors[request._id] case proto.Error e) {
-      throw HranaClient.createError(e);
+      throw ServerException.fromProto(e);
     }
     if (_result.stepResults[request._id] case proto.StmtResult r) {
       return StatementResult.fromProto(r);

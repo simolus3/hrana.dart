@@ -1,3 +1,5 @@
+import 'protocol.pb.dart' as proto;
+
 /// Superclass for all exceptions thrown by `package:hrana`.
 ///
 /// Note that, for invalid usage, subclasses of [Error] may be thrown as well.
@@ -21,6 +23,10 @@ final class ServerException implements HranaException {
   final String? code;
 
   ServerException({required this.message, required this.code});
+
+  factory ServerException.fromProto(proto.Error error) {
+    return ServerException(message: error.message, code: error.code);
+  }
 
   @override
   String toString() {

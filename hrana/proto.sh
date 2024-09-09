@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
-protoc --dart_out=. lib/src/protocol.protoc
+protoc --dart_out=. lib/src/protocol.proto
 dart format lib/
