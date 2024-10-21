@@ -200,32 +200,51 @@ typedef $$NotesTableUpdateCompanionBuilder = NotesCompanion Function({
   Value<String> content,
 });
 
-class $$NotesTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $NotesTable> {
-  $$NotesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+class $$NotesTableFilterComposer extends Composer<_$AppDatabase, $NotesTable> {
+  $$NotesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
 }
 
 class $$NotesTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $NotesTable> {
-  $$NotesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $NotesTable> {
+  $$NotesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+}
+
+class $$NotesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NotesTable> {
+  $$NotesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
 }
 
 class $$NotesTableTableManager extends RootTableManager<
@@ -234,6 +253,7 @@ class $$NotesTableTableManager extends RootTableManager<
     Note,
     $$NotesTableFilterComposer,
     $$NotesTableOrderingComposer,
+    $$NotesTableAnnotationComposer,
     $$NotesTableCreateCompanionBuilder,
     $$NotesTableUpdateCompanionBuilder,
     (Note, BaseReferences<_$AppDatabase, $NotesTable, Note>),
@@ -243,10 +263,12 @@ class $$NotesTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$NotesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$NotesTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$NotesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NotesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NotesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> content = const Value.absent(),
@@ -276,6 +298,7 @@ typedef $$NotesTableProcessedTableManager = ProcessedTableManager<
     Note,
     $$NotesTableFilterComposer,
     $$NotesTableOrderingComposer,
+    $$NotesTableAnnotationComposer,
     $$NotesTableCreateCompanionBuilder,
     $$NotesTableUpdateCompanionBuilder,
     (Note, BaseReferences<_$AppDatabase, $NotesTable, Note>),
