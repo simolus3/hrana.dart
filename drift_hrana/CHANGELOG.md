@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Support the latest version of `package:hrana`.
+
 ## 1.0.2
 
 - Support the latest version of `package:hrana`.

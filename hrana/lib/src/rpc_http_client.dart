@@ -2,10 +2,19 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
+import 'package:pool/pool.dart';
 
 import 'exception.dart';
 import 'protocol.pb.dart' as proto;
 import 'rpc_client.dart';
+
+void _log(String message) {
+  log(
+    message,
+    name: 'Hrana',
+    level: 300, // Level.FINEST
+  );
+}
 
 final class HranaHttpClient implements HranaClient {
   HranaHttpClient._(
@@ -19,19 +28,12 @@ final class HranaHttpClient implements HranaClient {
 
   final Uri _uri;
   final http.Client _httpClient;
+
   final Completer<void> _closed = Completer();
+  var _isClosed = false;
 
-  var _nextStreamId = 0;
   var _nextSqlTextId = 0;
-  final Map<SqlStreamId, _SqlStreamInfo> _streams = {};
-
-  static void _log(String message) {
-    log(
-      message,
-      name: 'Hrana',
-      level: 300, // Level.FINEST
-    );
-  }
+  final List<_HranaHttpStream> _streams = [];
 
   static Future<HranaHttpClient> connect(
     Uri uri, {
@@ -60,19 +62,87 @@ final class HranaHttpClient implements HranaClient {
     }
   }
 
-  Future<proto.StreamResponse> _runPipeline({
-    SqlStreamId? streamId,
-    required proto.StreamRequest? request,
-  }) async {
-    final streamInfo = _streams[streamId];
-    final baseUri = streamInfo?.baseUri ?? _uri;
+  @override
+  Future<HranaStream> openStream() async {
+    if (_isClosed) {
+      throw const ConnectionClosed();
+    }
+    final stream = _HranaHttpStream(this);
+    _streams.add(stream);
+
+    await stream.checkOpen();
+    return stream;
+  }
+
+  @override
+  bool get isClosed => _isClosed;
+
+  @override
+  Future<void> get closed => _closed.future;
+
+  @override
+  Future<void> close() async {
+    if (_isClosed) {
+      return;
+    }
+    _isClosed = true;
+    try {
+      await Future.wait(_streams.toList().map((s) => s.closeStream()));
+    } finally {
+      _streams.clear();
+      _httpClient.close();
+      _closed.complete();
+    }
+  }
+}
+
+final class _HranaHttpStream implements HranaStream {
+  final HranaHttpClient _client;
+
+  // Requests in a hrana stream must be sequential, which this lock ensures.
+  final Pool _lock = Pool(1);
+  Uri? _baseUri;
+
+  /// Null if this stream has just been created and has not been used in a
+  /// request yet.
+  String? _baton;
+
+  final Completer<void> _closed = Completer();
+  bool _isClosed = false;
+
+  _HranaHttpStream(this._client);
+
+  void _markClosed() {
+    if (!_isClosed) {
+      _isClosed = true;
+      _closed.complete();
+      _client._streams.remove(this);
+    }
+  }
+
+  Future<proto.StreamResponse> _sendStreamRequest(
+    proto.StreamRequest? request,
+  ) async {
+    return await _lock.withResource(() async {
+      if (_isClosed) {
+        throw const ConnectionClosed();
+      }
+
+      return await _sendStreamRequestWithLock(request);
+    });
+  }
+
+  Future<proto.StreamResponse> _sendStreamRequestWithLock(
+    proto.StreamRequest? request,
+  ) async {
+    final baseUri = _baseUri ?? _client._uri;
     final url = baseUri.resolve('./v3-protobuf/pipeline');
     final pipelineReq = proto.PipelineReq(
-      baton: streamInfo?.baton,
+      baton: _baton,
       requests: request == null ? const [] : [request],
     );
     _log('Sending request:\n$request');
-    final piplineResp = await _httpClient.post(
+    final piplineResp = await _client._httpClient.post(
       url,
       headers: {
         'Content-Type': 'application/protobuf',
@@ -90,18 +160,16 @@ final class HranaHttpClient implements HranaClient {
     final expectsBaton = request == null || !request.hasClose();
     if (!response.hasBaton() && expectsBaton) {
       // The server has closed the stream.
-      _streams.remove(streamId);
+      _markClosed();
       throw const ConnectionClosed();
     }
-    if (streamId != null) {
-      _streams[streamId] = (
-        baton: response.baton,
-        baseUri: switch (response.baseUrl) {
-          '' => null,
-          final url => Uri.parse(url),
-        },
-      );
-    }
+
+    _baton = response.baton;
+    _baseUri = switch (response.baseUrl) {
+      '' => null,
+      final url => Uri.parse(url),
+    };
+
     if (response.results.isEmpty && request == null) {
       _log('Opened stream');
       return proto.StreamResponse();
@@ -122,128 +190,74 @@ final class HranaHttpClient implements HranaClient {
   }
 
   @override
-  Future<SqlStreamId> openStream() async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
+  Future<bool> checkOpen() async {
+    // We can send an empty request to "ping" this stream
+    try {
+      await _sendStreamRequest(null);
+      return true;
+    } on ServerException {
+      _markClosed();
+      return false;
+    } on ConnectionClosed {
+      return false;
     }
-    final streamId = SqlStreamId(_nextStreamId++);
-    await _runPipeline(
-      streamId: streamId,
-      request: null,
-    );
-    return streamId;
   }
 
   @override
-  Future<void> closeStream(SqlStreamId id) async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
-    }
+  Future<void> closeSql(SqlTextId id) async {
+    final response = await _sendStreamRequest(proto.StreamRequest(
+      closeSql: proto.CloseSqlReq(sqlId: id.id),
+    ));
+    assert(response.whichResponse() == proto.StreamResponse_Response.closeSql);
+  }
+
+  @override
+  Future<void> closeStream() async {
     try {
-      final response = await _runPipeline(
-        streamId: id,
-        request: proto.StreamRequest(close: proto.CloseStreamReq()),
+      final response = await _sendStreamRequest(
+        proto.StreamRequest(close: proto.CloseStreamReq()),
       );
       assert(response.whichResponse() == proto.StreamResponse_Response.close);
+    } on ConnectionClosed {
+      // Fine, these streams time out implicitly too.
+    } on ServerException {
+      // Fine, these streams time out implicitly too.
     } finally {
-      _streams.remove(id);
+      _markClosed();
     }
   }
 
   @override
-  Future<StatementResult> executeStatement(
-    SqlStreamId stream,
-    StatementDescription stmt,
-  ) async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
-    }
-    final response = await _runPipeline(
-      streamId: stream,
-      request: proto.StreamRequest(
-        execute: proto.ExecuteStreamReq(stmt: stmt.toStatement()),
-      ),
-    );
+  Future<void> get closed => _closed.future;
+
+  @override
+  Future<StatementResult> executeStatement(StatementDescription stmt) async {
+    final response = await _sendStreamRequest(proto.StreamRequest(
+      execute: proto.ExecuteStreamReq(stmt: stmt.toStatement()),
+    ));
     assert(response.whichResponse() == proto.StreamResponse_Response.execute);
     return StatementResult.fromProto(response.execute.result);
   }
 
   @override
-  Future<proto.BatchResult> runBatch(
-    SqlStreamId stream,
-    proto.Batch batch,
-  ) async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
-    }
-    final response = await _runPipeline(
-      streamId: stream,
-      request: proto.StreamRequest(batch: proto.BatchStreamReq(batch: batch)),
+  Future<proto.BatchResult> runBatch(proto.Batch batch) async {
+    final response = await _sendStreamRequest(
+      proto.StreamRequest(batch: proto.BatchStreamReq(batch: batch)),
     );
     assert(response.whichResponse() == proto.StreamResponse_Response.batch);
     return response.batch.result;
   }
 
   @override
-  Future<SqlTextId> storeSql(SqlStreamId stream, String sql) async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
-    }
-    final textId = SqlTextId(_nextSqlTextId++);
-    final response = await _runPipeline(
-      streamId: stream,
-      request: proto.StreamRequest(
-        storeSql: proto.StoreSqlReq(sql: sql, sqlId: textId.id),
-      ),
-    );
+  Future<SqlTextId> storeSql(String sql) async {
+    final textId = SqlTextId(_client._nextSqlTextId++);
+    final response = await _sendStreamRequest(proto.StreamRequest(
+      storeSql: proto.StoreSqlReq(sql: sql, sqlId: textId.id),
+    ));
     assert(response.whichResponse() == proto.StreamResponse_Response.storeSql);
     return textId;
   }
-
-  @override
-  Future<void> closeSql(SqlStreamId stream, SqlTextId id) async {
-    if (_isClosed) {
-      throw const ConnectionClosed();
-    }
-    final response = await _runPipeline(
-      streamId: stream,
-      request: proto.StreamRequest(
-        closeSql: proto.CloseSqlReq(sqlId: id.id),
-      ),
-    );
-    assert(response.whichResponse() == proto.StreamResponse_Response.closeSql);
-  }
-
-  var _isClosed = false;
-
-  @override
-  bool get isClosed => _isClosed;
-
-  @override
-  Future<void> get closed => _closed.future;
-
-  @override
-  Future<void> close() async {
-    if (_isClosed) {
-      return;
-    }
-    _isClosed = true;
-    try {
-      await Future.wait(_streams.keys.map(closeStream));
-    } on ConnectionClosed {
-      // OK
-    } finally {
-      _streams.clear();
-      _httpClient.close();
-      _closed.complete();
-    }
-  }
 }
-
-typedef _SqlStreamInfo = ({
-  String baton,
-  Uri? baseUri,
-});
 
 final class _AuthorizingHttpClient extends http.BaseClient {
   _AuthorizingHttpClient({
