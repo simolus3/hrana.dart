@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:sqlite3/common.dart';
 
 import 'exception.dart';
@@ -14,12 +16,16 @@ import 'rpc_ws_client.dart';
 ///  final database = await Database.connect(Uri.parse('ws://localhost:8080/'));
 /// ```
 ///
-/// remote requests can be sent to the database with [select] and [execute].
+/// You can create short-lived sessions attached to the database with
+/// [openSession]. On a [DatabaseSession], you can [DatabaseSession.select] or
+/// [DatabaseSession.execute] to run statements. Note that, depending on the
+/// connection type used, database sessions might time out after a few seconds.
+/// Thus, a [DatabaseSession] should be used immediately after it has been
+/// obtained.
 final class Database {
   final HranaClient _client;
-  final SqlStreamId _stream;
 
-  Database._(this._client, this._stream);
+  Database._(this._client);
 
   /// Connects to a hrana server under the given [uri].
   ///
@@ -46,10 +52,53 @@ final class Database {
           'Scheme must be one of: "libsql", "http", "https", "ws" or "wss"',
         ),
     };
-    final stream = await client.openStream();
 
-    return Database._(client, stream);
+    return Database._(client);
   }
+
+  /// Opens a database session on the server.
+  ///
+  /// Sessions are used to access the database and prepare or execute
+  /// statements. On the stateless HTTP connection, sessions are fairly short-
+  /// lived and should not be used for long.
+  /// On the websocket connection, sessions can be long-lived. In both cases,
+  /// sessions should be closed with [DatabaseSession.close] when done.
+  Future<DatabaseSession> openSession() async {
+    final stream = await _client.openStream();
+    return DatabaseSession(stream);
+  }
+
+  /// Opens a short-lived session for [inner] and closes it after the inner
+  /// future returns.
+  Future<T> withSession<T>(
+      FutureOr<T> Function(DatabaseSession session) inner) async {
+    final session = await openSession();
+
+    try {
+      return await inner(session);
+    } finally {
+      await session.close();
+    }
+  }
+
+  /// Returns a future that completes with a value when this database has
+  /// closed.
+  ///
+  /// The database may close due to [close] being called, but it may also close
+  /// due to a fatal server error or the websocket loosing connectivity.
+  Future<void> get closed => _client.closed;
+
+  /// Closes the database connection and the underlying socket to a libsql
+  /// server.
+  Future<void> close() async {
+    await _client.close();
+  }
+}
+
+final class DatabaseSession {
+  final HranaStream _stream;
+
+  DatabaseSession(this._stream);
 
   StatementDescription _describe(dynamic sql, List<Object?> arguments,
       Map<String, Object?> namedArguments, bool wantRows) {
@@ -75,8 +124,17 @@ final class Database {
 
   Future<StatementResult> _runSql(dynamic sql, List<Object?> arguments,
       Map<String, Object?> namedArguments, bool wantRows) async {
-    return await _client.executeStatement(
-        _stream, _describe(sql, arguments, namedArguments, wantRows));
+    return await _stream
+        .executeStatement(_describe(sql, arguments, namedArguments, wantRows));
+  }
+
+  /// Sends an empty request with this session to ensure that it is still open.
+  ///
+  /// If [closed] is true after calling [ping], the session is no longer open.
+  /// Otherwise, the timeout on the server is reset and the session is likely
+  /// open for a few more seconds.
+  Future<void> ping() async {
+    await _stream.checkOpen();
   }
 
   /// Runs [sql] with [arguments] and [namedArguments], returning results as
@@ -114,8 +172,8 @@ final class Database {
   /// [StoredSql.execute].
   /// After using it, it must be closed with [StoredSql.close].
   Future<StoredSql> storeSql(String sql) async {
-    final id = await _client.storeSql(_stream, sql);
-    return StoredSql._(_stream, id, this);
+    final id = await _stream.storeSql(sql);
+    return StoredSql._(id, this);
   }
 
   /// Collects statements to run in a batch (via [BatchBuilder]) and then runs
@@ -137,7 +195,7 @@ final class Database {
     final builder = BatchBuilder._(this);
     buildBatch(builder);
 
-    final response = await _client.runBatch(_stream, builder._batch);
+    final response = await _stream.runBatch(builder._batch);
     return BatchResult._(response);
   }
 
@@ -146,16 +204,11 @@ final class Database {
   ///
   /// The database may close due to [close] being called, but it may also close
   /// due to a fatal server error or the websocket loosing connectivity.
-  Future<void> get closed => _client.closed;
+  Future<void> get closed => _stream.closed;
 
-  /// Closes the database connection and the underlying socket to a libsql
-  /// server.
+  /// Closes this stream on the server without closing the entire connection.
   Future<void> close() async {
-    if (!_client.isClosed) {
-      await _client.closeStream(_stream);
-    }
-
-    await _client.close();
+    await _stream.closeStream();
   }
 }
 
@@ -167,12 +220,11 @@ final class Database {
 /// After the [StoredSql] instance is no longer used, it must be [close]d to
 /// free up resources on the server.
 final class StoredSql {
-  final SqlStreamId _streamId;
   final SqlTextId _id;
-  final Database _database;
+  final DatabaseSession _session;
   bool _closed = false;
 
-  StoredSql._(this._streamId, this._id, this._database);
+  StoredSql._(this._id, this._session);
 
   void _checkNotClosed() {
     if (_closed) {
@@ -192,7 +244,7 @@ final class StoredSql {
     _checkNotClosed();
 
     final response =
-        await _database._runSql(this, arguments, namedArguments, true);
+        await _session._runSql(this, arguments, namedArguments, true);
     return response.interpreteAsResultSet();
   }
 
@@ -208,7 +260,7 @@ final class StoredSql {
     _checkNotClosed();
 
     final response =
-        await _database._runSql(this, arguments, namedArguments, true);
+        await _session._runSql(this, arguments, namedArguments, true);
     return response.interpretAsExecuteResult();
   }
 
@@ -216,7 +268,7 @@ final class StoredSql {
   Future<void> close() async {
     if (!_closed) {
       _closed = true;
-      await _database._client.closeSql(_streamId, _id);
+      await _session._stream.closeSql(_id);
     }
   }
 }
@@ -230,9 +282,9 @@ extension type BatchRequest._(int _id) {}
 /// Collects statements to run in a [Database.batch].
 final class BatchBuilder {
   final proto.Batch _batch = proto.Batch();
-  final Database _database;
+  final DatabaseSession _session;
 
-  BatchBuilder._(this._database);
+  BatchBuilder._(this._session);
 
   (BatchRequest, proto.BatchCond?) _newRequest() {
     final request = BatchRequest._(_batch.steps.length);
@@ -250,7 +302,7 @@ final class BatchBuilder {
   }) {
     final (request, cond) = _newRequest();
     _batch.steps.add(proto.BatchStep(
-      stmt: _database
+      stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
       condition: cond,
@@ -266,7 +318,7 @@ final class BatchBuilder {
   }) {
     final (request, cond) = _newRequest();
     _batch.steps.add(proto.BatchStep(
-      stmt: _database
+      stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
       condition: cond,
@@ -282,7 +334,7 @@ final class BatchBuilder {
   }) {
     final (request, cond) = _newRequest();
     _batch.steps.add(proto.BatchStep(
-      stmt: _database
+      stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
       condition: cond,
@@ -298,7 +350,7 @@ final class BatchBuilder {
   }) {
     final (request, cond) = _newRequest();
     _batch.steps.add(proto.BatchStep(
-      stmt: _database
+      stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
       condition: cond,

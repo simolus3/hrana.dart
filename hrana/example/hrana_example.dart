@@ -9,5 +9,8 @@ void main() async {
   );
   print('connected!');
 
-  print(await database.select('SELECT 1;'));
+  print(await database
+      .withSession((session) async => await session.select('SELECT 1;')));
+
+  await database.close();
 }

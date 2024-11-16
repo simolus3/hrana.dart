@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:docker_process/docker_process.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_hrana/drift_hrana.dart';
@@ -48,6 +50,22 @@ void main() {
       await database.notes.delete().go();
     });
 
+    expect(await database.notes.all().get(), isEmpty);
+  });
+
+  test('concurrent transactions and top-level statemens', () async {
+    await database.notes
+        .insertOne(NotesCompanion.insert(content: 'about to be deleted'));
+    final completeTransaction = Completer<void>();
+
+    final transactionDone = database.transaction(() async {
+      await database.notes.delete().go();
+      await completeTransaction.future;
+    });
+
+    expect(await database.notes.all().get(), isNotEmpty);
+    completeTransaction.complete();
+    await transactionDone;
     expect(await database.notes.all().get(), isEmpty);
   });
 }

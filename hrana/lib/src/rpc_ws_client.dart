@@ -19,6 +19,8 @@ final class HranaWebsocketClient implements HranaClient {
   int _nextStreamId = 0;
   int _nextSqlTextId = 0;
 
+  final List<HranaWebsocketStream> _streams = [];
+
   HranaWebsocketClient._(this._channel) {
     _channel.stream.listen((data) {
       if (data is Uint8List) {
@@ -40,6 +42,10 @@ final class HranaWebsocketClient implements HranaClient {
     for (final pending in _pendingRequests.values) {
       pending.completeError(const ConnectionClosed());
     }
+    for (final stream in _streams.toList()) {
+      stream.markClosed();
+    }
+    _streams.clear();
     _streamClosed.complete();
   }
 
@@ -56,51 +62,35 @@ final class HranaWebsocketClient implements HranaClient {
   }
 
   @override
-  Future<SqlStreamId> openStream() async {
+  Future<HranaStream> openStream() async {
+    final id = await openStreamId();
+    final stream = HranaWebsocketStream(this, id);
+    _streams.add(stream);
+
+    return stream;
+  }
+
+  Future<SqlStreamId> openStreamId() async {
     final streamId = _nextStreamId++;
-    await _request(
+    await request(
         proto.RequestMsg(openStream: proto.OpenStreamReq(streamId: streamId)));
-    return SqlStreamId(streamId);
+    return SqlStreamId._(streamId);
   }
 
-  @override
   Future<void> closeStream(SqlStreamId id) async {
-    await _request(
-        proto.RequestMsg(closeStream: proto.CloseStreamReq(streamId: id.id)));
+    await request(
+        proto.RequestMsg(closeStream: proto.CloseStreamReq(streamId: id)));
   }
 
-  @override
-  Future<StatementResult> executeStatement(
-      SqlStreamId stream, StatementDescription stmt) async {
-    final response = await _request(proto.RequestMsg(
-      execute: proto.ExecuteReq(
-        streamId: stream.id,
-        stmt: stmt.toStatement(),
-      ),
-    ));
-
-    return StatementResult.fromProto(response.execute.result);
-  }
-
-  @override
-  Future<SqlTextId> storeSql(SqlStreamId stream, String sql) async {
+  Future<SqlTextId> storeSql(String sql) async {
     final textId = _nextSqlTextId++;
-    await _request(
+    await request(
         proto.RequestMsg(storeSql: proto.StoreSqlReq(sqlId: textId, sql: sql)));
     return SqlTextId(textId);
   }
 
-  @override
-  Future<void> closeSql(SqlStreamId stream, SqlTextId id) async {
-    await _request(proto.RequestMsg(closeSql: proto.CloseSqlReq(sqlId: id.id)));
-  }
-
-  @override
-  Future<proto.BatchResult> runBatch(
-      SqlStreamId stream, proto.Batch batch) async {
-    final response = await _request(proto.RequestMsg(
-        batch: proto.BatchReq(batch: batch, streamId: stream.id)));
-    return response.batch.result;
+  Future<void> closeSql(SqlTextId id) async {
+    await request(proto.RequestMsg(closeSql: proto.CloseSqlReq(sqlId: id.id)));
   }
 
   Future<void> _hello(String? jwt) async {
@@ -110,7 +100,7 @@ final class HranaWebsocketClient implements HranaClient {
     _helloCompleter = null;
   }
 
-  Future<proto.ResponseOkMsg> _request(proto.RequestMsg request) async {
+  Future<proto.ResponseOkMsg> request(proto.RequestMsg request) async {
     final id = _nextRequestId++;
     final completer = Completer<proto.ResponseOkMsg>();
     _pendingRequests[id] = completer;
@@ -160,3 +150,82 @@ final class HranaWebsocketClient implements HranaClient {
     return client;
   }
 }
+
+final class HranaWebsocketStream implements HranaStream {
+  final HranaWebsocketClient _client;
+  final SqlStreamId _id;
+
+  bool _isClosed = false;
+  final Completer<void> _closed = Completer();
+
+  HranaWebsocketStream(this._client, this._id);
+
+  void _ensureOpen() {
+    if (_isClosed) {
+      throw ConnectionClosed();
+    }
+  }
+
+  @override
+  Future<bool> checkOpen() async {
+    // Web socket streams don't expire without the connection going down.
+    return true;
+  }
+
+  @override
+  Future<void> closeSql(SqlTextId id) async {
+    _ensureOpen();
+    await _client.closeSql(id);
+  }
+
+  @override
+  Future<void> closeStream() async {
+    try {
+      if (!_isClosed) {
+        await _client.closeStream(_id);
+      }
+    } finally {
+      markClosed();
+    }
+  }
+
+  @override
+  Future<void> get closed => _closed.future;
+
+  @override
+  Future<StatementResult> executeStatement(StatementDescription stmt) async {
+    _ensureOpen();
+    final response = await _client.request(proto.RequestMsg(
+      execute: proto.ExecuteReq(
+        streamId: _id,
+        stmt: stmt.toStatement(),
+      ),
+    ));
+
+    return StatementResult.fromProto(response.execute.result);
+  }
+
+  @override
+  Future<proto.BatchResult> runBatch(proto.Batch batch) async {
+    _ensureOpen();
+    final response = await _client.request(
+        proto.RequestMsg(batch: proto.BatchReq(batch: batch, streamId: _id)));
+    return response.batch.result;
+  }
+
+  @override
+  Future<SqlTextId> storeSql(String sql) async {
+    _ensureOpen();
+    return await _client.storeSql(sql);
+  }
+
+  void markClosed() {
+    if (!_isClosed) {
+      _isClosed = true;
+      _client._streams.remove(this);
+      _closed.complete();
+    }
+  }
+}
+
+extension type SqlStreamId._(int stream) implements int {}

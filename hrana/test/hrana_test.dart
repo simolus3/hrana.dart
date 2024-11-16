@@ -9,6 +9,7 @@ void main() {
   late DockerProcess server;
 
   late Database database;
+  late DatabaseSession session;
 
   setUpAll(() async {
     port = await selectFreePort();
@@ -26,18 +27,22 @@ void main() {
           Uri.parse('$scheme://localhost:$port/'),
         );
 
-        await database.execute(
+        session = await database.openSession();
+        await session.execute(
             'CREATE TABLE users (name TEXT, CHECK (LENGTH(name) < 10));');
       });
 
       tearDown(() async {
-        await database.execute('DROP TABLE users;');
+        await database.withSession((session) async {
+          await session.execute('DROP TABLE users;');
+        });
 
+        await session.close();
         await database.close();
       });
 
       test('can select statements', () async {
-        final result = await database.select('SELECT 1 AS r;');
+        final result = await session.select('SELECT 1 AS r;');
         expect(result.columnNames, ['r']);
         expect(result.rows, [
           [1]
@@ -45,7 +50,7 @@ void main() {
       });
 
       test('can execute statements', () async {
-        final result = await database.execute(
+        final result = await session.execute(
           'INSERT INTO users (name) VALUES (?);',
           arguments: ['name'],
         );
@@ -53,17 +58,24 @@ void main() {
         expect(result.lastInsertRowId, 1);
       });
 
+      test("can't use session after closing it", () async {
+        await session.close();
+
+        await expectLater(
+            () => session.select('SELECT 1'), throwsA(isA<ConnectionClosed>()));
+      });
+
       group('stored statements', () {
         test('can be executed', () async {
           final stored =
-              await database.storeSql('INSERT INTO users (name) VALUES (?);');
+              await session.storeSql('INSERT INTO users (name) VALUES (?);');
           final result = await stored.execute(arguments: ['Stored']);
           expect(result.affectedRows, 1);
           expect(result.lastInsertRowId, 1);
         });
 
         test('can be selected', () async {
-          final stored = await database.storeSql('SELECT 1');
+          final stored = await session.storeSql('SELECT 1');
           final result = await stored.select();
           expect(result.rows, [
             [1]
@@ -71,7 +83,7 @@ void main() {
         });
 
         test("don't work after being closed", () async {
-          final stored = await database.storeSql('SELECT 1');
+          final stored = await session.storeSql('SELECT 1');
           await stored.close();
           expect(() => stored.execute(), throwsStateError);
         });
@@ -79,11 +91,11 @@ void main() {
 
       group('batch', () {
         test('can run statements', () async {
-          final storedSelect = await database.storeSql('SELECT * FROM users;');
+          final storedSelect = await session.storeSql('SELECT * FROM users;');
           final storedExecute =
-              await database.storeSql('INSERT INTO users (name) VALUES (?);');
+              await session.storeSql('INSERT INTO users (name) VALUES (?);');
 
-          final results = await database.batch((builder) {
+          final results = await session.batch((builder) {
             builder
               ..executeStored(storedExecute, arguments: ['first'])
               ..select('SELECT * FROM users;')
@@ -105,7 +117,7 @@ void main() {
         });
 
         test('does not run statements after failure', () async {
-          final results = await database.batch((builder) {
+          final results = await session.batch((builder) {
             builder
               ..execute('INSERT INTO users (name) VALUES (?);', arguments: [
                 'very long name that will be rejected by the check constraint'

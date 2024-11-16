@@ -1,21 +1,30 @@
+@internal
+library;
+
 import 'package:fixnum/fixnum.dart';
+import 'package:meta/meta.dart';
 
 import 'protocol.pb.dart' as proto;
 
 abstract interface class HranaClient {
-  Future<SqlStreamId> openStream();
-  Future<void> closeStream(SqlStreamId id);
-  Future<StatementResult> executeStatement(
-      SqlStreamId stream, StatementDescription stmt);
-  Future<SqlTextId> storeSql(SqlStreamId stream, String sql);
-  Future<void> closeSql(SqlStreamId stream, SqlTextId id);
-  Future<proto.BatchResult> runBatch(SqlStreamId stream, proto.Batch batch);
+  Future<HranaStream> openStream();
   Future<void> close();
-  bool get isClosed;
+
   Future<void> get closed;
+  bool get isClosed;
 }
 
-extension type SqlStreamId(int id) {}
+abstract interface class HranaStream {
+  Future<bool> checkOpen();
+
+  Future<StatementResult> executeStatement(StatementDescription stmt);
+  Future<SqlTextId> storeSql(String sql);
+  Future<void> closeSql(SqlTextId id);
+  Future<proto.BatchResult> runBatch(proto.Batch batch);
+  Future<void> closeStream();
+
+  Future<void> get closed;
+}
 
 extension type SqlTextId(int id) {}
 

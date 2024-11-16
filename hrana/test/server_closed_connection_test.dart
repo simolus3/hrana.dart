@@ -12,14 +12,25 @@ void main() {
     var completed = false;
     final future = database.closed.whenComplete(() => completed = true);
 
-    await database.execute('SELECT 1');
+    final longLivedSession = await database.openSession();
+
+    await database.withSession((session) async {
+      await session.execute('SELECT 1');
+    });
     expect(completed, isFalse);
 
     server.stop();
     await expectLater(future, completes);
+    await expectLater(longLivedSession.closed, completes);
 
     await expectLater(
-        () => database.execute('SELECT 2'), throwsA(isA<ConnectionClosed>()));
+      () => database.withSession(
+        (session) async {
+          await session.execute('SELECT 2');
+        },
+      ),
+      throwsA(isA<ConnectionClosed>()),
+    );
     await database.close();
   });
 }
