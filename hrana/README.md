@@ -25,13 +25,18 @@ void main() async {
     Uri.parse('ws://localhost:8080/'),
     jwtToken: null,
   );
-  print(await database.select('SELECT 1;'));
+  print(await database.withSession((session) async {
+    await session.select('SELECT 1;');
+  }));
 }
 ```
 
+In addition to web sockets, an HTTP client is available as well and selected
+automatically when using an `http://` or `https://` URL.
+
 ## Additional information
 
-At the moment, this package implementats functionality to execute statements
+At the moment, this package implements functionality to execute statements
 and getting their results as rows.
 Batches and stored statements are supported as well, but no support for
 streaming cursors is implemented yet.
