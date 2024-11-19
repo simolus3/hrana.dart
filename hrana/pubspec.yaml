@@ -1,6 +1,6 @@
 name: hrana
 description: Dart client for hrana, a protocol for accessing libsql database servers.
-version: 0.4.0-dev
+version: 0.4.0
 repository: https://github.com/simolus3/hrana.dart
 topics:
   - database
