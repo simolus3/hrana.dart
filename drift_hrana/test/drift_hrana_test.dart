@@ -24,7 +24,7 @@ void main() {
   late AppDatabase database;
 
   setUp(() {
-    database = AppDatabase(HranaDatabase(Uri.parse('ws://localhost:$port/')));
+    database = AppDatabase(HranaDatabase(Uri.parse('http://localhost:$port/')));
   });
   tearDown(() async {
     await database.close();
@@ -67,5 +67,35 @@ void main() {
     completeTransaction.complete();
     await transactionDone;
     expect(await database.notes.all().get(), isEmpty);
+  });
+
+  test('supports table migrations', () async {
+    // Regression test for https://github.com/simolus3/drift/issues/3088
+
+    await database.notes
+        .insertOne(NotesCompanion.insert(content: 'existing content'));
+
+    // create unrelated table and view
+    await database.customStatement('''
+CREATE TABLE unrelated (
+  id INTEGER NOT NULL PRIMARY KEY,
+  content TEXT
+);
+''');
+    await database.customInsert('INSERT INTO unrelated (content) VALUES (?)',
+        variables: [Variable.withString('foo')]);
+    await database.customStatement(
+        'CREATE VIEW unrelated_view AS SELECT * FROM unrelated;');
+
+    // Issue table migration. Drift normally tries to enable the legacy alter
+    // table behavior for this, which is disabled with Turso.
+    await Migrator(database).alterTable(TableMigration(database.notes));
+
+    // Table should still be there
+    expect(await database.notes.all().get(), hasLength(1));
+
+    // And the unrelated table with data should also work.
+    expect(await database.customSelect('SELECT * FROM unrelated_view').get(),
+        hasLength(1));
   });
 }

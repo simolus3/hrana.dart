@@ -127,7 +127,7 @@ final class _HranaTransactionDelegate extends SupportedTransactionDelegate {
     await _delegate._run((s) async {
       await s.execute('BEGIN');
       try {
-        run(_HranaTransaction(s));
+        await run(_HranaTransaction(s));
         await s.execute('COMMIT');
       } catch (e) {
         await s.execute('ROLLBACK');

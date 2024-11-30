@@ -1,6 +1,6 @@
 name: drift_hrana
 description: Use a remote libsql server with your drift database.
-version: 1.0.3
+version: 1.0.4
 repository: https://github.com/simolus3/hrana.dart
 topics:
   - database
@@ -13,7 +13,7 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
-  drift: ^2.21.0
+  drift: ^2.22.1
   hrana: ^0.4.0
 
 dev_dependencies:
