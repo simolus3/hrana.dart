@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:pool/pool.dart';
 
 import 'exception.dart';
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 import 'rpc_client.dart';
 
 void _log(String message) {
@@ -49,13 +50,13 @@ final class HranaHttpClient implements HranaClient {
     return client;
   }
 
-  /// Ensures that the server supports the Hrana V3 Protobuf protocol.
+  /// Ensures that the server supports the Hrana V3 protocol.
   Future<void> _ensureProtocolSupport() async {
-    final url = _uri.resolve('./v3-protobuf');
+    final url = _uri.resolve('./v3');
     final response = await _httpClient.get(url);
     if (response.statusCode case < 200 || >= 300) {
       throw ServerException(
-        message: 'Server does not support Hrana V3 Protobuf protocol: '
+        message: 'Server does not support Hrana V3 protocol: '
             '"${response.body}"',
         code: response.statusCode.toString(),
       );
@@ -99,6 +100,8 @@ final class HranaHttpClient implements HranaClient {
 final class _HranaHttpStream implements HranaStream {
   final HranaHttpClient _client;
 
+  static final _codec = const JsonCodec().fuse(utf8);
+
   // Requests in a hrana stream must be sequential, which this lock ensures.
   final Pool _lock = Pool(1);
   Uri? _baseUri;
@@ -120,8 +123,8 @@ final class _HranaHttpStream implements HranaStream {
     }
   }
 
-  Future<proto.StreamResponse> _sendStreamRequest(
-    proto.StreamRequest? request,
+  Future<json.StreamResponse> _sendStreamRequest(
+    json.StreamRequest? request,
   ) async {
     return await _lock.withResource(() async {
       if (_isClosed) {
@@ -132,33 +135,35 @@ final class _HranaHttpStream implements HranaStream {
     });
   }
 
-  Future<proto.StreamResponse> _sendStreamRequestWithLock(
-    proto.StreamRequest? request,
+  Future<json.StreamResponse> _sendStreamRequestWithLock(
+    json.StreamRequest? request,
   ) async {
     final baseUri = _baseUri ?? _client._uri;
-    final url = baseUri.resolve('./v3-protobuf/pipeline');
-    final pipelineReq = proto.PipelineReq(
+    final url = baseUri.resolve('./v3/pipeline');
+    final pipelineReq = json.PipelineReq(
       baton: _baton,
       requests: request == null ? const [] : [request],
     );
     _log('Sending request:\n$request');
-    final piplineResp = await _client._httpClient.post(
+    final pipelineResp = await _client._httpClient.post(
       url,
       headers: {
-        'Content-Type': 'application/protobuf',
-        'Accept': 'application/protobuf',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: pipelineReq.writeToBuffer(),
+      body: _codec.encode(pipelineReq.toJson()),
     );
-    if (piplineResp.statusCode case < 200 || >= 300) {
+    if (pipelineResp.statusCode case < 200 || >= 300) {
       throw ServerException(
-        message: 'Failed to run pipeline: "${piplineResp.body}"',
-        code: piplineResp.statusCode.toString(),
+        message: 'Failed to run pipeline: "${pipelineResp.body}"',
+        code: pipelineResp.statusCode.toString(),
       );
     }
-    final response = proto.PipelineResp.fromBuffer(piplineResp.bodyBytes);
-    final expectsBaton = request == null || !request.hasClose();
-    if (!response.hasBaton() && expectsBaton) {
+    final response = json.PipelineResp.fromJson(
+      _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>,
+    );
+    final expectsBaton = request == null || request is! json.CloseStreamReq;
+    if (response.baton == null && expectsBaton) {
       // The server has closed the stream.
       _markClosed();
       throw const ConnectionClosed();
@@ -166,26 +171,20 @@ final class _HranaHttpStream implements HranaStream {
 
     _baton = response.baton;
     _baseUri = switch (response.baseUrl) {
-      '' => null,
+      null => null,
       final url => Uri.parse(url),
     };
 
     if (response.results.isEmpty && request == null) {
       _log('Opened stream');
-      return proto.StreamResponse();
+      return const json.StreamResponse.opened();
     }
     final result = response.results.single;
     _log('Received response:\n$result');
-    return switch (result.whichResult()) {
-      proto.StreamResult_Result.ok => result.ok,
-      proto.StreamResult_Result.error => throw ServerException(
-          message: result.error.message,
-          code: result.error.code,
-        ),
-      _ => throw ServerException(
-          message: 'Unexpected response: $response',
-          code: null,
-        ),
+    return switch (result) {
+      json.StreamResultOk(:final response) => response,
+      json.StreamResultError(:final response) =>
+        throw ServerException.fromJson(response),
     };
   }
 
@@ -205,19 +204,19 @@ final class _HranaHttpStream implements HranaStream {
 
   @override
   Future<void> closeSql(SqlTextId id) async {
-    final response = await _sendStreamRequest(proto.StreamRequest(
-      closeSql: proto.CloseSqlReq(sqlId: id.id),
-    ));
-    assert(response.whichResponse() == proto.StreamResponse_Response.closeSql);
+    final response = await _sendStreamRequest(
+      json.StreamRequest.closeSql(sqlId: id.id),
+    );
+    assert(response is json.CloseSqlStreamResp);
   }
 
   @override
   Future<void> closeStream() async {
     try {
       final response = await _sendStreamRequest(
-        proto.StreamRequest(close: proto.CloseStreamReq()),
+        const json.StreamRequest.close(),
       );
-      assert(response.whichResponse() == proto.StreamResponse_Response.close);
+      assert(response is json.CloseStreamStreamResp);
     } on ConnectionClosed {
       // Fine, these streams time out implicitly too.
     } on ServerException {
@@ -232,29 +231,31 @@ final class _HranaHttpStream implements HranaStream {
 
   @override
   Future<StatementResult> executeStatement(StatementDescription stmt) async {
-    final response = await _sendStreamRequest(proto.StreamRequest(
-      execute: proto.ExecuteStreamReq(stmt: stmt.toStatement()),
-    ));
-    assert(response.whichResponse() == proto.StreamResponse_Response.execute);
-    return StatementResult.fromProto(response.execute.result);
+    final response = await _sendStreamRequest(
+      json.StreamRequest.execute(stmt: stmt.toStatement()),
+    );
+    assert(response is json.ExecuteStreamResp);
+    return StatementResult.fromJson(
+      (response as json.ExecuteStreamResp).result,
+    );
   }
 
   @override
-  Future<proto.BatchResult> runBatch(proto.Batch batch) async {
+  Future<json.BatchResult> runBatch(json.Batch batch) async {
     final response = await _sendStreamRequest(
-      proto.StreamRequest(batch: proto.BatchStreamReq(batch: batch)),
+      json.StreamRequest.batch(batch: batch),
     );
-    assert(response.whichResponse() == proto.StreamResponse_Response.batch);
-    return response.batch.result;
+    assert(response is json.BatchStreamResp);
+    return (response as json.BatchStreamResp).result;
   }
 
   @override
   Future<SqlTextId> storeSql(String sql) async {
     final textId = SqlTextId(_client._nextSqlTextId++);
-    final response = await _sendStreamRequest(proto.StreamRequest(
-      storeSql: proto.StoreSqlReq(sql: sql, sqlId: textId.id),
-    ));
-    assert(response.whichResponse() == proto.StreamResponse_Response.storeSql);
+    final response = await _sendStreamRequest(
+      json.StreamRequest.storeSql(sql: sql, sqlId: textId.id),
+    );
+    assert(response is json.StoreSqlStreamResp);
     return textId;
   }
 }

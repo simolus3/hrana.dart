@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:sqlite3/common.dart';
 
 import 'exception.dart';
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 import 'rpc_client.dart';
 import 'rpc_http_client.dart';
 import 'rpc_ws_client.dart';
@@ -281,16 +281,18 @@ extension type BatchRequest._(int _id) {}
 
 /// Collects statements to run in a [Database.batch].
 final class BatchBuilder {
-  final proto.Batch _batch = proto.Batch();
+  final List<json.BatchStep> _batchSteps = [];
+  json.Batch get _batch => json.Batch(steps: _batchSteps);
+
   final DatabaseSession _session;
 
   BatchBuilder._(this._session);
 
-  (BatchRequest, proto.BatchCond?) _newRequest() {
-    final request = BatchRequest._(_batch.steps.length);
+  (BatchRequest, json.BatchCond?) _newRequest() {
+    final request = BatchRequest._(_batchSteps.length);
     return (
       request,
-      request._id == 0 ? null : proto.BatchCond(stepOk: request._id - 1)
+      request._id == 0 ? null : json.BatchCond.stepOk(request._id - 1)
     );
   }
 
@@ -301,7 +303,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
@@ -317,7 +319,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
@@ -333,7 +335,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
@@ -349,7 +351,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
@@ -360,16 +362,16 @@ final class BatchBuilder {
 }
 
 final class BatchResult {
-  final proto.BatchResult _result;
+  final json.BatchResult _result;
 
   BatchResult._(this._result);
 
   StatementResult? _rawResult(BatchRequest request) {
-    if (_result.stepErrors[request._id] case proto.Error e) {
-      throw ServerException.fromProto(e);
+    if (_result.stepErrors[request._id] case json.StreamError e) {
+      throw ServerException.fromJson(e);
     }
-    if (_result.stepResults[request._id] case proto.StmtResult r) {
-      return StatementResult.fromProto(r);
+    if (_result.stepResults[request._id] case json.StmtResult r) {
+      return StatementResult.fromJson(r);
     }
 
     return null;

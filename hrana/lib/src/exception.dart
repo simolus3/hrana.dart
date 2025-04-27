@@ -1,4 +1,4 @@
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 
 /// Superclass for all exceptions thrown by `package:hrana`.
 ///
@@ -24,7 +24,7 @@ final class ServerException implements HranaException {
 
   ServerException({required this.message, required this.code});
 
-  factory ServerException.fromProto(proto.Error error) {
+  factory ServerException.fromJson(json.StreamError error) {
     return ServerException(message: error.message, code: error.code);
   }
 
