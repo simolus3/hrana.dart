@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:fixnum/fixnum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'protocol.json.freezed.dart';
@@ -64,33 +65,26 @@ class Uint8ListConverter implements JsonConverter<Uint8List, String> {
   String toJson(Uint8List object) => base64Encode(object);
 }
 
-// Integer values are sometimes returned as strings
-class MaybeIntConverter implements JsonConverter<int, Object> {
-  const MaybeIntConverter();
+class Int64Converter implements JsonConverter<Int64, String> {
+  const Int64Converter();
 
   @override
-  int fromJson(Object json) {
-    return switch (json) {
-      final num value => value.toInt(),
-      final String str => int.parse(str),
-      _ => throw ArgumentError('Invalid value for int: $json'),
-    };
-  }
+  Int64 fromJson(String json) => Int64.parseInt(json);
 
   @override
-  Object toJson(int object) {
-    return object;
-  }
+  String toJson(Int64 object) => object.toString();
 }
 
 @_union
 sealed class Value with _$Value {
   @FreezedUnionValue('null')
   const factory Value.null$() = NullValue;
-  const factory Value.integer(@MaybeIntConverter() int value) = IntegerValue;
+  const factory Value.integer(@Int64Converter() Int64 value) = IntegerValue;
   const factory Value.float(double value) = FloatValue;
   const factory Value.text(String value) = TextValue;
-  const factory Value.blob(@Uint8ListConverter() Uint8List value) = BlobValue;
+  const factory Value.blob(
+    @Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value,
+  ) = BlobValue;
 
   const Value._();
 
@@ -103,8 +97,8 @@ abstract class StmtResult with _$StmtResult {
     @Default([]) List<Col> cols,
     @Default([]) List<List<Value>> rows,
     required int affectedRowCount,
-    @MaybeIntConverter() int? lastInsertRowid,
-    @MaybeIntConverter() int? replicationIndex,
+    @Int64Converter() Int64? lastInsertRowid,
+    String? replicationIndex,
     required int rowsRead,
     required int rowsWritten,
     required double queryDurationMs,
@@ -190,7 +184,7 @@ sealed class CursorEntry with _$CursorEntry {
   }) = StepBeginEntry;
   const factory CursorEntry.stepEnd({
     required int affectedRowCount,
-    @MaybeIntConverter() int? lastInsertRowid,
+    @Int64Converter() Int64? lastInsertRowid,
   }) = StepEndEntry;
   const factory CursorEntry.stepError({
     required int step,

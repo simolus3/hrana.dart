@@ -29,7 +29,16 @@ void main() {
 
         session = await database.openSession();
         await session.execute(
-            'CREATE TABLE users (name TEXT, CHECK (LENGTH(name) < 10));');
+          '''
+CREATE TABLE users (
+  name TEXT,
+  integer INTEGER,
+  float REAL,
+  blob BLOB,
+  CHECK (LENGTH(name) < 10)
+);
+''',
+        );
       });
 
       tearDown(() async {
@@ -75,10 +84,26 @@ void main() {
         });
 
         test('can be selected', () async {
-          final stored = await session.storeSql('SELECT 1');
-          final result = await stored.select();
+          await session.execute(
+            'INSERT INTO users (name, integer, float, blob) VALUES (?, ?, ?, ?);',
+            arguments: [
+              'Stored',
+              1,
+              1.0,
+              [1, 2, 3],
+            ],
+          );
+          final stored = await session.storeSql(
+            'SELECT * FROM users where name = ?;',
+          );
+          final result = await stored.select(arguments: ['Stored']);
           expect(result.rows, [
-            [1]
+            [
+              'Stored',
+              1,
+              1.0,
+              [1, 2, 3]
+            ],
           ]);
         });
 
@@ -92,15 +117,27 @@ void main() {
       group('batch', () {
         test('can run statements', () async {
           final storedSelect = await session.storeSql('SELECT * FROM users;');
-          final storedExecute =
-              await session.storeSql('INSERT INTO users (name) VALUES (?);');
+          final storedExecute = await session.storeSql(
+              'INSERT INTO users (name, integer, float, blob) VALUES (?, ?, ?, ?);');
 
           final results = await session.batch((builder) {
             builder
-              ..executeStored(storedExecute, arguments: ['first'])
+              ..executeStored(storedExecute, arguments: [
+                'first',
+                1,
+                1.0,
+                [1, 2, 3]
+              ])
               ..select('SELECT * FROM users;')
-              ..execute('INSERT INTO users (name) VALUES (?)',
-                  arguments: ['second'])
+              ..execute(
+                'INSERT INTO users (name, integer, float, blob) VALUES (?, ?, ?, ?)',
+                arguments: [
+                  'second',
+                  2,
+                  2.0,
+                  [2, 3, 4]
+                ],
+              )
               ..selectStored(storedSelect);
           });
 
@@ -108,11 +145,26 @@ void main() {
           final secondSelect = results.selectResult(3 as BatchRequest);
 
           expect(firstSelect!.rows, [
-            ['first']
+            [
+              'first',
+              1,
+              1.0,
+              [1, 2, 3]
+            ],
           ]);
           expect(secondSelect!.rows, [
-            ['first'],
-            ['second']
+            [
+              'first',
+              1,
+              1.0,
+              [1, 2, 3]
+            ],
+            [
+              'second',
+              2,
+              2.0,
+              [2, 3, 4]
+            ],
           ]);
         });
 

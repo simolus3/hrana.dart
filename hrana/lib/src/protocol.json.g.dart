@@ -58,13 +58,13 @@ Map<String, dynamic> _$NullValueToJson(NullValue instance) => <String, dynamic>{
     };
 
 IntegerValue _$IntegerValueFromJson(Map<String, dynamic> json) => IntegerValue(
-      const MaybeIntConverter().fromJson(json['value'] as Object),
+      const Int64Converter().fromJson(json['value'] as String),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$IntegerValueToJson(IntegerValue instance) =>
     <String, dynamic>{
-      'value': const MaybeIntConverter().toJson(instance.value),
+      'value': const Int64Converter().toJson(instance.value),
       'type': instance.$type,
     };
 
@@ -90,12 +90,12 @@ Map<String, dynamic> _$TextValueToJson(TextValue instance) => <String, dynamic>{
     };
 
 BlobValue _$BlobValueFromJson(Map<String, dynamic> json) => BlobValue(
-      const Uint8ListConverter().fromJson(json['value'] as String),
+      const Uint8ListConverter().fromJson(json['base64'] as String),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$BlobValueToJson(BlobValue instance) => <String, dynamic>{
-      'value': const Uint8ListConverter().toJson(instance.value),
+      'base64': const Uint8ListConverter().toJson(instance.value),
       'type': instance.$type,
     };
 
@@ -111,10 +111,9 @@ _StmtResult _$StmtResultFromJson(Map<String, dynamic> json) => _StmtResult(
               .toList() ??
           const [],
       affectedRowCount: (json['affected_row_count'] as num).toInt(),
-      lastInsertRowid: _$JsonConverterFromJson<Object, int>(
-          json['last_insert_rowid'], const MaybeIntConverter().fromJson),
-      replicationIndex: _$JsonConverterFromJson<Object, int>(
-          json['replication_index'], const MaybeIntConverter().fromJson),
+      lastInsertRowid: _$JsonConverterFromJson<String, Int64>(
+          json['last_insert_rowid'], const Int64Converter().fromJson),
+      replicationIndex: json['replication_index'] as String?,
       rowsRead: (json['rows_read'] as num).toInt(),
       rowsWritten: (json['rows_written'] as num).toInt(),
       queryDurationMs: (json['query_duration_ms'] as num).toDouble(),
@@ -126,10 +125,9 @@ Map<String, dynamic> _$StmtResultToJson(_StmtResult instance) =>
       'rows':
           instance.rows.map((e) => e.map((e) => e.toJson()).toList()).toList(),
       'affected_row_count': instance.affectedRowCount,
-      'last_insert_rowid': _$JsonConverterToJson<Object, int>(
-          instance.lastInsertRowid, const MaybeIntConverter().toJson),
-      'replication_index': _$JsonConverterToJson<Object, int>(
-          instance.replicationIndex, const MaybeIntConverter().toJson),
+      'last_insert_rowid': _$JsonConverterToJson<String, Int64>(
+          instance.lastInsertRowid, const Int64Converter().toJson),
+      'replication_index': instance.replicationIndex,
       'rows_read': instance.rowsRead,
       'rows_written': instance.rowsWritten,
       'query_duration_ms': instance.queryDurationMs,
@@ -289,16 +287,16 @@ Map<String, dynamic> _$StepBeginEntryToJson(StepBeginEntry instance) =>
 
 StepEndEntry _$StepEndEntryFromJson(Map<String, dynamic> json) => StepEndEntry(
       affectedRowCount: (json['affected_row_count'] as num).toInt(),
-      lastInsertRowid: _$JsonConverterFromJson<Object, int>(
-          json['last_insert_rowid'], const MaybeIntConverter().fromJson),
+      lastInsertRowid: _$JsonConverterFromJson<String, Int64>(
+          json['last_insert_rowid'], const Int64Converter().fromJson),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$StepEndEntryToJson(StepEndEntry instance) =>
     <String, dynamic>{
       'affected_row_count': instance.affectedRowCount,
-      'last_insert_rowid': _$JsonConverterToJson<Object, int>(
-          instance.lastInsertRowid, const MaybeIntConverter().toJson),
+      'last_insert_rowid': _$JsonConverterToJson<String, Int64>(
+          instance.lastInsertRowid, const Int64Converter().toJson),
       'type': instance.$type,
     };
 

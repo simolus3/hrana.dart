@@ -3,6 +3,7 @@ library;
 
 import 'dart:typed_data';
 
+import 'package:fixnum/fixnum.dart';
 import 'package:meta/meta.dart';
 
 import 'protocol.json.dart' as json;
@@ -33,17 +34,17 @@ extension type Value(Object? value) {
   factory Value._fromJson(json.Value value) {
     return switch (value) {
       json.NullValue() => Value(null),
-      json.IntegerValue(:final value) => Value(value),
+      json.IntegerValue(:final value) => Value(value.toInt()),
       json.FloatValue(:final value) => Value(value),
       json.TextValue(:final value) => Value(value),
-      json.BlobValue(:final value) => Value(value),
+      json.BlobValue(:final value) => Value(value)
     };
   }
 
   json.Value _toJson() {
     return switch (this) {
       null => json.Value.null$(),
-      int i => json.Value.integer(i),
+      int i => json.Value.integer(Int64(i)),
       double f => json.Value.float(f),
       String t => json.Value.text(t),
       List<int> b => json.Value.blob(Uint8List.fromList(b)),
@@ -162,7 +163,7 @@ final class StatementResult {
           ]
       ],
       affectedRowCount: result.affectedRowCount,
-      lastInsertRowId: result.lastInsertRowid,
+      lastInsertRowId: result.lastInsertRowid?.toInt(),
     );
   }
 

@@ -675,14 +675,14 @@ class NullValue extends Value {
 /// @nodoc
 @JsonSerializable()
 class IntegerValue extends Value {
-  const IntegerValue(@MaybeIntConverter() this.value, {final String? $type})
+  const IntegerValue(@Int64Converter() this.value, {final String? $type})
       : $type = $type ?? 'integer',
         super._();
   factory IntegerValue.fromJson(Map<String, dynamic> json) =>
       _$IntegerValueFromJson(json);
 
-  @MaybeIntConverter()
-  final int value;
+  @Int64Converter()
+  final Int64 value;
 
   @JsonKey(name: 'type')
   final String $type;
@@ -726,7 +726,7 @@ abstract mixin class $IntegerValueCopyWith<$Res>
           IntegerValue value, $Res Function(IntegerValue) _then) =
       _$IntegerValueCopyWithImpl;
   @useResult
-  $Res call({@MaybeIntConverter() int value});
+  $Res call({@Int64Converter() Int64 value});
 }
 
 /// @nodoc
@@ -746,7 +746,7 @@ class _$IntegerValueCopyWithImpl<$Res> implements $IntegerValueCopyWith<$Res> {
       null == value
           ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Int64,
     ));
   }
 }
@@ -907,13 +907,15 @@ class _$TextValueCopyWithImpl<$Res> implements $TextValueCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BlobValue extends Value {
-  const BlobValue(@Uint8ListConverter() this.value, {final String? $type})
+  const BlobValue(@Uint8ListConverter() @JsonKey(name: 'base64') this.value,
+      {final String? $type})
       : $type = $type ?? 'blob',
         super._();
   factory BlobValue.fromJson(Map<String, dynamic> json) =>
       _$BlobValueFromJson(json);
 
   @Uint8ListConverter()
+  @JsonKey(name: 'base64')
   final Uint8List value;
 
   @JsonKey(name: 'type')
@@ -957,7 +959,7 @@ abstract mixin class $BlobValueCopyWith<$Res> implements $ValueCopyWith<$Res> {
   factory $BlobValueCopyWith(BlobValue value, $Res Function(BlobValue) _then) =
       _$BlobValueCopyWithImpl;
   @useResult
-  $Res call({@Uint8ListConverter() Uint8List value});
+  $Res call({@Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value});
 }
 
 /// @nodoc
@@ -987,10 +989,9 @@ mixin _$StmtResult {
   List<Col> get cols;
   List<List<Value>> get rows;
   int get affectedRowCount;
-  @MaybeIntConverter()
-  int? get lastInsertRowid;
-  @MaybeIntConverter()
-  int? get replicationIndex;
+  @Int64Converter()
+  Int64? get lastInsertRowid;
+  String? get replicationIndex;
   int get rowsRead;
   int get rowsWritten;
   double get queryDurationMs;
@@ -1055,8 +1056,8 @@ abstract mixin class $StmtResultCopyWith<$Res> {
       {List<Col> cols,
       List<List<Value>> rows,
       int affectedRowCount,
-      @MaybeIntConverter() int? lastInsertRowid,
-      @MaybeIntConverter() int? replicationIndex,
+      @Int64Converter() Int64? lastInsertRowid,
+      String? replicationIndex,
       int rowsRead,
       int rowsWritten,
       double queryDurationMs});
@@ -1099,11 +1100,11 @@ class _$StmtResultCopyWithImpl<$Res> implements $StmtResultCopyWith<$Res> {
       lastInsertRowid: freezed == lastInsertRowid
           ? _self.lastInsertRowid
           : lastInsertRowid // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as Int64?,
       replicationIndex: freezed == replicationIndex
           ? _self.replicationIndex
           : replicationIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       rowsRead: null == rowsRead
           ? _self.rowsRead
           : rowsRead // ignore: cast_nullable_to_non_nullable
@@ -1127,8 +1128,8 @@ class _StmtResult extends StmtResult {
       {final List<Col> cols = const [],
       final List<List<Value>> rows = const [],
       required this.affectedRowCount,
-      @MaybeIntConverter() this.lastInsertRowid,
-      @MaybeIntConverter() this.replicationIndex,
+      @Int64Converter() this.lastInsertRowid,
+      this.replicationIndex,
       required this.rowsRead,
       required this.rowsWritten,
       required this.queryDurationMs})
@@ -1159,11 +1160,10 @@ class _StmtResult extends StmtResult {
   @override
   final int affectedRowCount;
   @override
-  @MaybeIntConverter()
-  final int? lastInsertRowid;
+  @Int64Converter()
+  final Int64? lastInsertRowid;
   @override
-  @MaybeIntConverter()
-  final int? replicationIndex;
+  final String? replicationIndex;
   @override
   final int rowsRead;
   @override
@@ -1238,8 +1238,8 @@ abstract mixin class _$StmtResultCopyWith<$Res>
       {List<Col> cols,
       List<List<Value>> rows,
       int affectedRowCount,
-      @MaybeIntConverter() int? lastInsertRowid,
-      @MaybeIntConverter() int? replicationIndex,
+      @Int64Converter() Int64? lastInsertRowid,
+      String? replicationIndex,
       int rowsRead,
       int rowsWritten,
       double queryDurationMs});
@@ -1282,11 +1282,11 @@ class __$StmtResultCopyWithImpl<$Res> implements _$StmtResultCopyWith<$Res> {
       lastInsertRowid: freezed == lastInsertRowid
           ? _self.lastInsertRowid
           : lastInsertRowid // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as Int64?,
       replicationIndex: freezed == replicationIndex
           ? _self.replicationIndex
           : replicationIndex // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       rowsRead: null == rowsRead
           ? _self.rowsRead
           : rowsRead // ignore: cast_nullable_to_non_nullable
@@ -2641,7 +2641,7 @@ class _$StepBeginEntryCopyWithImpl<$Res>
 class StepEndEntry extends CursorEntry {
   const StepEndEntry(
       {required this.affectedRowCount,
-      @MaybeIntConverter() this.lastInsertRowid,
+      @Int64Converter() this.lastInsertRowid,
       final String? $type})
       : $type = $type ?? 'step_end',
         super._();
@@ -2649,8 +2649,8 @@ class StepEndEntry extends CursorEntry {
       _$StepEndEntryFromJson(json);
 
   final int affectedRowCount;
-  @MaybeIntConverter()
-  final int? lastInsertRowid;
+  @Int64Converter()
+  final Int64? lastInsertRowid;
 
   @JsonKey(name: 'type')
   final String $type;
@@ -2698,7 +2698,7 @@ abstract mixin class $StepEndEntryCopyWith<$Res>
           StepEndEntry value, $Res Function(StepEndEntry) _then) =
       _$StepEndEntryCopyWithImpl;
   @useResult
-  $Res call({int affectedRowCount, @MaybeIntConverter() int? lastInsertRowid});
+  $Res call({int affectedRowCount, @Int64Converter() Int64? lastInsertRowid});
 }
 
 /// @nodoc
@@ -2723,7 +2723,7 @@ class _$StepEndEntryCopyWithImpl<$Res> implements $StepEndEntryCopyWith<$Res> {
       lastInsertRowid: freezed == lastInsertRowid
           ? _self.lastInsertRowid
           : lastInsertRowid // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as Int64?,
     ));
   }
 }
