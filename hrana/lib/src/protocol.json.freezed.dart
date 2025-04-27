@@ -7094,27 +7094,22 @@ StreamResult _$StreamResultFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$StreamResult {
-  Object get response;
-
   /// Serializes this StreamResult to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is StreamResult &&
-            const DeepCollectionEquality().equals(other.response, response));
+        (other.runtimeType == runtimeType && other is StreamResult);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
+  int get hashCode => runtimeType.hashCode;
 
   @override
   String toString() {
-    return 'StreamResult(response: $response)';
+    return 'StreamResult()';
   }
 }
 
@@ -7132,7 +7127,6 @@ class StreamResultOk extends StreamResult {
   factory StreamResultOk.fromJson(Map<String, dynamic> json) =>
       _$StreamResultOkFromJson(json);
 
-  @override
   final StreamResponse response;
 
   @JsonKey(name: 'type')
@@ -7219,14 +7213,13 @@ class _$StreamResultOkCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class StreamResultError extends StreamResult {
-  const StreamResultError(this.response, {final String? $type})
+  const StreamResultError(this.error, {final String? $type})
       : $type = $type ?? 'error',
         super._();
   factory StreamResultError.fromJson(Map<String, dynamic> json) =>
       _$StreamResultErrorFromJson(json);
 
-  @override
-  final StreamError response;
+  final StreamError error;
 
   @JsonKey(name: 'type')
   final String $type;
@@ -7250,17 +7243,16 @@ class StreamResultError extends StreamResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is StreamResultError &&
-            (identical(other.response, response) ||
-                other.response == response));
+            (identical(other.error, error) || other.error == error));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode => Object.hash(runtimeType, error);
 
   @override
   String toString() {
-    return 'StreamResult.error(response: $response)';
+    return 'StreamResult.error(error: $error)';
   }
 }
 
@@ -7271,9 +7263,9 @@ abstract mixin class $StreamResultErrorCopyWith<$Res>
           StreamResultError value, $Res Function(StreamResultError) _then) =
       _$StreamResultErrorCopyWithImpl;
   @useResult
-  $Res call({StreamError response});
+  $Res call({StreamError error});
 
-  $StreamErrorCopyWith<$Res> get response;
+  $StreamErrorCopyWith<$Res> get error;
 }
 
 /// @nodoc
@@ -7288,12 +7280,12 @@ class _$StreamResultErrorCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? response = null,
+    Object? error = null,
   }) {
     return _then(StreamResultError(
-      null == response
-          ? _self.response
-          : response // ignore: cast_nullable_to_non_nullable
+      null == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
               as StreamError,
     ));
   }
@@ -7302,9 +7294,9 @@ class _$StreamResultErrorCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StreamErrorCopyWith<$Res> get response {
-    return $StreamErrorCopyWith<$Res>(_self.response, (value) {
-      return _then(_self.copyWith(response: value));
+  $StreamErrorCopyWith<$Res> get error {
+    return $StreamErrorCopyWith<$Res>(_self.error, (value) {
+      return _then(_self.copyWith(error: value));
     });
   }
 }

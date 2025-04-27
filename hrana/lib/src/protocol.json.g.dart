@@ -886,13 +886,13 @@ Map<String, dynamic> _$StreamResultOkToJson(StreamResultOk instance) =>
 
 StreamResultError _$StreamResultErrorFromJson(Map<String, dynamic> json) =>
     StreamResultError(
-      StreamError.fromJson(json['response'] as Map<String, dynamic>),
+      StreamError.fromJson(json['error'] as Map<String, dynamic>),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$StreamResultErrorToJson(StreamResultError instance) =>
     <String, dynamic>{
-      'response': instance.response.toJson(),
+      'error': instance.error.toJson(),
       'type': instance.$type,
     };
 

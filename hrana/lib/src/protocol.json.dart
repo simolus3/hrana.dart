@@ -426,7 +426,7 @@ abstract class PipelineResp with _$PipelineResp {
 @_union
 sealed class StreamResult with _$StreamResult {
   const factory StreamResult.ok(StreamResponse response) = StreamResultOk;
-  const factory StreamResult.error(StreamError response) = StreamResultError;
+  const factory StreamResult.error(StreamError error) = StreamResultError;
 
   const StreamResult._();
   factory StreamResult.fromJson(Map<String, Object?> json) =>

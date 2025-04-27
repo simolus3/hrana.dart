@@ -183,8 +183,8 @@ final class _HranaHttpStream implements HranaStream {
     _log('Received response:\n$result');
     return switch (result) {
       json.StreamResultOk(:final response) => response,
-      json.StreamResultError(:final response) =>
-        throw ServerException.fromJson(response),
+      json.StreamResultError(:final error) =>
+        throw ServerException.fromJson(error),
     };
   }
 
