@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:sqlite3/common.dart';
+import 'package:web_socket/web_socket.dart';
 
 import 'exception.dart';
 import 'protocol.json.dart' as json;
@@ -38,7 +40,7 @@ final class Database {
       uri = uri.replace(scheme: 'https');
     }
     final client = switch (uri.scheme) {
-      'ws' || 'wss' => await HranaWebsocketClient.connect(
+      'ws' || 'wss' => await _connectWebSocket(
           uri,
           jwtToken: jwtToken,
         ),
@@ -54,6 +56,35 @@ final class Database {
     };
 
     return Database._(client);
+  }
+
+  /// Attempts to connect to a hrana server under the given [uri] using
+  /// WebSockets.
+  ///
+  /// If the connection is not upgraded to a WebSocket, it falls back to an
+  /// HTTP connection.
+  static Future<HranaClient> _connectWebSocket(
+    Uri uri, {
+    String? jwtToken,
+  }) async {
+    try {
+      return await HranaWebsocketClient.connect(uri, jwtToken: jwtToken);
+    } on WebSocketException catch (e, st) {
+      log(
+        'Failed to connect to WebSocket. Falling back to HTTP.',
+        error: e,
+        stackTrace: st,
+        name: 'Hrana',
+        level: 300, // Level.FINEST
+      );
+      final httpUri = uri.replace(
+        scheme: uri.scheme == 'ws' ? 'http' : 'https',
+      );
+      return HranaHttpClient.connect(
+        httpUri,
+        jwtToken: jwtToken,
+      );
+    }
   }
 
   /// Opens a database session on the server.
