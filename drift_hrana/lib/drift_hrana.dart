@@ -94,6 +94,10 @@ final class _HranaDelegate extends _BaseHranaDelegate
     database.closed.whenComplete(() {
       _isClosed = true;
     });
+
+    final hranaVersionDelegate = _HranaVersionDelegate(delegate: this);
+    await hranaVersionDelegate.init();
+    versionDelegate = hranaVersionDelegate;
   }
 
   @override
@@ -109,8 +113,7 @@ final class _HranaDelegate extends _BaseHranaDelegate
       _HranaTransactionDelegate(this);
 
   @override
-  DbVersionDelegate get versionDelegate =>
-      _HranaVersionDelegate(delegate: this);
+  late DbVersionDelegate versionDelegate;
 }
 
 final class _HranaTransactionDelegate extends SupportedTransactionDelegate {
@@ -153,16 +156,50 @@ final class _HranaVersionDelegate extends DynamicVersionDelegate {
 
   _HranaVersionDelegate({required this.delegate});
 
+  Future<void> init() async {
+    await delegate._run((s) async {
+      await s.execute(
+        'CREATE TABLE IF NOT EXISTS __drift_user_version (user_version INTEGER) STRICT;',
+      );
+      final count = await s.select(
+        'SELECT COUNT(*) FROM __drift_user_version;',
+      );
+      if (count.rows.first.first as int == 0) {
+        final version = await _pragmaUserVersion(s).catchError((_) => 0);
+        await s.execute(
+          'INSERT INTO __drift_user_version VALUES(?);',
+          arguments: [version],
+        );
+      }
+    });
+  }
+
+  /// Returns the legacy `pragma user_version` value.
+  ///
+  /// This is used to initialize the __drift_user_version table.
+  Future<int> _pragmaUserVersion(DatabaseSession s) async {
+    final result = await s.select('pragma user_version;');
+    if (result.rows.isEmpty) {
+      return 0;
+    }
+    return result.rows.first.first as int;
+  }
+
   @override
   Future<int> get schemaVersion async {
-    final result = await delegate
-        ._run((s) async => await s.select('pragma user_version;'));
+    final result = await delegate._run(
+      (s) => s.select('SELECT user_version FROM __drift_user_version;'),
+    );
     return result.rows.first.first as int;
   }
 
   @override
   Future<void> setSchemaVersion(int version) async {
-    await delegate
-        ._run((s) async => s.execute('pragma user_version = $version;'));
+    await delegate._run((s) async {
+      await s.execute(
+        'UPDATE __drift_user_version SET user_version = ?;',
+        arguments: [version],
+      );
+    });
   }
 }
