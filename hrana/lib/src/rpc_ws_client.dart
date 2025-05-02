@@ -1,44 +1,51 @@
 import 'dart:async';
-import 'dart:typed_data';
+import 'dart:convert';
 
-import 'package:stream_channel/stream_channel.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket/web_socket.dart';
 
 import 'exception.dart';
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 import 'rpc_client.dart';
 
+enum _State { open, pendingClose, closed }
+
 final class HranaWebsocketClient implements HranaClient {
-  final StreamChannel<dynamic> _channel;
-  bool _closed = false;
+  final WebSocket _socket;
+  _State _state = _State.open;
   final Completer<void> _streamClosed = Completer();
 
   Completer<void>? _helloCompleter;
-  final Map<int, Completer<proto.ResponseOkMsg>> _pendingRequests = {};
+  final Map<int, Completer<json.ResponseOkMsg>> _pendingRequests = {};
   int _nextRequestId = 0;
   int _nextStreamId = 0;
   int _nextSqlTextId = 0;
 
   final List<HranaWebsocketStream> _streams = [];
 
-  HranaWebsocketClient._(this._channel) {
-    _channel.stream.listen((data) {
-      if (data is Uint8List) {
-        _handleMessage(data);
-      } else {
-        throw 'Unexpected message: $data';
+  HranaWebsocketClient._(this._socket) {
+    _socket.events.listen((data) {
+      switch (data) {
+        case TextDataReceived(:final text):
+          _handleMessage(text);
+        case BinaryDataReceived(:final data):
+          _handleMessage(utf8.decode(data));
+        case CloseReceived():
+          _closedByRemote();
       }
     }, onDone: _closedByRemote);
   }
 
   @override
-  bool get isClosed => _closed;
+  bool get isClosed => _state == _State.closed;
 
   @override
   Future<void> get closed => _streamClosed.future;
 
   void _closedByRemote() {
-    _closed = true;
+    if (_state == _State.closed) {
+      return;
+    }
+    _state = _State.closed;
     for (final pending in _pendingRequests.values) {
       pending.completeError(const ConnectionClosed());
     }
@@ -51,14 +58,16 @@ final class HranaWebsocketClient implements HranaClient {
 
   @override
   Future<void> close() async {
-    _closed = true;
-    if (_channel case WebSocketChannel ws) {
-      await ws.sink.close(1000, 'connection closed');
-    } else {
-      await _channel.sink.close();
+    switch (_state) {
+      case _State.closed:
+        return;
+      case _State.pendingClose:
+        return _streamClosed.future;
+      case _State.open:
+        _state = _State.pendingClose;
+        await _socket.close(1000, 'connection closed');
+        return _streamClosed.future;
     }
-
-    await _streamClosed.future;
   }
 
   @override
@@ -73,77 +82,85 @@ final class HranaWebsocketClient implements HranaClient {
   Future<SqlStreamId> openStreamId() async {
     final streamId = _nextStreamId++;
     await request(
-        proto.RequestMsg(openStream: proto.OpenStreamReq(streamId: streamId)));
+      json.Request.openStream(streamId: streamId),
+    );
     return SqlStreamId._(streamId);
   }
 
   Future<void> closeStream(SqlStreamId id) async {
     await request(
-        proto.RequestMsg(closeStream: proto.CloseStreamReq(streamId: id)));
+      json.Request.closeStream(streamId: id),
+    );
   }
 
   Future<SqlTextId> storeSql(String sql) async {
     final textId = _nextSqlTextId++;
     await request(
-        proto.RequestMsg(storeSql: proto.StoreSqlReq(sqlId: textId, sql: sql)));
+      json.Request.storeSql(sqlId: textId, sql: sql),
+    );
     return SqlTextId(textId);
   }
 
   Future<void> closeSql(SqlTextId id) async {
-    await request(proto.RequestMsg(closeSql: proto.CloseSqlReq(sqlId: id.id)));
+    await request(json.Request.closeSql(sqlId: id.id));
   }
 
   Future<void> _hello(String? jwt) async {
     final completer = _helloCompleter = Completer();
-    _send(proto.ClientMsg(hello: proto.HelloMsg(jwt: jwt)));
+    _send(json.ClientMsg.hello(jwt: jwt));
     await completer.future;
     _helloCompleter = null;
   }
 
-  Future<proto.ResponseOkMsg> request(proto.RequestMsg request) async {
+  Future<json.ResponseOkMsg> request(json.Request request) async {
     final id = _nextRequestId++;
-    final completer = Completer<proto.ResponseOkMsg>();
+    final completer = Completer<json.ResponseOkMsg>();
     _pendingRequests[id] = completer;
-    _send(proto.ClientMsg(request: request..requestId = id));
+    _send(
+      json.ClientMsg.request(requestId: id, request: request),
+    );
 
     return await completer.future;
   }
 
-  void _send(proto.ClientMsg msg) {
-    if (_closed) {
+  void _send(json.ClientMsg msg) {
+    if (_state != _State.open) {
       throw const ConnectionClosed();
     }
 
-    _channel.sink.add(msg.writeToBuffer());
+    _socket.sendText(jsonEncode(msg.toJson()));
   }
 
-  void _handleMessage(Uint8List data) {
-    final msg = proto.ServerMsg.fromBuffer(data);
-
-    if (msg.hasHelloOk()) {
-      _helloCompleter?.complete();
-    } else if (msg.hasHelloError()) {
-      _helloCompleter?.completeError(
-        ServerException.fromProto(msg.helloError.error),
-      );
-    } else if (msg.hasResponseOk()) {
-      final id = msg.responseOk.requestId;
-      final completer = _pendingRequests.remove(id);
-      completer?.complete(msg.responseOk);
-    } else if (msg.hasResponseError()) {
-      final id = msg.responseError.requestId;
-      final completer = _pendingRequests.remove(id);
-      completer?.completeError(
-        ServerException.fromProto(msg.responseError.error),
-      );
+  void _handleMessage(String data) {
+    final msg = json.ServerMsg.fromJson(
+      jsonDecode(data) as Map<String, Object?>,
+    );
+    switch (msg) {
+      case json.HelloOkMsg():
+        _helloCompleter?.complete();
+      case json.HelloErrorMsg(:final error):
+        _helloCompleter?.completeError(
+          ServerException.fromJson(error),
+        );
+      case json.ResponseOkMsg(:final requestId):
+        final completer = _pendingRequests.remove(requestId);
+        completer?.complete(msg);
+      case json.ResponseErrorMsg(:final requestId, :final error):
+        final completer = _pendingRequests.remove(requestId);
+        completer?.completeError(
+          ServerException.fromJson(error),
+        );
     }
   }
 
-  static Future<HranaWebsocketClient> connect(Uri uri,
-      {String? jwtToken}) async {
-    final channel =
-        WebSocketChannel.connect(uri, protocols: ['hrana3-protobuf']);
-    await channel.ready;
+  static Future<HranaWebsocketClient> connect(
+    Uri uri, {
+    String? jwtToken,
+  }) async {
+    final channel = await WebSocket.connect(
+      uri,
+      protocols: ['hrana3'],
+    );
 
     final client = HranaWebsocketClient._(channel);
     await client._hello(jwtToken);
@@ -195,22 +212,23 @@ final class HranaWebsocketStream implements HranaStream {
   @override
   Future<StatementResult> executeStatement(StatementDescription stmt) async {
     _ensureOpen();
-    final response = await _client.request(proto.RequestMsg(
-      execute: proto.ExecuteReq(
-        streamId: _id,
-        stmt: stmt.toStatement(),
-      ),
+    final response = await _client.request(json.Request.execute(
+      streamId: _id,
+      stmt: stmt.toStatement(),
     ));
 
-    return StatementResult.fromProto(response.execute.result);
+    final result = (response.response as json.ExecuteResp).result;
+    return StatementResult.fromJson(result);
   }
 
   @override
-  Future<proto.BatchResult> runBatch(proto.Batch batch) async {
+  Future<json.BatchResult> runBatch(json.Batch batch) async {
     _ensureOpen();
     final response = await _client.request(
-        proto.RequestMsg(batch: proto.BatchReq(batch: batch, streamId: _id)));
-    return response.batch.result;
+      json.Request.batch(batch: batch, streamId: _id),
+    );
+    final result = (response.response as json.BatchResp).result;
+    return result;
   }
 
   @override

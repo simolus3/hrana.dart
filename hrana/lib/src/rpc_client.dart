@@ -1,10 +1,12 @@
 @internal
 library;
 
+import 'dart:typed_data';
+
 import 'package:fixnum/fixnum.dart';
 import 'package:meta/meta.dart';
 
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 
 abstract interface class HranaClient {
   Future<HranaStream> openStream();
@@ -20,7 +22,7 @@ abstract interface class HranaStream {
   Future<StatementResult> executeStatement(StatementDescription stmt);
   Future<SqlTextId> storeSql(String sql);
   Future<void> closeSql(SqlTextId id);
-  Future<proto.BatchResult> runBatch(proto.Batch batch);
+  Future<json.BatchResult> runBatch(json.Batch batch);
   Future<void> closeStream();
 
   Future<void> get closed;
@@ -29,29 +31,23 @@ abstract interface class HranaStream {
 extension type SqlTextId(int id) {}
 
 extension type Value(Object? value) {
-  factory Value._fromProto(proto.Value value) {
-    if (value.hasNull_1()) {
-      return Value(null);
-    } else if (value.hasInteger()) {
-      return Value(value.integer.toInt());
-    } else if (value.hasFloat()) {
-      return Value(value.float);
-    } else if (value.hasText()) {
-      return Value(value.text);
-    } else if (value.hasBlob()) {
-      return Value(value.blob);
-    } else {
-      throw UnsupportedError('Unknown proto value type $value');
-    }
+  factory Value._fromJson(json.Value value) {
+    return switch (value) {
+      json.NullValue() => Value(null),
+      json.IntegerValue(:final value) => Value(value.toInt()),
+      json.FloatValue(:final value) => Value(value),
+      json.TextValue(:final value) => Value(value),
+      json.BlobValue(:final value) => Value(value)
+    };
   }
 
-  proto.Value _toProto() {
+  json.Value _toJson() {
     return switch (this) {
-      null => proto.Value(null_1: proto.Value_Null()),
-      int i => proto.Value(integer: Int64(i)),
-      double f => proto.Value(float: f),
-      String t => proto.Value(text: t),
-      List<int> b => proto.Value(blob: b),
+      null => json.Value.null$(),
+      int i => json.Value.integer(Int64(i)),
+      double f => json.Value.float(f),
+      String t => json.Value.text(t),
+      List<int> b => json.Value.blob(Uint8List.fromList(b)),
       _ => throw UnsupportedError('Unsupported value $value'),
     };
   }
@@ -68,15 +64,16 @@ sealed class StatementDescription {
     required this.wantRows,
   });
 
-  proto.Stmt toStatement();
+  json.Stmt toStatement();
 
-  Iterable<proto.Value> _encodeArgs() {
-    return args.map((e) => e._toProto());
+  List<json.Value> _encodeArgs() {
+    return args.map((e) => e._toJson()).toList();
   }
 
-  Iterable<proto.NamedArg> _encodeNamedArgs() {
+  List<json.NamedArg> _encodeNamedArgs() {
     return namedArgs
-        .map((e) => proto.NamedArg(name: e.$1, value: e.$2._toProto()));
+        .map((e) => json.NamedArg(name: e.$1, value: e.$2._toJson()))
+        .toList();
   }
 }
 
@@ -91,8 +88,8 @@ final class SqlStatement extends StatementDescription {
   });
 
   @override
-  proto.Stmt toStatement() {
-    return proto.Stmt(
+  json.Stmt toStatement() {
+    return json.Stmt(
       sql: sql,
       args: _encodeArgs(),
       namedArgs: _encodeNamedArgs(),
@@ -112,8 +109,8 @@ final class StoredStatement extends StatementDescription {
   });
 
   @override
-  proto.Stmt toStatement() {
-    return proto.Stmt(
+  json.Stmt toStatement() {
+    return json.Stmt(
       sqlId: id.id,
       args: _encodeArgs(),
       namedArgs: _encodeNamedArgs(),
@@ -128,10 +125,10 @@ final class Column {
 
   Column({required this.name, required this.decltype});
 
-  factory Column._fromProto(proto.Col column) {
+  factory Column._fromJson(json.Col column) {
     return Column(
       name: column.name,
-      decltype: column.hasDecltype() ? column.decltype : null,
+      decltype: column.decltype,
     );
   }
 
@@ -154,20 +151,19 @@ final class StatementResult {
     required this.lastInsertRowId,
   });
 
-  factory StatementResult.fromProto(proto.StmtResult result) {
+  factory StatementResult.fromJson(json.StmtResult result) {
     return StatementResult(
       columns: [
-        for (final col in result.cols) Column._fromProto(col),
+        for (final col in result.cols) Column._fromJson(col),
       ],
       rows: [
         for (final row in result.rows)
           [
-            for (final value in row.values) Value._fromProto(value),
+            for (final value in row) Value._fromJson(value),
           ]
       ],
-      affectedRowCount: result.affectedRowCount.toInt(),
-      lastInsertRowId:
-          result.hasLastInsertRowid() ? result.lastInsertRowid.toInt() : null,
+      affectedRowCount: result.affectedRowCount,
+      lastInsertRowId: result.lastInsertRowid?.toInt(),
     );
   }
 

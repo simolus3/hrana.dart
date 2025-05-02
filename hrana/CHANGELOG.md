@@ -1,3 +1,7 @@
+## 0.4.1
+
+- Migrates to JSON protocol
+
 ## 0.4.0
 
 - __Breaking__: Move operations into `DatabaseSession` class obtained through

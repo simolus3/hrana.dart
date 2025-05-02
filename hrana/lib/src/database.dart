@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:sqlite3/common.dart';
+import 'package:web_socket/web_socket.dart';
 
 import 'exception.dart';
-import 'protocol.pb.dart' as proto;
+import 'protocol.json.dart' as json;
 import 'rpc_client.dart';
 import 'rpc_http_client.dart';
 import 'rpc_ws_client.dart';
@@ -38,7 +40,7 @@ final class Database {
       uri = uri.replace(scheme: 'https');
     }
     final client = switch (uri.scheme) {
-      'ws' || 'wss' => await HranaWebsocketClient.connect(
+      'ws' || 'wss' => await _connectWebSocket(
           uri,
           jwtToken: jwtToken,
         ),
@@ -54,6 +56,35 @@ final class Database {
     };
 
     return Database._(client);
+  }
+
+  /// Attempts to connect to a hrana server under the given [uri] using
+  /// WebSockets.
+  ///
+  /// If the connection is not upgraded to a WebSocket, it falls back to an
+  /// HTTP connection.
+  static Future<HranaClient> _connectWebSocket(
+    Uri uri, {
+    String? jwtToken,
+  }) async {
+    try {
+      return await HranaWebsocketClient.connect(uri, jwtToken: jwtToken);
+    } on WebSocketException catch (e, st) {
+      log(
+        'Failed to connect to WebSocket. Falling back to HTTP.',
+        error: e,
+        stackTrace: st,
+        name: 'Hrana',
+        level: 300, // Level.FINEST
+      );
+      final httpUri = uri.replace(
+        scheme: uri.scheme == 'ws' ? 'http' : 'https',
+      );
+      return HranaHttpClient.connect(
+        httpUri,
+        jwtToken: jwtToken,
+      );
+    }
   }
 
   /// Opens a database session on the server.
@@ -281,16 +312,18 @@ extension type BatchRequest._(int _id) {}
 
 /// Collects statements to run in a [Database.batch].
 final class BatchBuilder {
-  final proto.Batch _batch = proto.Batch();
+  final List<json.BatchStep> _batchSteps = [];
+  json.Batch get _batch => json.Batch(steps: _batchSteps);
+
   final DatabaseSession _session;
 
   BatchBuilder._(this._session);
 
-  (BatchRequest, proto.BatchCond?) _newRequest() {
-    final request = BatchRequest._(_batch.steps.length);
+  (BatchRequest, json.BatchCond?) _newRequest() {
+    final request = BatchRequest._(_batchSteps.length);
     return (
       request,
-      request._id == 0 ? null : proto.BatchCond(stepOk: request._id - 1)
+      request._id == 0 ? null : json.BatchCond.stepOk(request._id - 1)
     );
   }
 
@@ -301,7 +334,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
@@ -317,7 +350,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
@@ -333,7 +366,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, false)
           .toStatement(),
@@ -349,7 +382,7 @@ final class BatchBuilder {
     Map<String, Object?> namedArguments = const {},
   }) {
     final (request, cond) = _newRequest();
-    _batch.steps.add(proto.BatchStep(
+    _batchSteps.add(json.BatchStep(
       stmt: _session
           ._describe(sql, arguments, namedArguments, true)
           .toStatement(),
@@ -360,16 +393,16 @@ final class BatchBuilder {
 }
 
 final class BatchResult {
-  final proto.BatchResult _result;
+  final json.BatchResult _result;
 
   BatchResult._(this._result);
 
   StatementResult? _rawResult(BatchRequest request) {
-    if (_result.stepErrors[request._id] case proto.Error e) {
-      throw ServerException.fromProto(e);
+    if (_result.stepErrors[request._id] case json.StreamError e) {
+      throw ServerException.fromJson(e);
     }
-    if (_result.stepResults[request._id] case proto.StmtResult r) {
-      return StatementResult.fromProto(r);
+    if (_result.stepResults[request._id] case json.StmtResult r) {
+      return StatementResult.fromJson(r);
     }
 
     return null;
