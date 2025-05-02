@@ -6,18 +6,16 @@ import 'package:test/test.dart';
 
 import 'start_server.dart';
 
-typedef TargetServer = ({
-  String name,
-  Uri Function() uri,
-  String? Function() authToken
-});
+typedef TargetServer = ({Uri Function() uri, String? Function() authToken});
 
 /// The list of target servers to run the test suite against.
-List<TargetServer> get targetServers => [
-      withLocalServer(),
+List<(String name, TargetServer?)> get targetServers => [
+      ('localhost', withLocalServer()),
       if (Platform.environment['TURSO_API_TOKEN'] case final token?
           when token.isNotEmpty)
-        withTursoServer(),
+        ('turso cloud', withTursoServer())
+      else
+        ('turso cloud', null),
     ];
 
 TargetServer withLocalServer() {
@@ -34,7 +32,6 @@ TargetServer withLocalServer() {
   });
 
   return (
-    name: 'localhost',
     uri: () => Uri.parse('http://localhost:$port/'),
     authToken: () => null,
   );
@@ -67,7 +64,6 @@ TargetServer withTursoServer() {
   });
 
   return (
-    name: 'turso',
     uri: () => Uri.parse(databaseUrl),
     authToken: () => authToken,
   );

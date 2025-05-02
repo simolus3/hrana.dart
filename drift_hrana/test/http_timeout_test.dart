@@ -6,8 +6,11 @@ import 'target_server.dart';
 
 void main() {
   late AppDatabase database;
-  for (final server in targetServers) {
-    group(server.name, () {
+
+  for (final (name, target) in targetServers) {
+    group(name, skip: target == null ? 'Not available' : null, () {
+      late final server = target!;
+
       setUp(() {
         database = AppDatabase(
           HranaDatabase(server.uri(), jwtToken: server.authToken()),
