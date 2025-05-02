@@ -58,11 +58,13 @@ abstract class NamedArg with _$NamedArg {
 class Uint8ListConverter implements JsonConverter<Uint8List, String> {
   const Uint8ListConverter();
 
-  @override
-  Uint8List fromJson(String json) => base64Decode(json);
+  static const _codec = Base64Codec();
 
   @override
-  String toJson(Uint8List object) => base64Encode(object);
+  Uint8List fromJson(String json) => _codec.decode(_codec.normalize(json));
+
+  @override
+  String toJson(Uint8List object) => _codec.encode(object);
 }
 
 class Int64Converter implements JsonConverter<Int64, String> {
