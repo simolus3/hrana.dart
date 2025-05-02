@@ -8,7 +8,6 @@ import 'package:test/test.dart';
 import 'start_server.dart';
 
 typedef TargetServer = ({
-  String name,
   Uri Function(String scheme) uri,
   String? Function() authToken
 });
@@ -27,7 +26,6 @@ TargetServer withLocalServer() {
   });
 
   return (
-    name: 'localhost',
     uri: (scheme) => Uri.parse('$scheme://localhost:$port/'),
     authToken: () => null,
   );
@@ -45,7 +43,7 @@ TargetServer withTursoServer() {
       'db',
       'show',
       databaseName,
-      '--http-url',
+      '--url',
     ]);
     authToken = await _runProcess('turso', [
       'db',
@@ -60,7 +58,6 @@ TargetServer withTursoServer() {
   });
 
   return (
-    name: 'turso',
     uri: (scheme) {
       final uri = Uri.parse(databaseUrl);
       return uri.replace(
@@ -80,14 +77,18 @@ void main() {
   late DatabaseSession session;
 
   final targetServers = [
-    withLocalServer(),
+    ('localhost', withLocalServer()),
     if (Platform.environment['TURSO_API_TOKEN'] case final token?
         when token.isNotEmpty)
-      withTursoServer(),
+      ('turso cloud', withTursoServer())
+    else
+      ('turso cloud', null)
   ];
 
-  for (final server in targetServers) {
-    group(server.name, () {
+  for (final (name, target) in targetServers) {
+    group(name, () {
+      late final server = target!;
+
       for (final scheme in const ['http', 'ws']) {
         group(scheme, () {
           setUp(() async {
@@ -254,7 +255,7 @@ CREATE TABLE users (
           });
         });
       }
-    });
+    }, skip: target == null ? 'Not available' : null);
   }
 }
 
