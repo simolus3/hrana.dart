@@ -92,7 +92,9 @@ jobs:
           fail-on-cache-miss: true
 
       - name: "Install Turso CLI"
-        run: curl -sSfL https://get.tur.so/install.sh | bash
+        run: |
+          curl -sSfL https://get.tur.so/install.sh | bash
+          echo "PATH=$PATH:/home/runner/.turso" >> $GITHUB_ENV
         env:
           TURSO_INSTALL_SKIP_SIGNUP: 1
 
