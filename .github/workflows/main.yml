@@ -91,6 +91,9 @@ jobs:
           key: ${{ needs.analyze.outputs.cache-key }}
           fail-on-cache-miss: true
 
+      - name: "Install Turso CLI"
+        run: curl -sSfL https://get.tur.so/install.sh | bash
+
       - name: "Get dependencies"
         working-directory: ${{ matrix.package }}
         run: dart pub get --offline
@@ -98,3 +101,5 @@ jobs:
       - name: "Run tests"
         working-directory: ${{ matrix.package }}
         run: dart test
+        env:
+          TURSO_API_TOKEN: ${{ secrets.TURSO_API_TOKEN }}
