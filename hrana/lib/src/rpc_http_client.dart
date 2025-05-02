@@ -162,12 +162,6 @@ final class _HranaHttpStream implements HranaStream {
     final response = json.PipelineResp.fromJson(
       _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>,
     );
-    final expectsBaton = request == null || request is! json.CloseStreamReq;
-    if (response.baton == null && expectsBaton) {
-      // The server has closed the stream.
-      _markClosed();
-      throw const ConnectionClosed();
-    }
 
     _baton = response.baton;
     _baseUri = switch (response.baseUrl) {
