@@ -1,101 +1,102 @@
 import 'dart:async';
 
-import 'package:docker_process/docker_process.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_hrana/drift_hrana.dart';
 import 'package:test/test.dart';
 
 import '../example/main.dart';
-import 'start_server.dart';
+import 'target_server.dart';
 
 void main() {
-  late int port;
-  late DockerProcess server;
-
-  setUpAll(() async {
-    port = await selectFreePort();
-    server = await startSqld(port);
-  });
-
-  tearDownAll(() async {
-    await server.stop();
-  });
-
   late AppDatabase database;
 
-  setUp(() {
-    database = AppDatabase(HranaDatabase(Uri.parse('http://localhost:$port/')));
-  });
-  tearDown(() async {
-    await database.close();
-  });
+  for (final (name, target) in targetServers) {
+    group(name, skip: target == null ? 'Not available' : null, () {
+      late final server = target!;
 
-  test('reports dialect as sqlite', () async {
-    expect(database.executor.dialect, SqlDialect.sqlite);
-  });
+      setUp(() {
+        database = AppDatabase(
+          HranaDatabase(
+            server.uri(),
+            jwtToken: server.authToken(),
+          ),
+        );
+      });
 
-  test('statements', () async {
-    final note = await database.notes
-        .insertReturning(NotesCompanion.insert(content: 'my first todo note'));
-    expect(note.content, 'my first todo note');
+      tearDown(() async {
+        await database.close();
+      });
 
-    final all = await database.notes.all().get();
-    expect(all, contains(note));
-  });
+      test('reports dialect as sqlite', () async {
+        expect(database.executor.dialect, SqlDialect.sqlite);
+      });
 
-  test('transactions', () async {
-    await database.notes
-        .insertOne(NotesCompanion.insert(content: 'about to be deleted'));
-    await database.transaction(() async {
-      await database.notes.delete().go();
-    });
+      test('statements', () async {
+        final note = await database.notes.insertReturning(
+            NotesCompanion.insert(content: 'my first todo note'));
+        expect(note.content, 'my first todo note');
 
-    expect(await database.notes.all().get(), isEmpty);
-  });
+        final all = await database.notes.all().get();
+        expect(all, contains(note));
+      });
 
-  test('concurrent transactions and top-level statemens', () async {
-    await database.notes
-        .insertOne(NotesCompanion.insert(content: 'about to be deleted'));
-    final completeTransaction = Completer<void>();
+      test('transactions', () async {
+        await database.notes
+            .insertOne(NotesCompanion.insert(content: 'about to be deleted'));
+        await database.transaction(() async {
+          await database.notes.delete().go();
+        });
 
-    final transactionDone = database.transaction(() async {
-      await database.notes.delete().go();
-      await completeTransaction.future;
-    });
+        expect(await database.notes.all().get(), isEmpty);
+      });
 
-    expect(await database.notes.all().get(), isNotEmpty);
-    completeTransaction.complete();
-    await transactionDone;
-    expect(await database.notes.all().get(), isEmpty);
-  });
+      test('concurrent transactions and top-level statemens', () async {
+        await database.notes
+            .insertOne(NotesCompanion.insert(content: 'about to be deleted'));
+        final completeTransaction = Completer<void>();
 
-  test('supports table migrations', () async {
-    // Regression test for https://github.com/simolus3/drift/issues/3088
+        final transactionDone = database.transaction(() async {
+          await database.notes.delete().go();
+          await completeTransaction.future;
+        });
 
-    await database.notes
-        .insertOne(NotesCompanion.insert(content: 'existing content'));
+        expect(await database.notes.all().get(), isNotEmpty);
+        completeTransaction.complete();
+        await transactionDone;
+        expect(await database.notes.all().get(), isEmpty);
+      });
 
-    // create unrelated table and view
-    await database.customStatement('''
+      test('supports table migrations', () async {
+        // Regression test for https://github.com/simolus3/drift/issues/3088
+
+        await database.notes
+            .insertOne(NotesCompanion.insert(content: 'existing content'));
+
+        // create unrelated table and view
+        await database.customStatement('''
 CREATE TABLE unrelated (
   id INTEGER NOT NULL PRIMARY KEY,
   content TEXT
 );
 ''');
-    await database.customInsert('INSERT INTO unrelated (content) VALUES (?)',
-        variables: [Variable.withString('foo')]);
-    await database.customStatement(
-        'CREATE VIEW unrelated_view AS SELECT * FROM unrelated;');
+        await database.customInsert(
+            'INSERT INTO unrelated (content) VALUES (?)',
+            variables: [Variable.withString('foo')]);
+        await database.customStatement(
+            'CREATE VIEW unrelated_view AS SELECT * FROM unrelated;');
 
-    // Issue table migration. Drift normally tries to enable the legacy alter
-    // table behavior for this, which is disabled with Turso.
-    await Migrator(database).alterTable(TableMigration(database.notes));
+        // Issue table migration. Drift normally tries to enable the legacy alter
+        // table behavior for this, which is disabled with Turso.
+        await Migrator(database).alterTable(TableMigration(database.notes));
 
-    // Table should still be there
-    expect(await database.notes.all().get(), hasLength(1));
+        // Table should still be there
+        expect(await database.notes.all().get(), hasLength(1));
 
-    // And the unrelated table with data should also work.
-    expect(await database.customSelect('SELECT * FROM unrelated_view').get(),
-        hasLength(1));
-  });
+        // And the unrelated table with data should also work.
+        expect(
+            await database.customSelect('SELECT * FROM unrelated_view').get(),
+            hasLength(1));
+      });
+    });
+  }
 }

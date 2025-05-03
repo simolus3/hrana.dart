@@ -1,3 +1,8 @@
+
+## 1.0.5
+
+- Stop using `user_version` pragma for migration, improving support with Turso.
+
 ## 1.0.4
 
 - Fix transactions not working.
