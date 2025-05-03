@@ -151,6 +151,12 @@ final class _HranaTransaction extends _BaseHranaDelegate {
   }
 }
 
+/// A [DbVersionDelegate] implementation for hrana databases backed by a table
+/// storing the current version in the database.
+///
+/// While drift would use the `user_version` pragma for regular SQLite
+/// databases, some hrana servers (most notably Turso's cloud offering) don't
+/// support that.
 final class _HranaVersionDelegate extends DynamicVersionDelegate {
   final _HranaDelegate delegate;
 
