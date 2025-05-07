@@ -253,6 +253,31 @@ CREATE TABLE users (
               expect(results.selectResult(1 as BatchRequest), isNull);
             });
           });
+
+          // Ensures that requests are buffered against the built-in resource
+          // pool to prevent rate limits from the server.
+          test('pools requests', () async {
+            Future<int> request(int i) async {
+              final session = await database.openSession();
+              try {
+                await session.execute('BEGIN;');
+                final result = await session.select('SELECT $i;');
+                await session.execute('COMMIT;');
+                return result.rows.first.first as int;
+              } finally {
+                await session.close();
+              }
+            }
+
+            final requests = <Future<int>>[];
+            for (var i = 0; i < 1000; i++) {
+              requests.add(request(i));
+            }
+            expect(
+              Future.wait(requests, eagerError: true),
+              completion(unorderedEquals(List.generate(1000, (i) => i))),
+            );
+          });
         });
       }
     }, skip: target == null ? 'Not available' : null);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:pool/pool.dart';
 import 'package:web_socket/web_socket.dart';
 
 import 'exception.dart';
@@ -19,6 +20,12 @@ final class HranaWebsocketClient implements HranaClient {
   int _nextRequestId = 0;
   int _nextStreamId = 0;
   int _nextSqlTextId = 0;
+
+  /// The maximum number of concurrent streams that can be opened.
+  ///
+  /// This limit is set by the LibSQL server and is not configurable.
+  static const int _maxConcurrentStreams = 128;
+  final _concurrentStreams = Pool(_maxConcurrentStreams);
 
   final List<HranaWebsocketStream> _streams = [];
 
@@ -72,8 +79,9 @@ final class HranaWebsocketClient implements HranaClient {
 
   @override
   Future<HranaStream> openStream() async {
+    final streamLock = await _concurrentStreams.request();
     final id = await openStreamId();
-    final stream = HranaWebsocketStream(this, id);
+    final stream = HranaWebsocketStream(this, id, streamLock);
     _streams.add(stream);
 
     return stream;
@@ -171,11 +179,12 @@ final class HranaWebsocketClient implements HranaClient {
 final class HranaWebsocketStream implements HranaStream {
   final HranaWebsocketClient _client;
   final SqlStreamId _id;
+  final PoolResource _streamLock;
 
   bool _isClosed = false;
   final Completer<void> _closed = Completer();
 
-  HranaWebsocketStream(this._client, this._id);
+  HranaWebsocketStream(this._client, this._id, this._streamLock);
 
   void _ensureOpen() {
     if (_isClosed) {
@@ -242,6 +251,7 @@ final class HranaWebsocketStream implements HranaStream {
       _isClosed = true;
       _client._streams.remove(this);
       _closed.complete();
+      _streamLock.release();
     }
   }
 }

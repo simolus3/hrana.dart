@@ -1,3 +1,7 @@
+## 0.4.2
+
+- Pool requests to prevent rate limiting by server.
+
 ## 0.4.1
 
 - Migrates to JSON protocol
