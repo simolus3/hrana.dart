@@ -17,6 +17,16 @@ void _log(String message) {
   );
 }
 
+void _logError(String message, [Object? error, StackTrace? stackTrace]) {
+  log(
+    message,
+    name: 'Hrana',
+    level: 1000, // Level.SEVERE
+    error: error,
+    stackTrace: stackTrace,
+  );
+}
+
 final class HranaHttpClient implements HranaClient {
   HranaHttpClient._(
     this._uri, {
@@ -32,6 +42,12 @@ final class HranaHttpClient implements HranaClient {
 
   final Completer<void> _closed = Completer();
   var _isClosed = false;
+
+  /// The maximum number of concurrent streams that can be opened.
+  ///
+  /// This limit is set by the LibSQL server and is not configurable.
+  static const int _maxConcurrentStreams = 128;
+  final _concurrentStreams = Pool(_maxConcurrentStreams);
 
   var _nextSqlTextId = 0;
   final List<_HranaHttpStream> _streams = [];
@@ -68,7 +84,8 @@ final class HranaHttpClient implements HranaClient {
     if (_isClosed) {
       throw const ConnectionClosed();
     }
-    final stream = _HranaHttpStream(this);
+    final streamLock = await _concurrentStreams.request();
+    final stream = _HranaHttpStream(this, streamLock);
     _streams.add(stream);
 
     await stream.checkOpen();
@@ -99,6 +116,7 @@ final class HranaHttpClient implements HranaClient {
 
 final class _HranaHttpStream implements HranaStream {
   final HranaHttpClient _client;
+  final PoolResource _streamLock;
 
   static final _codec = const JsonCodec().fuse(utf8);
 
@@ -113,13 +131,14 @@ final class _HranaHttpStream implements HranaStream {
   final Completer<void> _closed = Completer();
   bool _isClosed = false;
 
-  _HranaHttpStream(this._client);
+  _HranaHttpStream(this._client, this._streamLock);
 
   void _markClosed() {
     if (!_isClosed) {
       _isClosed = true;
       _closed.complete();
       _client._streams.remove(this);
+      _streamLock.release();
     }
   }
 
@@ -188,7 +207,8 @@ final class _HranaHttpStream implements HranaStream {
     try {
       await _sendStreamRequest(null);
       return true;
-    } on ServerException {
+    } on ServerException catch (e, st) {
+      _logError('Error in stream', e, st);
       _markClosed();
       return false;
     } on ConnectionClosed {
