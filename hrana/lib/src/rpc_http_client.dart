@@ -175,7 +175,7 @@ final class _HranaHttpStream implements HranaStream {
     if (pipelineResp.statusCode case < 200 || >= 300) {
       try {
         final jsonResponse = json.StreamError.fromJson(
-          jsonDecode(pipelineResp.body) as Map<String, Object?>,
+          _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>,
         );
         throw ServerException.fromJson(jsonResponse);
       } on FormatException {
