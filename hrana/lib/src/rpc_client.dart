@@ -172,3 +172,10 @@ final class StatementResult {
     return 'StatementResult(cols = $columns, rows = $rows, count = $affectedRowCount, last id = $lastInsertRowId)';
   }
 }
+
+/// The maximum number of concurrent streams that can be opened.
+///
+/// This limit is set by the LibSQL server and cannot be configured by clients.
+/// While the default is 128, it looks like free Turso databases have a much
+/// lower limit.
+const int maxConcurrentStreams = 32;

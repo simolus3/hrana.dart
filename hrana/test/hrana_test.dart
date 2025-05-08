@@ -270,13 +270,18 @@ CREATE TABLE users (
             }
 
             final requests = <Future<int>>[];
+            final errors = <(Object, StackTrace)>[];
+
             for (var i = 0; i < 1000; i++) {
-              requests.add(request(i));
+              requests.add(request(i).onError((Object e, s) {
+                errors.add((e, s));
+                return -1;
+              }));
             }
-            expect(
-              Future.wait(requests, eagerError: true),
-              completion(unorderedEquals(List.generate(1000, (i) => i))),
-            );
+
+            final responses = await Future.wait(requests);
+            expect(errors, isEmpty);
+            expect(responses, unorderedEquals(List.generate(1000, (i) => i)));
           });
         });
       }

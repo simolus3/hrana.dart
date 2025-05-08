@@ -21,11 +21,7 @@ final class HranaWebsocketClient implements HranaClient {
   int _nextStreamId = 0;
   int _nextSqlTextId = 0;
 
-  /// The maximum number of concurrent streams that can be opened.
-  ///
-  /// This limit is set by the LibSQL server and is not configurable.
-  static const int _maxConcurrentStreams = 128;
-  final _concurrentStreams = Pool(_maxConcurrentStreams);
+  final _concurrentStreams = Pool(maxConcurrentStreams);
 
   final List<HranaWebsocketStream> _streams = [];
 

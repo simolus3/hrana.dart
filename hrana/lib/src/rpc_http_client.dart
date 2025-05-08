@@ -43,11 +43,7 @@ final class HranaHttpClient implements HranaClient {
   final Completer<void> _closed = Completer();
   var _isClosed = false;
 
-  /// The maximum number of concurrent streams that can be opened.
-  ///
-  /// This limit is set by the LibSQL server and is not configurable.
-  static const int _maxConcurrentStreams = 128;
-  final _concurrentStreams = Pool(_maxConcurrentStreams);
+  final _concurrentStreams = Pool(maxConcurrentStreams);
 
   var _nextSqlTextId = 0;
   final List<_HranaHttpStream> _streams = [];
@@ -174,9 +170,14 @@ final class _HranaHttpStream implements HranaStream {
     );
     if (pipelineResp.statusCode case < 200 || >= 300) {
       try {
-        final jsonResponse = json.StreamError.fromJson(
-          _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>,
-        );
+        final decoded =
+            _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>;
+
+        if (decoded case {'error': final String desc}) {
+          throw ServerException(message: desc, code: null);
+        }
+
+        final jsonResponse = json.StreamError.fromJson(decoded);
         throw ServerException.fromJson(jsonResponse);
       } on FormatException {
         throw ServerException(
