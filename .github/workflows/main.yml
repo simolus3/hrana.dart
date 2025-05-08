@@ -104,6 +104,6 @@ jobs:
 
       - name: "Run tests"
         working-directory: ${{ matrix.package }}
-        run: dart test
+        run: dart test -j1
         env:
           TURSO_API_TOKEN: ${{ secrets.TURSO_API_TOKEN }}
