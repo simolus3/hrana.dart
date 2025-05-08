@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'protocol.json.dart' as json;
 
 /// Superclass for all exceptions thrown by `package:hrana`.
@@ -15,6 +17,7 @@ final class ConnectionClosed implements HranaException {
 
 /// An exception thrown when the libsql server reports an error response for
 /// a request.
+@immutable
 final class ServerException implements HranaException {
   /// The error message reported from the server.
   final String message;
@@ -32,4 +35,14 @@ final class ServerException implements HranaException {
   String toString() {
     return 'HranaException($code): $message';
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ServerException &&
+        other.message == message &&
+        other.code == code;
+  }
+
+  @override
+  int get hashCode => Object.hash(message, code);
 }

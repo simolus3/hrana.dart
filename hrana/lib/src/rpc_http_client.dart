@@ -173,10 +173,17 @@ final class _HranaHttpStream implements HranaStream {
       body: _codec.encode(pipelineReq.toJson()),
     );
     if (pipelineResp.statusCode case < 200 || >= 300) {
-      throw ServerException(
-        message: 'Failed to run pipeline: "${pipelineResp.body}"',
-        code: pipelineResp.statusCode.toString(),
-      );
+      try {
+        final jsonResponse = json.StreamError.fromJson(
+          jsonDecode(pipelineResp.body) as Map<String, Object?>,
+        );
+        throw ServerException.fromJson(jsonResponse);
+      } on FormatException {
+        throw ServerException(
+          message: pipelineResp.body,
+          code: pipelineResp.statusCode.toString(),
+        );
+      }
     }
     final response = json.PipelineResp.fromJson(
       _codec.decode(pipelineResp.bodyBytes) as Map<String, Object?>,
