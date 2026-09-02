@@ -1,0 +1,10 @@
+name: _workspace
+environment:
+  sdk: ^3.6.0
+
+workspace:
+  - drift_hrana
+  - hrana
+
+dev_dependencies:
+  lints: ^6.0.0
