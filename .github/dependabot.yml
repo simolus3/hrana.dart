@@ -12,8 +12,6 @@ updates:
   - package-ecosystem: "pub"
     directories:
       - "/"
-      - "/hrana"
-      - "/drift_hrana"
     schedule:
       interval: "quarterly"
     versioning-strategy: increase-if-necessary
