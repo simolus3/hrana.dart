@@ -1,7 +1,6 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'protocol.json.dart';
@@ -10,6 +9,7 @@ part of 'protocol.json.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -30,20 +30,26 @@ mixin _$StreamError {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as StreamError;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is StreamError &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.code, code) || other.code == code));
+            (identical(other.message, _this.message) ||
+                other.message == _this.message) &&
+            (identical(other.code, _this.code) || other.code == _this.code));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message, code);
+  int get hashCode {
+    final _this = this as StreamError;
+    return Object.hash(runtimeType, _this.message, _this.code);
+  }
 
   @override
   String toString() {
-    return 'StreamError(message: $message, code: $code)';
+    final _this = this as StreamError;
+    return 'StreamError(message: ${_this.message}, code: ${_this.code})';
   }
 }
 
@@ -71,7 +77,7 @@ class _$StreamErrorCopyWithImpl<$Res> implements $StreamErrorCopyWith<$Res> {
     Object? message = null,
     Object? code = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(StreamError(
       message: null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -81,6 +87,163 @@ class _$StreamErrorCopyWithImpl<$Res> implements $StreamErrorCopyWith<$Res> {
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [StreamError].
+extension StreamErrorPatterns on StreamError {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_StreamError value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_StreamError value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_StreamError value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String message, String? code)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError() when $default != null:
+        return $default(_that.message, _that.code);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String message, String? code) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError():
+        return $default(_that.message, _that.code);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String message, String? code)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StreamError() when $default != null:
+        return $default(_that.message, _that.code);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -122,7 +285,9 @@ class _StreamError extends StreamError {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message, code);
+  int get hashCode {
+    return Object.hash(runtimeType, message, code);
+  }
 
   @override
   String toString() {
@@ -173,7 +338,7 @@ class __$StreamErrorCopyWithImpl<$Res> implements _$StreamErrorCopyWith<$Res> {
 mixin _$Stmt {
   String? get sql;
   int? get sqlId;
-  List<Value> get args;
+  List<HranaValue> get args;
   List<NamedArg> get namedArgs;
   bool? get wantRows;
 
@@ -189,30 +354,37 @@ mixin _$Stmt {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as Stmt;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Stmt &&
-            (identical(other.sql, sql) || other.sql == sql) &&
-            (identical(other.sqlId, sqlId) || other.sqlId == sqlId) &&
-            const DeepCollectionEquality().equals(other.args, args) &&
-            const DeepCollectionEquality().equals(other.namedArgs, namedArgs) &&
-            (identical(other.wantRows, wantRows) ||
-                other.wantRows == wantRows));
+            (identical(other.sql, _this.sql) || other.sql == _this.sql) &&
+            (identical(other.sqlId, _this.sqlId) ||
+                other.sqlId == _this.sqlId) &&
+            const DeepCollectionEquality().equals(other.args, _this.args) &&
+            const DeepCollectionEquality()
+                .equals(other.namedArgs, _this.namedArgs) &&
+            (identical(other.wantRows, _this.wantRows) ||
+                other.wantRows == _this.wantRows));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      sql,
-      sqlId,
-      const DeepCollectionEquality().hash(args),
-      const DeepCollectionEquality().hash(namedArgs),
-      wantRows);
+  int get hashCode {
+    final _this = this as Stmt;
+    return Object.hash(
+        runtimeType,
+        _this.sql,
+        _this.sqlId,
+        const DeepCollectionEquality().hash(_this.args),
+        const DeepCollectionEquality().hash(_this.namedArgs),
+        _this.wantRows);
+  }
 
   @override
   String toString() {
-    return 'Stmt(sql: $sql, sqlId: $sqlId, args: $args, namedArgs: $namedArgs, wantRows: $wantRows)';
+    final _this = this as Stmt;
+    return 'Stmt(sql: ${_this.sql}, sqlId: ${_this.sqlId}, args: ${_this.args}, namedArgs: ${_this.namedArgs}, wantRows: ${_this.wantRows})';
   }
 }
 
@@ -224,7 +396,7 @@ abstract mixin class $StmtCopyWith<$Res> {
   $Res call(
       {String? sql,
       int? sqlId,
-      List<Value> args,
+      List<HranaValue> args,
       List<NamedArg> namedArgs,
       bool? wantRows});
 }
@@ -247,7 +419,7 @@ class _$StmtCopyWithImpl<$Res> implements $StmtCopyWith<$Res> {
     Object? namedArgs = null,
     Object? wantRows = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(Stmt(
       sql: freezed == sql
           ? _self.sql
           : sql // ignore: cast_nullable_to_non_nullable
@@ -259,7 +431,7 @@ class _$StmtCopyWithImpl<$Res> implements $StmtCopyWith<$Res> {
       args: null == args
           ? _self.args
           : args // ignore: cast_nullable_to_non_nullable
-              as List<Value>,
+              as List<HranaValue>,
       namedArgs: null == namedArgs
           ? _self.namedArgs
           : namedArgs // ignore: cast_nullable_to_non_nullable
@@ -272,14 +444,180 @@ class _$StmtCopyWithImpl<$Res> implements $StmtCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [Stmt].
+extension StmtPatterns on Stmt {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Stmt value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Stmt value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Stmt value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String? sql, int? sqlId, List<HranaValue> args,
+            List<NamedArg> namedArgs, bool? wantRows)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt() when $default != null:
+        return $default(_that.sql, _that.sqlId, _that.args, _that.namedArgs,
+            _that.wantRows);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String? sql, int? sqlId, List<HranaValue> args,
+            List<NamedArg> namedArgs, bool? wantRows)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt():
+        return $default(_that.sql, _that.sqlId, _that.args, _that.namedArgs,
+            _that.wantRows);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String? sql, int? sqlId, List<HranaValue> args,
+            List<NamedArg> namedArgs, bool? wantRows)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Stmt() when $default != null:
+        return $default(_that.sql, _that.sqlId, _that.args, _that.namedArgs,
+            _that.wantRows);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _Stmt extends Stmt {
   const _Stmt(
       {this.sql,
       this.sqlId,
-      final List<Value> args = const [],
-      final List<NamedArg> namedArgs = const [],
+      List<HranaValue> args = const [],
+      List<NamedArg> namedArgs = const [],
       this.wantRows})
       : _args = args,
         _namedArgs = namedArgs,
@@ -290,10 +628,10 @@ class _Stmt extends Stmt {
   final String? sql;
   @override
   final int? sqlId;
-  final List<Value> _args;
+  final List<HranaValue> _args;
   @override
   @JsonKey()
-  List<Value> get args {
+  List<HranaValue> get args {
     if (_args is EqualUnmodifiableListView) return _args;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_args);
@@ -333,22 +671,24 @@ class _Stmt extends Stmt {
             other is _Stmt &&
             (identical(other.sql, sql) || other.sql == sql) &&
             (identical(other.sqlId, sqlId) || other.sqlId == sqlId) &&
-            const DeepCollectionEquality().equals(other._args, _args) &&
+            const DeepCollectionEquality().equals(other.args, _args) &&
             const DeepCollectionEquality()
-                .equals(other._namedArgs, _namedArgs) &&
+                .equals(other.namedArgs, _namedArgs) &&
             (identical(other.wantRows, wantRows) ||
                 other.wantRows == wantRows));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      sql,
-      sqlId,
-      const DeepCollectionEquality().hash(_args),
-      const DeepCollectionEquality().hash(_namedArgs),
-      wantRows);
+  int get hashCode {
+    return Object.hash(
+        runtimeType,
+        sql,
+        sqlId,
+        const DeepCollectionEquality().hash(_args),
+        const DeepCollectionEquality().hash(_namedArgs),
+        wantRows);
+  }
 
   @override
   String toString() {
@@ -365,7 +705,7 @@ abstract mixin class _$StmtCopyWith<$Res> implements $StmtCopyWith<$Res> {
   $Res call(
       {String? sql,
       int? sqlId,
-      List<Value> args,
+      List<HranaValue> args,
       List<NamedArg> namedArgs,
       bool? wantRows});
 }
@@ -400,7 +740,7 @@ class __$StmtCopyWithImpl<$Res> implements _$StmtCopyWith<$Res> {
       args: null == args
           ? _self._args
           : args // ignore: cast_nullable_to_non_nullable
-              as List<Value>,
+              as List<HranaValue>,
       namedArgs: null == namedArgs
           ? _self._namedArgs
           : namedArgs // ignore: cast_nullable_to_non_nullable
@@ -416,7 +756,7 @@ class __$StmtCopyWithImpl<$Res> implements _$StmtCopyWith<$Res> {
 /// @nodoc
 mixin _$NamedArg {
   String get name;
-  Value get value;
+  HranaValue get value;
 
   /// Create a copy of NamedArg
   /// with the given fields replaced by the non-null parameter values.
@@ -430,20 +770,26 @@ mixin _$NamedArg {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as NamedArg;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NamedArg &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.name, _this.name) || other.name == _this.name) &&
+            (identical(other.value, _this.value) ||
+                other.value == _this.value));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value);
+  int get hashCode {
+    final _this = this as NamedArg;
+    return Object.hash(runtimeType, _this.name, _this.value);
+  }
 
   @override
   String toString() {
-    return 'NamedArg(name: $name, value: $value)';
+    final _this = this as NamedArg;
+    return 'NamedArg(name: ${_this.name}, value: ${_this.value})';
   }
 }
 
@@ -452,9 +798,9 @@ abstract mixin class $NamedArgCopyWith<$Res> {
   factory $NamedArgCopyWith(NamedArg value, $Res Function(NamedArg) _then) =
       _$NamedArgCopyWithImpl;
   @useResult
-  $Res call({String name, Value value});
+  $Res call({String name, HranaValue value});
 
-  $ValueCopyWith<$Res> get value;
+  $HranaValueCopyWith<$Res> get value;
 }
 
 /// @nodoc
@@ -472,7 +818,7 @@ class _$NamedArgCopyWithImpl<$Res> implements $NamedArgCopyWith<$Res> {
     Object? name = null,
     Object? value = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(NamedArg(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -480,7 +826,7 @@ class _$NamedArgCopyWithImpl<$Res> implements $NamedArgCopyWith<$Res> {
       value: null == value
           ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
-              as Value,
+              as HranaValue,
     ));
   }
 
@@ -488,10 +834,167 @@ class _$NamedArgCopyWithImpl<$Res> implements $NamedArgCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ValueCopyWith<$Res> get value {
-    return $ValueCopyWith<$Res>(_self.value, (value) {
+  $HranaValueCopyWith<$Res> get value {
+    return $HranaValueCopyWith<$Res>(_self.value, (value) {
       return _then(_self.copyWith(value: value));
     });
+  }
+}
+
+/// Adds pattern-matching-related methods to [NamedArg].
+extension NamedArgPatterns on NamedArg {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_NamedArg value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_NamedArg value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_NamedArg value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String name, HranaValue value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg() when $default != null:
+        return $default(_that.name, _that.value);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String name, HranaValue value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg():
+        return $default(_that.name, _that.value);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String name, HranaValue value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NamedArg() when $default != null:
+        return $default(_that.name, _that.value);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -505,7 +1008,7 @@ class _NamedArg extends NamedArg {
   @override
   final String name;
   @override
-  final Value value;
+  final HranaValue value;
 
   /// Create a copy of NamedArg
   /// with the given fields replaced by the non-null parameter values.
@@ -533,7 +1036,9 @@ class _NamedArg extends NamedArg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value);
+  int get hashCode {
+    return Object.hash(runtimeType, name, value);
+  }
 
   @override
   String toString() {
@@ -548,10 +1053,10 @@ abstract mixin class _$NamedArgCopyWith<$Res>
       __$NamedArgCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, Value value});
+  $Res call({String name, HranaValue value});
 
   @override
-  $ValueCopyWith<$Res> get value;
+  $HranaValueCopyWith<$Res> get value;
 }
 
 /// @nodoc
@@ -577,7 +1082,7 @@ class __$NamedArgCopyWithImpl<$Res> implements _$NamedArgCopyWith<$Res> {
       value: null == value
           ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
-              as Value,
+              as HranaValue,
     ));
   }
 
@@ -585,14 +1090,14 @@ class __$NamedArgCopyWithImpl<$Res> implements _$NamedArgCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ValueCopyWith<$Res> get value {
-    return $ValueCopyWith<$Res>(_self.value, (value) {
+  $HranaValueCopyWith<$Res> get value {
+    return $HranaValueCopyWith<$Res>(_self.value, (value) {
       return _then(_self.copyWith(value: value));
     });
   }
 }
 
-Value _$ValueFromJson(Map<String, dynamic> json) {
+HranaValue _$HranaValueFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
     case 'null':
       return NullValue.fromJson(json);
@@ -607,19 +1112,19 @@ Value _$ValueFromJson(Map<String, dynamic> json) {
 
     default:
       throw CheckedFromJsonException(
-          json, 'type', 'Value', 'Invalid union type "${json['type']}"!');
+          json, 'type', 'HranaValue', 'Invalid union type "${json['type']}"!');
   }
 }
 
 /// @nodoc
-mixin _$Value {
-  /// Serializes this Value to a JSON map.
+mixin _$HranaValue {
+  /// Serializes this HranaValue to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Value);
+        (other.runtimeType == runtimeType && other is HranaValue);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -628,19 +1133,250 @@ mixin _$Value {
 
   @override
   String toString() {
-    return 'Value()';
+    return 'HranaValue()';
   }
 }
 
 /// @nodoc
-class $ValueCopyWith<$Res> {
-  $ValueCopyWith(Value _, $Res Function(Value) __);
+class $HranaValueCopyWith<$Res> {
+  $HranaValueCopyWith(HranaValue _, $Res Function(HranaValue) __);
+}
+
+/// Adds pattern-matching-related methods to [HranaValue].
+extension HranaValuePatterns on HranaValue {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NullValue value)? null$,
+    TResult Function(IntegerValue value)? integer,
+    TResult Function(FloatValue value)? float,
+    TResult Function(TextValue value)? text,
+    TResult Function(BlobValue value)? blob,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue() when null$ != null:
+        return null$(_that);
+      case IntegerValue() when integer != null:
+        return integer(_that);
+      case FloatValue() when float != null:
+        return float(_that);
+      case TextValue() when text != null:
+        return text(_that);
+      case BlobValue() when blob != null:
+        return blob(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NullValue value) null$,
+    required TResult Function(IntegerValue value) integer,
+    required TResult Function(FloatValue value) float,
+    required TResult Function(TextValue value) text,
+    required TResult Function(BlobValue value) blob,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue():
+        return null$(_that);
+      case IntegerValue():
+        return integer(_that);
+      case FloatValue():
+        return float(_that);
+      case TextValue():
+        return text(_that);
+      case BlobValue():
+        return blob(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NullValue value)? null$,
+    TResult? Function(IntegerValue value)? integer,
+    TResult? Function(FloatValue value)? float,
+    TResult? Function(TextValue value)? text,
+    TResult? Function(BlobValue value)? blob,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue() when null$ != null:
+        return null$(_that);
+      case IntegerValue() when integer != null:
+        return integer(_that);
+      case FloatValue() when float != null:
+        return float(_that);
+      case TextValue() when text != null:
+        return text(_that);
+      case BlobValue() when blob != null:
+        return blob(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? null$,
+    TResult Function(@Int64Converter() Int64 value)? integer,
+    TResult Function(double value)? float,
+    TResult Function(String value)? text,
+    TResult Function(
+            @Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value)?
+        blob,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue() when null$ != null:
+        return null$();
+      case IntegerValue() when integer != null:
+        return integer(_that.value);
+      case FloatValue() when float != null:
+        return float(_that.value);
+      case TextValue() when text != null:
+        return text(_that.value);
+      case BlobValue() when blob != null:
+        return blob(_that.value);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() null$,
+    required TResult Function(@Int64Converter() Int64 value) integer,
+    required TResult Function(double value) float,
+    required TResult Function(String value) text,
+    required TResult Function(
+            @Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value)
+        blob,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue():
+        return null$();
+      case IntegerValue():
+        return integer(_that.value);
+      case FloatValue():
+        return float(_that.value);
+      case TextValue():
+        return text(_that.value);
+      case BlobValue():
+        return blob(_that.value);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? null$,
+    TResult? Function(@Int64Converter() Int64 value)? integer,
+    TResult? Function(double value)? float,
+    TResult? Function(String value)? text,
+    TResult? Function(
+            @Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value)?
+        blob,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case NullValue() when null$ != null:
+        return null$();
+      case IntegerValue() when integer != null:
+        return integer(_that.value);
+      case FloatValue() when float != null:
+        return float(_that.value);
+      case TextValue() when text != null:
+        return text(_that.value);
+      case BlobValue() when blob != null:
+        return blob(_that.value);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
-class NullValue extends Value {
-  const NullValue({final String? $type})
+class NullValue extends HranaValue {
+  const NullValue({String? $type})
       : $type = $type ?? 'null',
         super._();
   factory NullValue.fromJson(Map<String, dynamic> json) =>
@@ -668,14 +1404,14 @@ class NullValue extends Value {
 
   @override
   String toString() {
-    return 'Value.null\$()';
+    return 'HranaValue.null\$()';
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class IntegerValue extends Value {
-  const IntegerValue(@Int64Converter() this.value, {final String? $type})
+class IntegerValue extends HranaValue {
+  const IntegerValue(@Int64Converter() this.value, {String? $type})
       : $type = $type ?? 'integer',
         super._();
   factory IntegerValue.fromJson(Map<String, dynamic> json) =>
@@ -687,7 +1423,7 @@ class IntegerValue extends Value {
   @JsonKey(name: 'type')
   final String $type;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -711,17 +1447,19 @@ class IntegerValue extends Value {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, value);
+  int get hashCode {
+    return Object.hash(runtimeType, value);
+  }
 
   @override
   String toString() {
-    return 'Value.integer(value: $value)';
+    return 'HranaValue.integer(value: $value)';
   }
 }
 
 /// @nodoc
 abstract mixin class $IntegerValueCopyWith<$Res>
-    implements $ValueCopyWith<$Res> {
+    implements $HranaValueCopyWith<$Res> {
   factory $IntegerValueCopyWith(
           IntegerValue value, $Res Function(IntegerValue) _then) =
       _$IntegerValueCopyWithImpl;
@@ -736,7 +1474,7 @@ class _$IntegerValueCopyWithImpl<$Res> implements $IntegerValueCopyWith<$Res> {
   final IntegerValue _self;
   final $Res Function(IntegerValue) _then;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
@@ -753,8 +1491,8 @@ class _$IntegerValueCopyWithImpl<$Res> implements $IntegerValueCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class FloatValue extends Value {
-  const FloatValue(this.value, {final String? $type})
+class FloatValue extends HranaValue {
+  const FloatValue(this.value, {String? $type})
       : $type = $type ?? 'float',
         super._();
   factory FloatValue.fromJson(Map<String, dynamic> json) =>
@@ -765,7 +1503,7 @@ class FloatValue extends Value {
   @JsonKey(name: 'type')
   final String $type;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -789,16 +1527,19 @@ class FloatValue extends Value {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, value);
+  int get hashCode {
+    return Object.hash(runtimeType, value);
+  }
 
   @override
   String toString() {
-    return 'Value.float(value: $value)';
+    return 'HranaValue.float(value: $value)';
   }
 }
 
 /// @nodoc
-abstract mixin class $FloatValueCopyWith<$Res> implements $ValueCopyWith<$Res> {
+abstract mixin class $FloatValueCopyWith<$Res>
+    implements $HranaValueCopyWith<$Res> {
   factory $FloatValueCopyWith(
           FloatValue value, $Res Function(FloatValue) _then) =
       _$FloatValueCopyWithImpl;
@@ -813,7 +1554,7 @@ class _$FloatValueCopyWithImpl<$Res> implements $FloatValueCopyWith<$Res> {
   final FloatValue _self;
   final $Res Function(FloatValue) _then;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
@@ -830,8 +1571,8 @@ class _$FloatValueCopyWithImpl<$Res> implements $FloatValueCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class TextValue extends Value {
-  const TextValue(this.value, {final String? $type})
+class TextValue extends HranaValue {
+  const TextValue(this.value, {String? $type})
       : $type = $type ?? 'text',
         super._();
   factory TextValue.fromJson(Map<String, dynamic> json) =>
@@ -842,7 +1583,7 @@ class TextValue extends Value {
   @JsonKey(name: 'type')
   final String $type;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -866,16 +1607,19 @@ class TextValue extends Value {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, value);
+  int get hashCode {
+    return Object.hash(runtimeType, value);
+  }
 
   @override
   String toString() {
-    return 'Value.text(value: $value)';
+    return 'HranaValue.text(value: $value)';
   }
 }
 
 /// @nodoc
-abstract mixin class $TextValueCopyWith<$Res> implements $ValueCopyWith<$Res> {
+abstract mixin class $TextValueCopyWith<$Res>
+    implements $HranaValueCopyWith<$Res> {
   factory $TextValueCopyWith(TextValue value, $Res Function(TextValue) _then) =
       _$TextValueCopyWithImpl;
   @useResult
@@ -889,7 +1633,7 @@ class _$TextValueCopyWithImpl<$Res> implements $TextValueCopyWith<$Res> {
   final TextValue _self;
   final $Res Function(TextValue) _then;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
@@ -906,9 +1650,9 @@ class _$TextValueCopyWithImpl<$Res> implements $TextValueCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class BlobValue extends Value {
+class BlobValue extends HranaValue {
   const BlobValue(@Uint8ListConverter() @JsonKey(name: 'base64') this.value,
-      {final String? $type})
+      {String? $type})
       : $type = $type ?? 'blob',
         super._();
   factory BlobValue.fromJson(Map<String, dynamic> json) =>
@@ -921,7 +1665,7 @@ class BlobValue extends Value {
   @JsonKey(name: 'type')
   final String $type;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -945,17 +1689,19 @@ class BlobValue extends Value {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+  int get hashCode {
+    return Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+  }
 
   @override
   String toString() {
-    return 'Value.blob(value: $value)';
+    return 'HranaValue.blob(value: $value)';
   }
 }
 
 /// @nodoc
-abstract mixin class $BlobValueCopyWith<$Res> implements $ValueCopyWith<$Res> {
+abstract mixin class $BlobValueCopyWith<$Res>
+    implements $HranaValueCopyWith<$Res> {
   factory $BlobValueCopyWith(BlobValue value, $Res Function(BlobValue) _then) =
       _$BlobValueCopyWithImpl;
   @useResult
@@ -969,7 +1715,7 @@ class _$BlobValueCopyWithImpl<$Res> implements $BlobValueCopyWith<$Res> {
   final BlobValue _self;
   final $Res Function(BlobValue) _then;
 
-  /// Create a copy of Value
+  /// Create a copy of HranaValue
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
@@ -987,7 +1733,7 @@ class _$BlobValueCopyWithImpl<$Res> implements $BlobValueCopyWith<$Res> {
 /// @nodoc
 mixin _$StmtResult {
   List<Col> get cols;
-  List<List<Value>> get rows;
+  List<List<HranaValue>> get rows;
   int get affectedRowCount;
   @Int64Converter()
   Int64? get lastInsertRowid;
@@ -1008,41 +1754,46 @@ mixin _$StmtResult {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as StmtResult;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is StmtResult &&
-            const DeepCollectionEquality().equals(other.cols, cols) &&
-            const DeepCollectionEquality().equals(other.rows, rows) &&
-            (identical(other.affectedRowCount, affectedRowCount) ||
-                other.affectedRowCount == affectedRowCount) &&
-            (identical(other.lastInsertRowid, lastInsertRowid) ||
-                other.lastInsertRowid == lastInsertRowid) &&
-            (identical(other.replicationIndex, replicationIndex) ||
-                other.replicationIndex == replicationIndex) &&
-            (identical(other.rowsRead, rowsRead) ||
-                other.rowsRead == rowsRead) &&
-            (identical(other.rowsWritten, rowsWritten) ||
-                other.rowsWritten == rowsWritten) &&
-            (identical(other.queryDurationMs, queryDurationMs) ||
-                other.queryDurationMs == queryDurationMs));
+            const DeepCollectionEquality().equals(other.cols, _this.cols) &&
+            const DeepCollectionEquality().equals(other.rows, _this.rows) &&
+            (identical(other.affectedRowCount, _this.affectedRowCount) ||
+                other.affectedRowCount == _this.affectedRowCount) &&
+            (identical(other.lastInsertRowid, _this.lastInsertRowid) ||
+                other.lastInsertRowid == _this.lastInsertRowid) &&
+            (identical(other.replicationIndex, _this.replicationIndex) ||
+                other.replicationIndex == _this.replicationIndex) &&
+            (identical(other.rowsRead, _this.rowsRead) ||
+                other.rowsRead == _this.rowsRead) &&
+            (identical(other.rowsWritten, _this.rowsWritten) ||
+                other.rowsWritten == _this.rowsWritten) &&
+            (identical(other.queryDurationMs, _this.queryDurationMs) ||
+                other.queryDurationMs == _this.queryDurationMs));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(cols),
-      const DeepCollectionEquality().hash(rows),
-      affectedRowCount,
-      lastInsertRowid,
-      replicationIndex,
-      rowsRead,
-      rowsWritten,
-      queryDurationMs);
+  int get hashCode {
+    final _this = this as StmtResult;
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_this.cols),
+        const DeepCollectionEquality().hash(_this.rows),
+        _this.affectedRowCount,
+        _this.lastInsertRowid,
+        _this.replicationIndex,
+        _this.rowsRead,
+        _this.rowsWritten,
+        _this.queryDurationMs);
+  }
 
   @override
   String toString() {
-    return 'StmtResult(cols: $cols, rows: $rows, affectedRowCount: $affectedRowCount, lastInsertRowid: $lastInsertRowid, replicationIndex: $replicationIndex, rowsRead: $rowsRead, rowsWritten: $rowsWritten, queryDurationMs: $queryDurationMs)';
+    final _this = this as StmtResult;
+    return 'StmtResult(cols: ${_this.cols}, rows: ${_this.rows}, affectedRowCount: ${_this.affectedRowCount}, lastInsertRowid: ${_this.lastInsertRowid}, replicationIndex: ${_this.replicationIndex}, rowsRead: ${_this.rowsRead}, rowsWritten: ${_this.rowsWritten}, queryDurationMs: ${_this.queryDurationMs})';
   }
 }
 
@@ -1054,7 +1805,7 @@ abstract mixin class $StmtResultCopyWith<$Res> {
   @useResult
   $Res call(
       {List<Col> cols,
-      List<List<Value>> rows,
+      List<List<HranaValue>> rows,
       int affectedRowCount,
       @Int64Converter() Int64? lastInsertRowid,
       String? replicationIndex,
@@ -1084,7 +1835,7 @@ class _$StmtResultCopyWithImpl<$Res> implements $StmtResultCopyWith<$Res> {
     Object? rowsWritten = null,
     Object? queryDurationMs = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(StmtResult(
       cols: null == cols
           ? _self.cols
           : cols // ignore: cast_nullable_to_non_nullable
@@ -1092,7 +1843,7 @@ class _$StmtResultCopyWithImpl<$Res> implements $StmtResultCopyWith<$Res> {
       rows: null == rows
           ? _self.rows
           : rows // ignore: cast_nullable_to_non_nullable
-              as List<List<Value>>,
+              as List<List<HranaValue>>,
       affectedRowCount: null == affectedRowCount
           ? _self.affectedRowCount
           : affectedRowCount // ignore: cast_nullable_to_non_nullable
@@ -1121,12 +1872,220 @@ class _$StmtResultCopyWithImpl<$Res> implements $StmtResultCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [StmtResult].
+extension StmtResultPatterns on StmtResult {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_StmtResult value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_StmtResult value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_StmtResult value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<Col> cols,
+            List<List<HranaValue>> rows,
+            int affectedRowCount,
+            @Int64Converter() Int64? lastInsertRowid,
+            String? replicationIndex,
+            int rowsRead,
+            int rowsWritten,
+            double queryDurationMs)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult() when $default != null:
+        return $default(
+            _that.cols,
+            _that.rows,
+            _that.affectedRowCount,
+            _that.lastInsertRowid,
+            _that.replicationIndex,
+            _that.rowsRead,
+            _that.rowsWritten,
+            _that.queryDurationMs);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<Col> cols,
+            List<List<HranaValue>> rows,
+            int affectedRowCount,
+            @Int64Converter() Int64? lastInsertRowid,
+            String? replicationIndex,
+            int rowsRead,
+            int rowsWritten,
+            double queryDurationMs)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult():
+        return $default(
+            _that.cols,
+            _that.rows,
+            _that.affectedRowCount,
+            _that.lastInsertRowid,
+            _that.replicationIndex,
+            _that.rowsRead,
+            _that.rowsWritten,
+            _that.queryDurationMs);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<Col> cols,
+            List<List<HranaValue>> rows,
+            int affectedRowCount,
+            @Int64Converter() Int64? lastInsertRowid,
+            String? replicationIndex,
+            int rowsRead,
+            int rowsWritten,
+            double queryDurationMs)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StmtResult() when $default != null:
+        return $default(
+            _that.cols,
+            _that.rows,
+            _that.affectedRowCount,
+            _that.lastInsertRowid,
+            _that.replicationIndex,
+            _that.rowsRead,
+            _that.rowsWritten,
+            _that.queryDurationMs);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _StmtResult extends StmtResult {
   const _StmtResult(
-      {final List<Col> cols = const [],
-      final List<List<Value>> rows = const [],
+      {List<Col> cols = const [],
+      List<List<HranaValue>> rows = const [],
       required this.affectedRowCount,
       @Int64Converter() this.lastInsertRowid,
       this.replicationIndex,
@@ -1148,10 +2107,10 @@ class _StmtResult extends StmtResult {
     return EqualUnmodifiableListView(_cols);
   }
 
-  final List<List<Value>> _rows;
+  final List<List<HranaValue>> _rows;
   @override
   @JsonKey()
-  List<List<Value>> get rows {
+  List<List<HranaValue>> get rows {
     if (_rows is EqualUnmodifiableListView) return _rows;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_rows);
@@ -1191,8 +2150,8 @@ class _StmtResult extends StmtResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _StmtResult &&
-            const DeepCollectionEquality().equals(other._cols, _cols) &&
-            const DeepCollectionEquality().equals(other._rows, _rows) &&
+            const DeepCollectionEquality().equals(other.cols, _cols) &&
+            const DeepCollectionEquality().equals(other.rows, _rows) &&
             (identical(other.affectedRowCount, affectedRowCount) ||
                 other.affectedRowCount == affectedRowCount) &&
             (identical(other.lastInsertRowid, lastInsertRowid) ||
@@ -1209,16 +2168,18 @@ class _StmtResult extends StmtResult {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_cols),
-      const DeepCollectionEquality().hash(_rows),
-      affectedRowCount,
-      lastInsertRowid,
-      replicationIndex,
-      rowsRead,
-      rowsWritten,
-      queryDurationMs);
+  int get hashCode {
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_cols),
+        const DeepCollectionEquality().hash(_rows),
+        affectedRowCount,
+        lastInsertRowid,
+        replicationIndex,
+        rowsRead,
+        rowsWritten,
+        queryDurationMs);
+  }
 
   @override
   String toString() {
@@ -1236,7 +2197,7 @@ abstract mixin class _$StmtResultCopyWith<$Res>
   @useResult
   $Res call(
       {List<Col> cols,
-      List<List<Value>> rows,
+      List<List<HranaValue>> rows,
       int affectedRowCount,
       @Int64Converter() Int64? lastInsertRowid,
       String? replicationIndex,
@@ -1274,7 +2235,7 @@ class __$StmtResultCopyWithImpl<$Res> implements _$StmtResultCopyWith<$Res> {
       rows: null == rows
           ? _self._rows
           : rows // ignore: cast_nullable_to_non_nullable
-              as List<List<Value>>,
+              as List<List<HranaValue>>,
       affectedRowCount: null == affectedRowCount
           ? _self.affectedRowCount
           : affectedRowCount // ignore: cast_nullable_to_non_nullable
@@ -1320,21 +2281,26 @@ mixin _$Col {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as Col;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Col &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.decltype, decltype) ||
-                other.decltype == decltype));
+            (identical(other.name, _this.name) || other.name == _this.name) &&
+            (identical(other.decltype, _this.decltype) ||
+                other.decltype == _this.decltype));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, decltype);
+  int get hashCode {
+    final _this = this as Col;
+    return Object.hash(runtimeType, _this.name, _this.decltype);
+  }
 
   @override
   String toString() {
-    return 'Col(name: $name, decltype: $decltype)';
+    final _this = this as Col;
+    return 'Col(name: ${_this.name}, decltype: ${_this.decltype})';
   }
 }
 
@@ -1360,7 +2326,7 @@ class _$ColCopyWithImpl<$Res> implements $ColCopyWith<$Res> {
     Object? name = freezed,
     Object? decltype = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(Col(
       name: freezed == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -1370,6 +2336,163 @@ class _$ColCopyWithImpl<$Res> implements $ColCopyWith<$Res> {
           : decltype // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [Col].
+extension ColPatterns on Col {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Col value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Col() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Col value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Col():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Col value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Col() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String? name, String? decltype)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Col() when $default != null:
+        return $default(_that.name, _that.decltype);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String? name, String? decltype) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Col():
+        return $default(_that.name, _that.decltype);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String? name, String? decltype)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Col() when $default != null:
+        return $default(_that.name, _that.decltype);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -1411,7 +2534,9 @@ class _Col extends Col {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, decltype);
+  int get hashCode {
+    return Object.hash(runtimeType, name, decltype);
+  }
 
   @override
   String toString() {
@@ -1472,20 +2597,25 @@ mixin _$Batch {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as Batch;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Batch &&
-            const DeepCollectionEquality().equals(other.steps, steps));
+            const DeepCollectionEquality().equals(other.steps, _this.steps));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(steps));
+  int get hashCode {
+    final _this = this as Batch;
+    return Object.hash(
+        runtimeType, const DeepCollectionEquality().hash(_this.steps));
+  }
 
   @override
   String toString() {
-    return 'Batch(steps: $steps)';
+    final _this = this as Batch;
+    return 'Batch(steps: ${_this.steps})';
   }
 }
 
@@ -1511,7 +2641,7 @@ class _$BatchCopyWithImpl<$Res> implements $BatchCopyWith<$Res> {
   $Res call({
     Object? steps = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(Batch(
       steps: null == steps
           ? _self.steps
           : steps // ignore: cast_nullable_to_non_nullable
@@ -1520,10 +2650,167 @@ class _$BatchCopyWithImpl<$Res> implements $BatchCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [Batch].
+extension BatchPatterns on Batch {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Batch value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Batch() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Batch value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Batch():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Batch value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Batch() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(List<BatchStep> steps)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Batch() when $default != null:
+        return $default(_that.steps);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<BatchStep> steps) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Batch():
+        return $default(_that.steps);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(List<BatchStep> steps)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Batch() when $default != null:
+        return $default(_that.steps);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _Batch extends Batch {
-  const _Batch({required final List<BatchStep> steps})
+  const _Batch({required List<BatchStep> steps})
       : _steps = steps,
         super._();
   factory _Batch.fromJson(Map<String, dynamic> json) => _$BatchFromJson(json);
@@ -1556,13 +2843,15 @@ class _Batch extends Batch {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Batch &&
-            const DeepCollectionEquality().equals(other._steps, _steps));
+            const DeepCollectionEquality().equals(other.steps, _steps));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_steps));
+  int get hashCode {
+    return Object.hash(
+        runtimeType, const DeepCollectionEquality().hash(_steps));
+  }
 
   @override
   String toString() {
@@ -1619,21 +2908,26 @@ mixin _$BatchStep {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as BatchStep;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BatchStep &&
-            (identical(other.condition, condition) ||
-                other.condition == condition) &&
-            (identical(other.stmt, stmt) || other.stmt == stmt));
+            (identical(other.condition, _this.condition) ||
+                other.condition == _this.condition) &&
+            (identical(other.stmt, _this.stmt) || other.stmt == _this.stmt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, condition, stmt);
+  int get hashCode {
+    final _this = this as BatchStep;
+    return Object.hash(runtimeType, _this.condition, _this.stmt);
+  }
 
   @override
   String toString() {
-    return 'BatchStep(condition: $condition, stmt: $stmt)';
+    final _this = this as BatchStep;
+    return 'BatchStep(condition: ${_this.condition}, stmt: ${_this.stmt})';
   }
 }
 
@@ -1663,7 +2957,7 @@ class _$BatchStepCopyWithImpl<$Res> implements $BatchStepCopyWith<$Res> {
     Object? condition = freezed,
     Object? stmt = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(BatchStep(
       condition: freezed == condition
           ? _self.condition
           : condition // ignore: cast_nullable_to_non_nullable
@@ -1697,6 +2991,163 @@ class _$BatchStepCopyWithImpl<$Res> implements $BatchStepCopyWith<$Res> {
     return $StmtCopyWith<$Res>(_self.stmt, (value) {
       return _then(_self.copyWith(stmt: value));
     });
+  }
+}
+
+/// Adds pattern-matching-related methods to [BatchStep].
+extension BatchStepPatterns on BatchStep {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BatchStep value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BatchStep value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BatchStep value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(BatchCond? condition, Stmt stmt)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep() when $default != null:
+        return $default(_that.condition, _that.stmt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(BatchCond? condition, Stmt stmt) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep():
+        return $default(_that.condition, _that.stmt);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(BatchCond? condition, Stmt stmt)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchStep() when $default != null:
+        return $default(_that.condition, _that.stmt);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -1739,7 +3190,9 @@ class _BatchStep extends BatchStep {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, condition, stmt);
+  int get hashCode {
+    return Object.hash(runtimeType, condition, stmt);
+  }
 
   @override
   String toString() {
@@ -1862,10 +3315,253 @@ class $BatchCondCopyWith<$Res> {
   $BatchCondCopyWith(BatchCond _, $Res Function(BatchCond) __);
 }
 
+/// Adds pattern-matching-related methods to [BatchCond].
+extension BatchCondPatterns on BatchCond {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BatchCondStepOk value)? stepOk,
+    TResult Function(BatchCondStepError value)? stepError,
+    TResult Function(BatchCondNot value)? not,
+    TResult Function(BatchCondAnd value)? and,
+    TResult Function(BatchCondOr value)? or,
+    TResult Function(BatchCondIsAutocommit value)? isAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk() when stepOk != null:
+        return stepOk(_that);
+      case BatchCondStepError() when stepError != null:
+        return stepError(_that);
+      case BatchCondNot() when not != null:
+        return not(_that);
+      case BatchCondAnd() when and != null:
+        return and(_that);
+      case BatchCondOr() when or != null:
+        return or(_that);
+      case BatchCondIsAutocommit() when isAutocommit != null:
+        return isAutocommit(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(BatchCondStepOk value) stepOk,
+    required TResult Function(BatchCondStepError value) stepError,
+    required TResult Function(BatchCondNot value) not,
+    required TResult Function(BatchCondAnd value) and,
+    required TResult Function(BatchCondOr value) or,
+    required TResult Function(BatchCondIsAutocommit value) isAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk():
+        return stepOk(_that);
+      case BatchCondStepError():
+        return stepError(_that);
+      case BatchCondNot():
+        return not(_that);
+      case BatchCondAnd():
+        return and(_that);
+      case BatchCondOr():
+        return or(_that);
+      case BatchCondIsAutocommit():
+        return isAutocommit(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(BatchCondStepOk value)? stepOk,
+    TResult? Function(BatchCondStepError value)? stepError,
+    TResult? Function(BatchCondNot value)? not,
+    TResult? Function(BatchCondAnd value)? and,
+    TResult? Function(BatchCondOr value)? or,
+    TResult? Function(BatchCondIsAutocommit value)? isAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk() when stepOk != null:
+        return stepOk(_that);
+      case BatchCondStepError() when stepError != null:
+        return stepError(_that);
+      case BatchCondNot() when not != null:
+        return not(_that);
+      case BatchCondAnd() when and != null:
+        return and(_that);
+      case BatchCondOr() when or != null:
+        return or(_that);
+      case BatchCondIsAutocommit() when isAutocommit != null:
+        return isAutocommit(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int step)? stepOk,
+    TResult Function(int step)? stepError,
+    TResult Function(BatchCond cond)? not,
+    TResult Function(List<BatchCond> conds)? and,
+    TResult Function(List<BatchCond> conds)? or,
+    TResult Function()? isAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk() when stepOk != null:
+        return stepOk(_that.step);
+      case BatchCondStepError() when stepError != null:
+        return stepError(_that.step);
+      case BatchCondNot() when not != null:
+        return not(_that.cond);
+      case BatchCondAnd() when and != null:
+        return and(_that.conds);
+      case BatchCondOr() when or != null:
+        return or(_that.conds);
+      case BatchCondIsAutocommit() when isAutocommit != null:
+        return isAutocommit();
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int step) stepOk,
+    required TResult Function(int step) stepError,
+    required TResult Function(BatchCond cond) not,
+    required TResult Function(List<BatchCond> conds) and,
+    required TResult Function(List<BatchCond> conds) or,
+    required TResult Function() isAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk():
+        return stepOk(_that.step);
+      case BatchCondStepError():
+        return stepError(_that.step);
+      case BatchCondNot():
+        return not(_that.cond);
+      case BatchCondAnd():
+        return and(_that.conds);
+      case BatchCondOr():
+        return or(_that.conds);
+      case BatchCondIsAutocommit():
+        return isAutocommit();
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int step)? stepOk,
+    TResult? Function(int step)? stepError,
+    TResult? Function(BatchCond cond)? not,
+    TResult? Function(List<BatchCond> conds)? and,
+    TResult? Function(List<BatchCond> conds)? or,
+    TResult? Function()? isAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case BatchCondStepOk() when stepOk != null:
+        return stepOk(_that.step);
+      case BatchCondStepError() when stepError != null:
+        return stepError(_that.step);
+      case BatchCondNot() when not != null:
+        return not(_that.cond);
+      case BatchCondAnd() when and != null:
+        return and(_that.conds);
+      case BatchCondOr() when or != null:
+        return or(_that.conds);
+      case BatchCondIsAutocommit() when isAutocommit != null:
+        return isAutocommit();
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class BatchCondStepOk extends BatchCond {
-  const BatchCondStepOk(this.step, {final String? $type})
+  const BatchCondStepOk(this.step, {String? $type})
       : $type = $type ?? 'ok',
         super._();
   factory BatchCondStepOk.fromJson(Map<String, dynamic> json) =>
@@ -1900,7 +3596,9 @@ class BatchCondStepOk extends BatchCond {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, step);
+  int get hashCode {
+    return Object.hash(runtimeType, step);
+  }
 
   @override
   String toString() {
@@ -1944,7 +3642,7 @@ class _$BatchCondStepOkCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class BatchCondStepError extends BatchCond {
-  const BatchCondStepError(this.step, {final String? $type})
+  const BatchCondStepError(this.step, {String? $type})
       : $type = $type ?? 'error',
         super._();
   factory BatchCondStepError.fromJson(Map<String, dynamic> json) =>
@@ -1979,7 +3677,9 @@ class BatchCondStepError extends BatchCond {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, step);
+  int get hashCode {
+    return Object.hash(runtimeType, step);
+  }
 
   @override
   String toString() {
@@ -2023,7 +3723,7 @@ class _$BatchCondStepErrorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class BatchCondNot extends BatchCond {
-  const BatchCondNot(this.cond, {final String? $type})
+  const BatchCondNot(this.cond, {String? $type})
       : $type = $type ?? 'not',
         super._();
   factory BatchCondNot.fromJson(Map<String, dynamic> json) =>
@@ -2058,7 +3758,9 @@ class BatchCondNot extends BatchCond {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, cond);
+  int get hashCode {
+    return Object.hash(runtimeType, cond);
+  }
 
   @override
   String toString() {
@@ -2113,7 +3815,7 @@ class _$BatchCondNotCopyWithImpl<$Res> implements $BatchCondNotCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BatchCondAnd extends BatchCond {
-  const BatchCondAnd(final List<BatchCond> conds, {final String? $type})
+  const BatchCondAnd(List<BatchCond> conds, {String? $type})
       : _conds = conds,
         $type = $type ?? 'and',
         super._();
@@ -2149,13 +3851,15 @@ class BatchCondAnd extends BatchCond {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BatchCondAnd &&
-            const DeepCollectionEquality().equals(other._conds, _conds));
+            const DeepCollectionEquality().equals(other.conds, _conds));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_conds));
+  int get hashCode {
+    return Object.hash(
+        runtimeType, const DeepCollectionEquality().hash(_conds));
+  }
 
   @override
   String toString() {
@@ -2198,7 +3902,7 @@ class _$BatchCondAndCopyWithImpl<$Res> implements $BatchCondAndCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BatchCondOr extends BatchCond {
-  const BatchCondOr(final List<BatchCond> conds, {final String? $type})
+  const BatchCondOr(List<BatchCond> conds, {String? $type})
       : _conds = conds,
         $type = $type ?? 'or',
         super._();
@@ -2234,13 +3938,15 @@ class BatchCondOr extends BatchCond {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BatchCondOr &&
-            const DeepCollectionEquality().equals(other._conds, _conds));
+            const DeepCollectionEquality().equals(other.conds, _conds));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_conds));
+  int get hashCode {
+    return Object.hash(
+        runtimeType, const DeepCollectionEquality().hash(_conds));
+  }
 
   @override
   String toString() {
@@ -2283,7 +3989,7 @@ class _$BatchCondOrCopyWithImpl<$Res> implements $BatchCondOrCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BatchCondIsAutocommit extends BatchCond {
-  const BatchCondIsAutocommit({final String? $type})
+  const BatchCondIsAutocommit({String? $type})
       : $type = $type ?? 'is_autocommit',
         super._();
   factory BatchCondIsAutocommit.fromJson(Map<String, dynamic> json) =>
@@ -2332,25 +4038,30 @@ mixin _$BatchResult {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as BatchResult;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BatchResult &&
             const DeepCollectionEquality()
-                .equals(other.stepResults, stepResults) &&
+                .equals(other.stepResults, _this.stepResults) &&
             const DeepCollectionEquality()
-                .equals(other.stepErrors, stepErrors));
+                .equals(other.stepErrors, _this.stepErrors));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(stepResults),
-      const DeepCollectionEquality().hash(stepErrors));
+  int get hashCode {
+    final _this = this as BatchResult;
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_this.stepResults),
+        const DeepCollectionEquality().hash(_this.stepErrors));
+  }
 
   @override
   String toString() {
-    return 'BatchResult(stepResults: $stepResults, stepErrors: $stepErrors)';
+    final _this = this as BatchResult;
+    return 'BatchResult(stepResults: ${_this.stepResults}, stepErrors: ${_this.stepErrors})';
   }
 }
 
@@ -2378,7 +4089,7 @@ class _$BatchResultCopyWithImpl<$Res> implements $BatchResultCopyWith<$Res> {
     Object? stepResults = null,
     Object? stepErrors = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(BatchResult(
       stepResults: null == stepResults
           ? _self.stepResults
           : stepResults // ignore: cast_nullable_to_non_nullable
@@ -2391,12 +4102,175 @@ class _$BatchResultCopyWithImpl<$Res> implements $BatchResultCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [BatchResult].
+extension BatchResultPatterns on BatchResult {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BatchResult value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BatchResult value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BatchResult value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<StmtResult?> stepResults, List<StreamError?> stepErrors)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult() when $default != null:
+        return $default(_that.stepResults, _that.stepErrors);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<StmtResult?> stepResults, List<StreamError?> stepErrors)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult():
+        return $default(_that.stepResults, _that.stepErrors);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<StmtResult?> stepResults, List<StreamError?> stepErrors)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchResult() when $default != null:
+        return $default(_that.stepResults, _that.stepErrors);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _BatchResult extends BatchResult {
   const _BatchResult(
-      {required final List<StmtResult?> stepResults,
-      required final List<StreamError?> stepErrors})
+      {required List<StmtResult?> stepResults,
+      required List<StreamError?> stepErrors})
       : _stepResults = stepResults,
         _stepErrors = stepErrors,
         super._();
@@ -2440,17 +4314,19 @@ class _BatchResult extends BatchResult {
         (other.runtimeType == runtimeType &&
             other is _BatchResult &&
             const DeepCollectionEquality()
-                .equals(other._stepResults, _stepResults) &&
+                .equals(other.stepResults, _stepResults) &&
             const DeepCollectionEquality()
-                .equals(other._stepErrors, _stepErrors));
+                .equals(other.stepErrors, _stepErrors));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_stepResults),
-      const DeepCollectionEquality().hash(_stepErrors));
+  int get hashCode {
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_stepResults),
+        const DeepCollectionEquality().hash(_stepErrors));
+  }
 
   @override
   String toString() {
@@ -2542,11 +4418,242 @@ class $CursorEntryCopyWith<$Res> {
   $CursorEntryCopyWith(CursorEntry _, $Res Function(CursorEntry) __);
 }
 
+/// Adds pattern-matching-related methods to [CursorEntry].
+extension CursorEntryPatterns on CursorEntry {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StepBeginEntry value)? stepBegin,
+    TResult Function(StepEndEntry value)? stepEnd,
+    TResult Function(StepErrorEntry value)? stepError,
+    TResult Function(CursorEntryRow value)? row,
+    TResult Function(CursorEntryError value)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry() when stepBegin != null:
+        return stepBegin(_that);
+      case StepEndEntry() when stepEnd != null:
+        return stepEnd(_that);
+      case StepErrorEntry() when stepError != null:
+        return stepError(_that);
+      case CursorEntryRow() when row != null:
+        return row(_that);
+      case CursorEntryError() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StepBeginEntry value) stepBegin,
+    required TResult Function(StepEndEntry value) stepEnd,
+    required TResult Function(StepErrorEntry value) stepError,
+    required TResult Function(CursorEntryRow value) row,
+    required TResult Function(CursorEntryError value) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry():
+        return stepBegin(_that);
+      case StepEndEntry():
+        return stepEnd(_that);
+      case StepErrorEntry():
+        return stepError(_that);
+      case CursorEntryRow():
+        return row(_that);
+      case CursorEntryError():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StepBeginEntry value)? stepBegin,
+    TResult? Function(StepEndEntry value)? stepEnd,
+    TResult? Function(StepErrorEntry value)? stepError,
+    TResult? Function(CursorEntryRow value)? row,
+    TResult? Function(CursorEntryError value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry() when stepBegin != null:
+        return stepBegin(_that);
+      case StepEndEntry() when stepEnd != null:
+        return stepEnd(_that);
+      case StepErrorEntry() when stepError != null:
+        return stepError(_that);
+      case CursorEntryRow() when row != null:
+        return row(_that);
+      case CursorEntryError() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int step, List<Col> cols)? stepBegin,
+    TResult Function(
+            int affectedRowCount, @Int64Converter() Int64? lastInsertRowid)?
+        stepEnd,
+    TResult Function(int step, StreamError error)? stepError,
+    TResult Function(List<HranaValue> row)? row,
+    TResult Function(StreamError error)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry() when stepBegin != null:
+        return stepBegin(_that.step, _that.cols);
+      case StepEndEntry() when stepEnd != null:
+        return stepEnd(_that.affectedRowCount, _that.lastInsertRowid);
+      case StepErrorEntry() when stepError != null:
+        return stepError(_that.step, _that.error);
+      case CursorEntryRow() when row != null:
+        return row(_that.row);
+      case CursorEntryError() when error != null:
+        return error(_that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int step, List<Col> cols) stepBegin,
+    required TResult Function(
+            int affectedRowCount, @Int64Converter() Int64? lastInsertRowid)
+        stepEnd,
+    required TResult Function(int step, StreamError error) stepError,
+    required TResult Function(List<HranaValue> row) row,
+    required TResult Function(StreamError error) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry():
+        return stepBegin(_that.step, _that.cols);
+      case StepEndEntry():
+        return stepEnd(_that.affectedRowCount, _that.lastInsertRowid);
+      case StepErrorEntry():
+        return stepError(_that.step, _that.error);
+      case CursorEntryRow():
+        return row(_that.row);
+      case CursorEntryError():
+        return error(_that.error);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int step, List<Col> cols)? stepBegin,
+    TResult? Function(
+            int affectedRowCount, @Int64Converter() Int64? lastInsertRowid)?
+        stepEnd,
+    TResult? Function(int step, StreamError error)? stepError,
+    TResult? Function(List<HranaValue> row)? row,
+    TResult? Function(StreamError error)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StepBeginEntry() when stepBegin != null:
+        return stepBegin(_that.step, _that.cols);
+      case StepEndEntry() when stepEnd != null:
+        return stepEnd(_that.affectedRowCount, _that.lastInsertRowid);
+      case StepErrorEntry() when stepError != null:
+        return stepError(_that.step, _that.error);
+      case CursorEntryRow() when row != null:
+        return row(_that.row);
+      case CursorEntryError() when error != null:
+        return error(_that.error);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class StepBeginEntry extends CursorEntry {
   const StepBeginEntry(
-      {required this.step, required final List<Col> cols, final String? $type})
+      {required this.step, required List<Col> cols, String? $type})
       : _cols = cols,
         $type = $type ?? 'step_begin',
         super._();
@@ -2584,13 +4691,15 @@ class StepBeginEntry extends CursorEntry {
         (other.runtimeType == runtimeType &&
             other is StepBeginEntry &&
             (identical(other.step, step) || other.step == step) &&
-            const DeepCollectionEquality().equals(other._cols, _cols));
+            const DeepCollectionEquality().equals(other.cols, _cols));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, step, const DeepCollectionEquality().hash(_cols));
+  int get hashCode {
+    return Object.hash(
+        runtimeType, step, const DeepCollectionEquality().hash(_cols));
+  }
 
   @override
   String toString() {
@@ -2642,7 +4751,7 @@ class StepEndEntry extends CursorEntry {
   const StepEndEntry(
       {required this.affectedRowCount,
       @Int64Converter() this.lastInsertRowid,
-      final String? $type})
+      String? $type})
       : $type = $type ?? 'step_end',
         super._();
   factory StepEndEntry.fromJson(Map<String, dynamic> json) =>
@@ -2682,8 +4791,9 @@ class StepEndEntry extends CursorEntry {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, affectedRowCount, lastInsertRowid);
+  int get hashCode {
+    return Object.hash(runtimeType, affectedRowCount, lastInsertRowid);
+  }
 
   @override
   String toString() {
@@ -2731,8 +4841,7 @@ class _$StepEndEntryCopyWithImpl<$Res> implements $StepEndEntryCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class StepErrorEntry extends CursorEntry {
-  const StepErrorEntry(
-      {required this.step, required this.error, final String? $type})
+  const StepErrorEntry({required this.step, required this.error, String? $type})
       : $type = $type ?? 'step_error',
         super._();
   factory StepErrorEntry.fromJson(Map<String, dynamic> json) =>
@@ -2769,7 +4878,9 @@ class StepErrorEntry extends CursorEntry {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, step, error);
+  int get hashCode {
+    return Object.hash(runtimeType, step, error);
+  }
 
   @override
   String toString() {
@@ -2830,15 +4941,15 @@ class _$StepErrorEntryCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class CursorEntryRow extends CursorEntry {
-  const CursorEntryRow(final List<Value> row, {final String? $type})
+  const CursorEntryRow(List<HranaValue> row, {String? $type})
       : _row = row,
         $type = $type ?? 'row',
         super._();
   factory CursorEntryRow.fromJson(Map<String, dynamic> json) =>
       _$CursorEntryRowFromJson(json);
 
-  final List<Value> _row;
-  List<Value> get row {
+  final List<HranaValue> _row;
+  List<HranaValue> get row {
     if (_row is EqualUnmodifiableListView) return _row;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_row);
@@ -2866,13 +4977,14 @@ class CursorEntryRow extends CursorEntry {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is CursorEntryRow &&
-            const DeepCollectionEquality().equals(other._row, _row));
+            const DeepCollectionEquality().equals(other.row, _row));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_row));
+  int get hashCode {
+    return Object.hash(runtimeType, const DeepCollectionEquality().hash(_row));
+  }
 
   @override
   String toString() {
@@ -2887,7 +4999,7 @@ abstract mixin class $CursorEntryRowCopyWith<$Res>
           CursorEntryRow value, $Res Function(CursorEntryRow) _then) =
       _$CursorEntryRowCopyWithImpl;
   @useResult
-  $Res call({List<Value> row});
+  $Res call({List<HranaValue> row});
 }
 
 /// @nodoc
@@ -2908,7 +5020,7 @@ class _$CursorEntryRowCopyWithImpl<$Res>
       null == row
           ? _self._row
           : row // ignore: cast_nullable_to_non_nullable
-              as List<Value>,
+              as List<HranaValue>,
     ));
   }
 }
@@ -2916,7 +5028,7 @@ class _$CursorEntryRowCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class CursorEntryError extends CursorEntry {
-  const CursorEntryError(this.error, {final String? $type})
+  const CursorEntryError(this.error, {String? $type})
       : $type = $type ?? 'error',
         super._();
   factory CursorEntryError.fromJson(Map<String, dynamic> json) =>
@@ -2951,7 +5063,9 @@ class CursorEntryError extends CursorEntry {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode {
+    return Object.hash(runtimeType, error);
+  }
 
   @override
   String toString() {
@@ -3024,29 +5138,34 @@ mixin _$DescribeResult {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as DescribeResult;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DescribeResult &&
-            const DeepCollectionEquality().equals(other.params, params) &&
-            const DeepCollectionEquality().equals(other.cols, cols) &&
-            (identical(other.isExplain, isExplain) ||
-                other.isExplain == isExplain) &&
-            (identical(other.isReadonly, isReadonly) ||
-                other.isReadonly == isReadonly));
+            const DeepCollectionEquality().equals(other.params, _this.params) &&
+            const DeepCollectionEquality().equals(other.cols, _this.cols) &&
+            (identical(other.isExplain, _this.isExplain) ||
+                other.isExplain == _this.isExplain) &&
+            (identical(other.isReadonly, _this.isReadonly) ||
+                other.isReadonly == _this.isReadonly));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(params),
-      const DeepCollectionEquality().hash(cols),
-      isExplain,
-      isReadonly);
+  int get hashCode {
+    final _this = this as DescribeResult;
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_this.params),
+        const DeepCollectionEquality().hash(_this.cols),
+        _this.isExplain,
+        _this.isReadonly);
+  }
 
   @override
   String toString() {
-    return 'DescribeResult(params: $params, cols: $cols, isExplain: $isExplain, isReadonly: $isReadonly)';
+    final _this = this as DescribeResult;
+    return 'DescribeResult(params: ${_this.params}, cols: ${_this.cols}, isExplain: ${_this.isExplain}, isReadonly: ${_this.isReadonly})';
   }
 }
 
@@ -3081,7 +5200,7 @@ class _$DescribeResultCopyWithImpl<$Res>
     Object? isExplain = null,
     Object? isReadonly = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(DescribeResult(
       params: null == params
           ? _self.params
           : params // ignore: cast_nullable_to_non_nullable
@@ -3102,12 +5221,178 @@ class _$DescribeResultCopyWithImpl<$Res>
   }
 }
 
+/// Adds pattern-matching-related methods to [DescribeResult].
+extension DescribeResultPatterns on DescribeResult {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DescribeResult value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DescribeResult value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DescribeResult value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(List<DescribeParam> params, List<DescribeCol> cols,
+            bool isExplain, bool isReadonly)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult() when $default != null:
+        return $default(
+            _that.params, _that.cols, _that.isExplain, _that.isReadonly);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<DescribeParam> params, List<DescribeCol> cols,
+            bool isExplain, bool isReadonly)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult():
+        return $default(
+            _that.params, _that.cols, _that.isExplain, _that.isReadonly);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(List<DescribeParam> params, List<DescribeCol> cols,
+            bool isExplain, bool isReadonly)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeResult() when $default != null:
+        return $default(
+            _that.params, _that.cols, _that.isExplain, _that.isReadonly);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _DescribeResult extends DescribeResult {
   const _DescribeResult(
-      {required final List<DescribeParam> params,
-      required final List<DescribeCol> cols,
+      {required List<DescribeParam> params,
+      required List<DescribeCol> cols,
       required this.isExplain,
       required this.isReadonly})
       : _params = params,
@@ -3157,8 +5442,8 @@ class _DescribeResult extends DescribeResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _DescribeResult &&
-            const DeepCollectionEquality().equals(other._params, _params) &&
-            const DeepCollectionEquality().equals(other._cols, _cols) &&
+            const DeepCollectionEquality().equals(other.params, _params) &&
+            const DeepCollectionEquality().equals(other.cols, _cols) &&
             (identical(other.isExplain, isExplain) ||
                 other.isExplain == isExplain) &&
             (identical(other.isReadonly, isReadonly) ||
@@ -3167,12 +5452,14 @@ class _DescribeResult extends DescribeResult {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_params),
-      const DeepCollectionEquality().hash(_cols),
-      isExplain,
-      isReadonly);
+  int get hashCode {
+    return Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_params),
+        const DeepCollectionEquality().hash(_cols),
+        isExplain,
+        isReadonly);
+  }
 
   @override
   String toString() {
@@ -3251,19 +5538,24 @@ mixin _$DescribeParam {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as DescribeParam;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DescribeParam &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, _this.name) || other.name == _this.name));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode {
+    final _this = this as DescribeParam;
+    return Object.hash(runtimeType, _this.name);
+  }
 
   @override
   String toString() {
-    return 'DescribeParam(name: $name)';
+    final _this = this as DescribeParam;
+    return 'DescribeParam(name: ${_this.name})';
   }
 }
 
@@ -3291,12 +5583,169 @@ class _$DescribeParamCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(DescribeParam(
       name: freezed == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [DescribeParam].
+extension DescribeParamPatterns on DescribeParam {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DescribeParam value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DescribeParam value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DescribeParam value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String? name)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam() when $default != null:
+        return $default(_that.name);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String? name) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam():
+        return $default(_that.name);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String? name)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeParam() when $default != null:
+        return $default(_that.name);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -3335,7 +5784,9 @@ class _DescribeParam extends DescribeParam {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode {
+    return Object.hash(runtimeType, name);
+  }
 
   @override
   String toString() {
@@ -3395,21 +5846,26 @@ mixin _$DescribeCol {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as DescribeCol;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DescribeCol &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.decltype, decltype) ||
-                other.decltype == decltype));
+            (identical(other.name, _this.name) || other.name == _this.name) &&
+            (identical(other.decltype, _this.decltype) ||
+                other.decltype == _this.decltype));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, decltype);
+  int get hashCode {
+    final _this = this as DescribeCol;
+    return Object.hash(runtimeType, _this.name, _this.decltype);
+  }
 
   @override
   String toString() {
-    return 'DescribeCol(name: $name, decltype: $decltype)';
+    final _this = this as DescribeCol;
+    return 'DescribeCol(name: ${_this.name}, decltype: ${_this.decltype})';
   }
 }
 
@@ -3437,7 +5893,7 @@ class _$DescribeColCopyWithImpl<$Res> implements $DescribeColCopyWith<$Res> {
     Object? name = null,
     Object? decltype = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(DescribeCol(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -3447,6 +5903,163 @@ class _$DescribeColCopyWithImpl<$Res> implements $DescribeColCopyWith<$Res> {
           : decltype // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [DescribeCol].
+extension DescribeColPatterns on DescribeCol {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DescribeCol value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DescribeCol value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DescribeCol value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String name, String? decltype)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol() when $default != null:
+        return $default(_that.name, _that.decltype);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String name, String? decltype) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol():
+        return $default(_that.name, _that.decltype);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String name, String? decltype)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _DescribeCol() when $default != null:
+        return $default(_that.name, _that.decltype);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -3489,7 +6102,9 @@ class _DescribeCol extends DescribeCol {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, decltype);
+  int get hashCode {
+    return Object.hash(runtimeType, name, decltype);
+  }
 
   @override
   String toString() {
@@ -3575,10 +6190,181 @@ class $ClientMsgCopyWith<$Res> {
   $ClientMsgCopyWith(ClientMsg _, $Res Function(ClientMsg) __);
 }
 
+/// Adds pattern-matching-related methods to [ClientMsg].
+extension ClientMsgPatterns on ClientMsg {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HelloMsg value)? hello,
+    TResult Function(RequestMsg value)? request,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg() when hello != null:
+        return hello(_that);
+      case RequestMsg() when request != null:
+        return request(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HelloMsg value) hello,
+    required TResult Function(RequestMsg value) request,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg():
+        return hello(_that);
+      case RequestMsg():
+        return request(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HelloMsg value)? hello,
+    TResult? Function(RequestMsg value)? request,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg() when hello != null:
+        return hello(_that);
+      case RequestMsg() when request != null:
+        return request(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? jwt)? hello,
+    TResult Function(int requestId, Request request)? request,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg() when hello != null:
+        return hello(_that.jwt);
+      case RequestMsg() when request != null:
+        return request(_that.requestId, _that.request);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? jwt) hello,
+    required TResult Function(int requestId, Request request) request,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg():
+        return hello(_that.jwt);
+      case RequestMsg():
+        return request(_that.requestId, _that.request);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? jwt)? hello,
+    TResult? Function(int requestId, Request request)? request,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloMsg() when hello != null:
+        return hello(_that.jwt);
+      case RequestMsg() when request != null:
+        return request(_that.requestId, _that.request);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class HelloMsg extends ClientMsg {
-  const HelloMsg({this.jwt, final String? $type})
+  const HelloMsg({this.jwt, String? $type})
       : $type = $type ?? 'hello',
         super._();
   factory HelloMsg.fromJson(Map<String, dynamic> json) =>
@@ -3613,7 +6399,9 @@ class HelloMsg extends ClientMsg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, jwt);
+  int get hashCode {
+    return Object.hash(runtimeType, jwt);
+  }
 
   @override
   String toString() {
@@ -3656,7 +6444,7 @@ class _$HelloMsgCopyWithImpl<$Res> implements $HelloMsgCopyWith<$Res> {
 @JsonSerializable()
 class RequestMsg extends ClientMsg {
   const RequestMsg(
-      {required this.requestId, required this.request, final String? $type})
+      {required this.requestId, required this.request, String? $type})
       : $type = $type ?? 'request',
         super._();
   factory RequestMsg.fromJson(Map<String, dynamic> json) =>
@@ -3694,7 +6482,9 @@ class RequestMsg extends ClientMsg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, requestId, request);
+  int get hashCode {
+    return Object.hash(runtimeType, requestId, request);
+  }
 
   @override
   String toString() {
@@ -3794,10 +6584,217 @@ class $ServerMsgCopyWith<$Res> {
   $ServerMsgCopyWith(ServerMsg _, $Res Function(ServerMsg) __);
 }
 
+/// Adds pattern-matching-related methods to [ServerMsg].
+extension ServerMsgPatterns on ServerMsg {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HelloOkMsg value)? helloOk,
+    TResult Function(HelloErrorMsg value)? helloError,
+    TResult Function(ResponseOkMsg value)? responseOk,
+    TResult Function(ResponseErrorMsg value)? responseError,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg() when helloOk != null:
+        return helloOk(_that);
+      case HelloErrorMsg() when helloError != null:
+        return helloError(_that);
+      case ResponseOkMsg() when responseOk != null:
+        return responseOk(_that);
+      case ResponseErrorMsg() when responseError != null:
+        return responseError(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HelloOkMsg value) helloOk,
+    required TResult Function(HelloErrorMsg value) helloError,
+    required TResult Function(ResponseOkMsg value) responseOk,
+    required TResult Function(ResponseErrorMsg value) responseError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg():
+        return helloOk(_that);
+      case HelloErrorMsg():
+        return helloError(_that);
+      case ResponseOkMsg():
+        return responseOk(_that);
+      case ResponseErrorMsg():
+        return responseError(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HelloOkMsg value)? helloOk,
+    TResult? Function(HelloErrorMsg value)? helloError,
+    TResult? Function(ResponseOkMsg value)? responseOk,
+    TResult? Function(ResponseErrorMsg value)? responseError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg() when helloOk != null:
+        return helloOk(_that);
+      case HelloErrorMsg() when helloError != null:
+        return helloError(_that);
+      case ResponseOkMsg() when responseOk != null:
+        return responseOk(_that);
+      case ResponseErrorMsg() when responseError != null:
+        return responseError(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? helloOk,
+    TResult Function(StreamError error)? helloError,
+    TResult Function(int requestId, Response response)? responseOk,
+    TResult Function(int requestId, StreamError error)? responseError,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg() when helloOk != null:
+        return helloOk();
+      case HelloErrorMsg() when helloError != null:
+        return helloError(_that.error);
+      case ResponseOkMsg() when responseOk != null:
+        return responseOk(_that.requestId, _that.response);
+      case ResponseErrorMsg() when responseError != null:
+        return responseError(_that.requestId, _that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() helloOk,
+    required TResult Function(StreamError error) helloError,
+    required TResult Function(int requestId, Response response) responseOk,
+    required TResult Function(int requestId, StreamError error) responseError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg():
+        return helloOk();
+      case HelloErrorMsg():
+        return helloError(_that.error);
+      case ResponseOkMsg():
+        return responseOk(_that.requestId, _that.response);
+      case ResponseErrorMsg():
+        return responseError(_that.requestId, _that.error);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? helloOk,
+    TResult? Function(StreamError error)? helloError,
+    TResult? Function(int requestId, Response response)? responseOk,
+    TResult? Function(int requestId, StreamError error)? responseError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HelloOkMsg() when helloOk != null:
+        return helloOk();
+      case HelloErrorMsg() when helloError != null:
+        return helloError(_that.error);
+      case ResponseOkMsg() when responseOk != null:
+        return responseOk(_that.requestId, _that.response);
+      case ResponseErrorMsg() when responseError != null:
+        return responseError(_that.requestId, _that.error);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class HelloOkMsg extends ServerMsg {
-  const HelloOkMsg({final String? $type})
+  const HelloOkMsg({String? $type})
       : $type = $type ?? 'hello_ok',
         super._();
   factory HelloOkMsg.fromJson(Map<String, dynamic> json) =>
@@ -3832,7 +6829,7 @@ class HelloOkMsg extends ServerMsg {
 /// @nodoc
 @JsonSerializable()
 class HelloErrorMsg extends ServerMsg {
-  const HelloErrorMsg({required this.error, final String? $type})
+  const HelloErrorMsg({required this.error, String? $type})
       : $type = $type ?? 'hello_error',
         super._();
   factory HelloErrorMsg.fromJson(Map<String, dynamic> json) =>
@@ -3867,7 +6864,9 @@ class HelloErrorMsg extends ServerMsg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode {
+    return Object.hash(runtimeType, error);
+  }
 
   @override
   String toString() {
@@ -3924,7 +6923,7 @@ class _$HelloErrorMsgCopyWithImpl<$Res>
 @JsonSerializable()
 class ResponseOkMsg extends ServerMsg {
   const ResponseOkMsg(
-      {required this.requestId, required this.response, final String? $type})
+      {required this.requestId, required this.response, String? $type})
       : $type = $type ?? 'response_ok',
         super._();
   factory ResponseOkMsg.fromJson(Map<String, dynamic> json) =>
@@ -3963,7 +6962,9 @@ class ResponseOkMsg extends ServerMsg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, requestId, response);
+  int get hashCode {
+    return Object.hash(runtimeType, requestId, response);
+  }
 
   @override
   String toString() {
@@ -4025,7 +7026,7 @@ class _$ResponseOkMsgCopyWithImpl<$Res>
 @JsonSerializable()
 class ResponseErrorMsg extends ServerMsg {
   const ResponseErrorMsg(
-      {required this.requestId, required this.error, final String? $type})
+      {required this.requestId, required this.error, String? $type})
       : $type = $type ?? 'response_error',
         super._();
   factory ResponseErrorMsg.fromJson(Map<String, dynamic> json) =>
@@ -4063,7 +7064,9 @@ class ResponseErrorMsg extends ServerMsg {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, requestId, error);
+  int get hashCode {
+    return Object.hash(runtimeType, requestId, error);
+  }
 
   @override
   String toString() {
@@ -4180,10 +7183,362 @@ class $RequestCopyWith<$Res> {
   $RequestCopyWith(Request _, $Res Function(Request) __);
 }
 
+/// Adds pattern-matching-related methods to [Request].
+extension RequestPatterns on Request {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OpenStreamReq value)? openStream,
+    TResult Function(CloseStreamReq value)? closeStream,
+    TResult Function(ExecuteReq value)? execute,
+    TResult Function(BatchReq value)? batch,
+    TResult Function(OpenCursorReq value)? openCursor,
+    TResult Function(CloseCursorReq value)? closeCursor,
+    TResult Function(FetchCursorReq value)? fetchCursor,
+    TResult Function(SequenceReq value)? sequence,
+    TResult Function(DescribeReq value)? describe,
+    TResult Function(StoreSqlReq value)? storeSql,
+    TResult Function(CloseSqlReq value)? closeSql,
+    TResult Function(GetAutocommitReq value)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq() when openStream != null:
+        return openStream(_that);
+      case CloseStreamReq() when closeStream != null:
+        return closeStream(_that);
+      case ExecuteReq() when execute != null:
+        return execute(_that);
+      case BatchReq() when batch != null:
+        return batch(_that);
+      case OpenCursorReq() when openCursor != null:
+        return openCursor(_that);
+      case CloseCursorReq() when closeCursor != null:
+        return closeCursor(_that);
+      case FetchCursorReq() when fetchCursor != null:
+        return fetchCursor(_that);
+      case SequenceReq() when sequence != null:
+        return sequence(_that);
+      case DescribeReq() when describe != null:
+        return describe(_that);
+      case StoreSqlReq() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlReq() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitReq() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OpenStreamReq value) openStream,
+    required TResult Function(CloseStreamReq value) closeStream,
+    required TResult Function(ExecuteReq value) execute,
+    required TResult Function(BatchReq value) batch,
+    required TResult Function(OpenCursorReq value) openCursor,
+    required TResult Function(CloseCursorReq value) closeCursor,
+    required TResult Function(FetchCursorReq value) fetchCursor,
+    required TResult Function(SequenceReq value) sequence,
+    required TResult Function(DescribeReq value) describe,
+    required TResult Function(StoreSqlReq value) storeSql,
+    required TResult Function(CloseSqlReq value) closeSql,
+    required TResult Function(GetAutocommitReq value) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq():
+        return openStream(_that);
+      case CloseStreamReq():
+        return closeStream(_that);
+      case ExecuteReq():
+        return execute(_that);
+      case BatchReq():
+        return batch(_that);
+      case OpenCursorReq():
+        return openCursor(_that);
+      case CloseCursorReq():
+        return closeCursor(_that);
+      case FetchCursorReq():
+        return fetchCursor(_that);
+      case SequenceReq():
+        return sequence(_that);
+      case DescribeReq():
+        return describe(_that);
+      case StoreSqlReq():
+        return storeSql(_that);
+      case CloseSqlReq():
+        return closeSql(_that);
+      case GetAutocommitReq():
+        return getAutocommit(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OpenStreamReq value)? openStream,
+    TResult? Function(CloseStreamReq value)? closeStream,
+    TResult? Function(ExecuteReq value)? execute,
+    TResult? Function(BatchReq value)? batch,
+    TResult? Function(OpenCursorReq value)? openCursor,
+    TResult? Function(CloseCursorReq value)? closeCursor,
+    TResult? Function(FetchCursorReq value)? fetchCursor,
+    TResult? Function(SequenceReq value)? sequence,
+    TResult? Function(DescribeReq value)? describe,
+    TResult? Function(StoreSqlReq value)? storeSql,
+    TResult? Function(CloseSqlReq value)? closeSql,
+    TResult? Function(GetAutocommitReq value)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq() when openStream != null:
+        return openStream(_that);
+      case CloseStreamReq() when closeStream != null:
+        return closeStream(_that);
+      case ExecuteReq() when execute != null:
+        return execute(_that);
+      case BatchReq() when batch != null:
+        return batch(_that);
+      case OpenCursorReq() when openCursor != null:
+        return openCursor(_that);
+      case CloseCursorReq() when closeCursor != null:
+        return closeCursor(_that);
+      case FetchCursorReq() when fetchCursor != null:
+        return fetchCursor(_that);
+      case SequenceReq() when sequence != null:
+        return sequence(_that);
+      case DescribeReq() when describe != null:
+        return describe(_that);
+      case StoreSqlReq() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlReq() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitReq() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int streamId)? openStream,
+    TResult Function(int streamId)? closeStream,
+    TResult Function(int streamId, Stmt stmt)? execute,
+    TResult Function(int streamId, Batch batch)? batch,
+    TResult Function(int streamId, int cursorId, Batch batch)? openCursor,
+    TResult Function(int cursorId)? closeCursor,
+    TResult Function(int cursorId, int maxCount)? fetchCursor,
+    TResult Function(int streamId, String? sql, int? sqlId)? sequence,
+    TResult Function(int streamId, String? sql, int? sqlId)? describe,
+    TResult Function(int sqlId, String sql)? storeSql,
+    TResult Function(int sqlId)? closeSql,
+    TResult Function(int streamId)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq() when openStream != null:
+        return openStream(_that.streamId);
+      case CloseStreamReq() when closeStream != null:
+        return closeStream(_that.streamId);
+      case ExecuteReq() when execute != null:
+        return execute(_that.streamId, _that.stmt);
+      case BatchReq() when batch != null:
+        return batch(_that.streamId, _that.batch);
+      case OpenCursorReq() when openCursor != null:
+        return openCursor(_that.streamId, _that.cursorId, _that.batch);
+      case CloseCursorReq() when closeCursor != null:
+        return closeCursor(_that.cursorId);
+      case FetchCursorReq() when fetchCursor != null:
+        return fetchCursor(_that.cursorId, _that.maxCount);
+      case SequenceReq() when sequence != null:
+        return sequence(_that.streamId, _that.sql, _that.sqlId);
+      case DescribeReq() when describe != null:
+        return describe(_that.streamId, _that.sql, _that.sqlId);
+      case StoreSqlReq() when storeSql != null:
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlReq() when closeSql != null:
+        return closeSql(_that.sqlId);
+      case GetAutocommitReq() when getAutocommit != null:
+        return getAutocommit(_that.streamId);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int streamId) openStream,
+    required TResult Function(int streamId) closeStream,
+    required TResult Function(int streamId, Stmt stmt) execute,
+    required TResult Function(int streamId, Batch batch) batch,
+    required TResult Function(int streamId, int cursorId, Batch batch)
+        openCursor,
+    required TResult Function(int cursorId) closeCursor,
+    required TResult Function(int cursorId, int maxCount) fetchCursor,
+    required TResult Function(int streamId, String? sql, int? sqlId) sequence,
+    required TResult Function(int streamId, String? sql, int? sqlId) describe,
+    required TResult Function(int sqlId, String sql) storeSql,
+    required TResult Function(int sqlId) closeSql,
+    required TResult Function(int streamId) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq():
+        return openStream(_that.streamId);
+      case CloseStreamReq():
+        return closeStream(_that.streamId);
+      case ExecuteReq():
+        return execute(_that.streamId, _that.stmt);
+      case BatchReq():
+        return batch(_that.streamId, _that.batch);
+      case OpenCursorReq():
+        return openCursor(_that.streamId, _that.cursorId, _that.batch);
+      case CloseCursorReq():
+        return closeCursor(_that.cursorId);
+      case FetchCursorReq():
+        return fetchCursor(_that.cursorId, _that.maxCount);
+      case SequenceReq():
+        return sequence(_that.streamId, _that.sql, _that.sqlId);
+      case DescribeReq():
+        return describe(_that.streamId, _that.sql, _that.sqlId);
+      case StoreSqlReq():
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlReq():
+        return closeSql(_that.sqlId);
+      case GetAutocommitReq():
+        return getAutocommit(_that.streamId);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int streamId)? openStream,
+    TResult? Function(int streamId)? closeStream,
+    TResult? Function(int streamId, Stmt stmt)? execute,
+    TResult? Function(int streamId, Batch batch)? batch,
+    TResult? Function(int streamId, int cursorId, Batch batch)? openCursor,
+    TResult? Function(int cursorId)? closeCursor,
+    TResult? Function(int cursorId, int maxCount)? fetchCursor,
+    TResult? Function(int streamId, String? sql, int? sqlId)? sequence,
+    TResult? Function(int streamId, String? sql, int? sqlId)? describe,
+    TResult? Function(int sqlId, String sql)? storeSql,
+    TResult? Function(int sqlId)? closeSql,
+    TResult? Function(int streamId)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamReq() when openStream != null:
+        return openStream(_that.streamId);
+      case CloseStreamReq() when closeStream != null:
+        return closeStream(_that.streamId);
+      case ExecuteReq() when execute != null:
+        return execute(_that.streamId, _that.stmt);
+      case BatchReq() when batch != null:
+        return batch(_that.streamId, _that.batch);
+      case OpenCursorReq() when openCursor != null:
+        return openCursor(_that.streamId, _that.cursorId, _that.batch);
+      case CloseCursorReq() when closeCursor != null:
+        return closeCursor(_that.cursorId);
+      case FetchCursorReq() when fetchCursor != null:
+        return fetchCursor(_that.cursorId, _that.maxCount);
+      case SequenceReq() when sequence != null:
+        return sequence(_that.streamId, _that.sql, _that.sqlId);
+      case DescribeReq() when describe != null:
+        return describe(_that.streamId, _that.sql, _that.sqlId);
+      case StoreSqlReq() when storeSql != null:
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlReq() when closeSql != null:
+        return closeSql(_that.sqlId);
+      case GetAutocommitReq() when getAutocommit != null:
+        return getAutocommit(_that.streamId);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class OpenStreamReq extends Request {
-  const OpenStreamReq({required this.streamId, final String? $type})
+  const OpenStreamReq({required this.streamId, String? $type})
       : $type = $type ?? 'open_stream',
         super._();
   factory OpenStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -4219,7 +7574,9 @@ class OpenStreamReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId);
+  }
 
   @override
   String toString() {
@@ -4263,7 +7620,7 @@ class _$OpenStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class CloseStreamReq extends Request {
-  const CloseStreamReq({required this.streamId, final String? $type})
+  const CloseStreamReq({required this.streamId, String? $type})
       : $type = $type ?? 'close_stream',
         super._();
   factory CloseStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -4299,7 +7656,9 @@ class CloseStreamReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId);
+  }
 
   @override
   String toString() {
@@ -4343,8 +7702,7 @@ class _$CloseStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class ExecuteReq extends Request {
-  const ExecuteReq(
-      {required this.streamId, required this.stmt, final String? $type})
+  const ExecuteReq({required this.streamId, required this.stmt, String? $type})
       : $type = $type ?? 'execute',
         super._();
   factory ExecuteReq.fromJson(Map<String, dynamic> json) =>
@@ -4382,7 +7740,9 @@ class ExecuteReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId, stmt);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId, stmt);
+  }
 
   @override
   String toString() {
@@ -4442,8 +7802,7 @@ class _$ExecuteReqCopyWithImpl<$Res> implements $ExecuteReqCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BatchReq extends Request {
-  const BatchReq(
-      {required this.streamId, required this.batch, final String? $type})
+  const BatchReq({required this.streamId, required this.batch, String? $type})
       : $type = $type ?? 'batch',
         super._();
   factory BatchReq.fromJson(Map<String, dynamic> json) =>
@@ -4481,7 +7840,9 @@ class BatchReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId, batch);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId, batch);
+  }
 
   @override
   String toString() {
@@ -4543,7 +7904,7 @@ class OpenCursorReq extends Request {
       {required this.streamId,
       required this.cursorId,
       required this.batch,
-      final String? $type})
+      String? $type})
       : $type = $type ?? 'open_cursor',
         super._();
   factory OpenCursorReq.fromJson(Map<String, dynamic> json) =>
@@ -4584,7 +7945,9 @@ class OpenCursorReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId, cursorId, batch);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId, cursorId, batch);
+  }
 
   @override
   String toString() {
@@ -4650,7 +8013,7 @@ class _$OpenCursorReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class CloseCursorReq extends Request {
-  const CloseCursorReq({required this.cursorId, final String? $type})
+  const CloseCursorReq({required this.cursorId, String? $type})
       : $type = $type ?? 'close_cursor',
         super._();
   factory CloseCursorReq.fromJson(Map<String, dynamic> json) =>
@@ -4686,7 +8049,9 @@ class CloseCursorReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, cursorId);
+  int get hashCode {
+    return Object.hash(runtimeType, cursorId);
+  }
 
   @override
   String toString() {
@@ -4731,7 +8096,7 @@ class _$CloseCursorReqCopyWithImpl<$Res>
 @JsonSerializable()
 class FetchCursorReq extends Request {
   const FetchCursorReq(
-      {required this.cursorId, required this.maxCount, final String? $type})
+      {required this.cursorId, required this.maxCount, String? $type})
       : $type = $type ?? 'fetch_cursor',
         super._();
   factory FetchCursorReq.fromJson(Map<String, dynamic> json) =>
@@ -4770,7 +8135,9 @@ class FetchCursorReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, cursorId, maxCount);
+  int get hashCode {
+    return Object.hash(runtimeType, cursorId, maxCount);
+  }
 
   @override
   String toString() {
@@ -4820,7 +8187,7 @@ class _$FetchCursorReqCopyWithImpl<$Res>
 @JsonSerializable()
 class SequenceReq extends Request {
   const SequenceReq(
-      {required this.streamId, this.sql, this.sqlId, final String? $type})
+      {required this.streamId, this.sql, this.sqlId, String? $type})
       : $type = $type ?? 'sequence',
         super._();
   factory SequenceReq.fromJson(Map<String, dynamic> json) =>
@@ -4860,7 +8227,9 @@ class SequenceReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId, sql, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId, sql, sqlId);
+  }
 
   @override
   String toString() {
@@ -4914,7 +8283,7 @@ class _$SequenceReqCopyWithImpl<$Res> implements $SequenceReqCopyWith<$Res> {
 @JsonSerializable()
 class DescribeReq extends Request {
   const DescribeReq(
-      {required this.streamId, this.sql, this.sqlId, final String? $type})
+      {required this.streamId, this.sql, this.sqlId, String? $type})
       : $type = $type ?? 'describe',
         super._();
   factory DescribeReq.fromJson(Map<String, dynamic> json) =>
@@ -4954,7 +8323,9 @@ class DescribeReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId, sql, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId, sql, sqlId);
+  }
 
   @override
   String toString() {
@@ -5007,8 +8378,7 @@ class _$DescribeReqCopyWithImpl<$Res> implements $DescribeReqCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class StoreSqlReq extends Request {
-  const StoreSqlReq(
-      {required this.sqlId, required this.sql, final String? $type})
+  const StoreSqlReq({required this.sqlId, required this.sql, String? $type})
       : $type = $type ?? 'store_sql',
         super._();
   factory StoreSqlReq.fromJson(Map<String, dynamic> json) =>
@@ -5045,7 +8415,9 @@ class StoreSqlReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sqlId, sql);
+  int get hashCode {
+    return Object.hash(runtimeType, sqlId, sql);
+  }
 
   @override
   String toString() {
@@ -5093,7 +8465,7 @@ class _$StoreSqlReqCopyWithImpl<$Res> implements $StoreSqlReqCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class CloseSqlReq extends Request {
-  const CloseSqlReq({required this.sqlId, final String? $type})
+  const CloseSqlReq({required this.sqlId, String? $type})
       : $type = $type ?? 'close_sql',
         super._();
   factory CloseSqlReq.fromJson(Map<String, dynamic> json) =>
@@ -5128,7 +8500,9 @@ class CloseSqlReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, sqlId);
+  }
 
   @override
   String toString() {
@@ -5171,7 +8545,7 @@ class _$CloseSqlReqCopyWithImpl<$Res> implements $CloseSqlReqCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class GetAutocommitReq extends Request {
-  const GetAutocommitReq({required this.streamId, final String? $type})
+  const GetAutocommitReq({required this.streamId, String? $type})
       : $type = $type ?? 'get_autocommit',
         super._();
   factory GetAutocommitReq.fromJson(Map<String, dynamic> json) =>
@@ -5207,7 +8581,9 @@ class GetAutocommitReq extends Request {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId);
+  }
 
   @override
   String toString() {
@@ -5307,10 +8683,361 @@ class $ResponseCopyWith<$Res> {
   $ResponseCopyWith(Response _, $Res Function(Response) __);
 }
 
+/// Adds pattern-matching-related methods to [Response].
+extension ResponsePatterns on Response {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OpenStreamResp value)? openStream,
+    TResult Function(CloseStreamResp value)? closeStream,
+    TResult Function(ExecuteResp value)? execute,
+    TResult Function(BatchResp value)? batch,
+    TResult Function(OpenCursorResp value)? openCursor,
+    TResult Function(CloseCursorResp value)? closeCursor,
+    TResult Function(FetchCursorResp value)? fetchCursor,
+    TResult Function(SequenceResp value)? sequence,
+    TResult Function(DescribeResp value)? describe,
+    TResult Function(StoreSqlResp value)? storeSql,
+    TResult Function(CloseSqlResp value)? closeSql,
+    TResult Function(GetAutocommitResp value)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp() when openStream != null:
+        return openStream(_that);
+      case CloseStreamResp() when closeStream != null:
+        return closeStream(_that);
+      case ExecuteResp() when execute != null:
+        return execute(_that);
+      case BatchResp() when batch != null:
+        return batch(_that);
+      case OpenCursorResp() when openCursor != null:
+        return openCursor(_that);
+      case CloseCursorResp() when closeCursor != null:
+        return closeCursor(_that);
+      case FetchCursorResp() when fetchCursor != null:
+        return fetchCursor(_that);
+      case SequenceResp() when sequence != null:
+        return sequence(_that);
+      case DescribeResp() when describe != null:
+        return describe(_that);
+      case StoreSqlResp() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlResp() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitResp() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OpenStreamResp value) openStream,
+    required TResult Function(CloseStreamResp value) closeStream,
+    required TResult Function(ExecuteResp value) execute,
+    required TResult Function(BatchResp value) batch,
+    required TResult Function(OpenCursorResp value) openCursor,
+    required TResult Function(CloseCursorResp value) closeCursor,
+    required TResult Function(FetchCursorResp value) fetchCursor,
+    required TResult Function(SequenceResp value) sequence,
+    required TResult Function(DescribeResp value) describe,
+    required TResult Function(StoreSqlResp value) storeSql,
+    required TResult Function(CloseSqlResp value) closeSql,
+    required TResult Function(GetAutocommitResp value) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp():
+        return openStream(_that);
+      case CloseStreamResp():
+        return closeStream(_that);
+      case ExecuteResp():
+        return execute(_that);
+      case BatchResp():
+        return batch(_that);
+      case OpenCursorResp():
+        return openCursor(_that);
+      case CloseCursorResp():
+        return closeCursor(_that);
+      case FetchCursorResp():
+        return fetchCursor(_that);
+      case SequenceResp():
+        return sequence(_that);
+      case DescribeResp():
+        return describe(_that);
+      case StoreSqlResp():
+        return storeSql(_that);
+      case CloseSqlResp():
+        return closeSql(_that);
+      case GetAutocommitResp():
+        return getAutocommit(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OpenStreamResp value)? openStream,
+    TResult? Function(CloseStreamResp value)? closeStream,
+    TResult? Function(ExecuteResp value)? execute,
+    TResult? Function(BatchResp value)? batch,
+    TResult? Function(OpenCursorResp value)? openCursor,
+    TResult? Function(CloseCursorResp value)? closeCursor,
+    TResult? Function(FetchCursorResp value)? fetchCursor,
+    TResult? Function(SequenceResp value)? sequence,
+    TResult? Function(DescribeResp value)? describe,
+    TResult? Function(StoreSqlResp value)? storeSql,
+    TResult? Function(CloseSqlResp value)? closeSql,
+    TResult? Function(GetAutocommitResp value)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp() when openStream != null:
+        return openStream(_that);
+      case CloseStreamResp() when closeStream != null:
+        return closeStream(_that);
+      case ExecuteResp() when execute != null:
+        return execute(_that);
+      case BatchResp() when batch != null:
+        return batch(_that);
+      case OpenCursorResp() when openCursor != null:
+        return openCursor(_that);
+      case CloseCursorResp() when closeCursor != null:
+        return closeCursor(_that);
+      case FetchCursorResp() when fetchCursor != null:
+        return fetchCursor(_that);
+      case SequenceResp() when sequence != null:
+        return sequence(_that);
+      case DescribeResp() when describe != null:
+        return describe(_that);
+      case StoreSqlResp() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlResp() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitResp() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? openStream,
+    TResult Function()? closeStream,
+    TResult Function(StmtResult result)? execute,
+    TResult Function(BatchResult result)? batch,
+    TResult Function()? openCursor,
+    TResult Function()? closeCursor,
+    TResult Function(List<CursorEntry> entries, bool done)? fetchCursor,
+    TResult Function()? sequence,
+    TResult Function(DescribeResult result)? describe,
+    TResult Function()? storeSql,
+    TResult Function()? closeSql,
+    TResult Function(bool isAutocommit)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp() when openStream != null:
+        return openStream();
+      case CloseStreamResp() when closeStream != null:
+        return closeStream();
+      case ExecuteResp() when execute != null:
+        return execute(_that.result);
+      case BatchResp() when batch != null:
+        return batch(_that.result);
+      case OpenCursorResp() when openCursor != null:
+        return openCursor();
+      case CloseCursorResp() when closeCursor != null:
+        return closeCursor();
+      case FetchCursorResp() when fetchCursor != null:
+        return fetchCursor(_that.entries, _that.done);
+      case SequenceResp() when sequence != null:
+        return sequence();
+      case DescribeResp() when describe != null:
+        return describe(_that.result);
+      case StoreSqlResp() when storeSql != null:
+        return storeSql();
+      case CloseSqlResp() when closeSql != null:
+        return closeSql();
+      case GetAutocommitResp() when getAutocommit != null:
+        return getAutocommit(_that.isAutocommit);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() openStream,
+    required TResult Function() closeStream,
+    required TResult Function(StmtResult result) execute,
+    required TResult Function(BatchResult result) batch,
+    required TResult Function() openCursor,
+    required TResult Function() closeCursor,
+    required TResult Function(List<CursorEntry> entries, bool done) fetchCursor,
+    required TResult Function() sequence,
+    required TResult Function(DescribeResult result) describe,
+    required TResult Function() storeSql,
+    required TResult Function() closeSql,
+    required TResult Function(bool isAutocommit) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp():
+        return openStream();
+      case CloseStreamResp():
+        return closeStream();
+      case ExecuteResp():
+        return execute(_that.result);
+      case BatchResp():
+        return batch(_that.result);
+      case OpenCursorResp():
+        return openCursor();
+      case CloseCursorResp():
+        return closeCursor();
+      case FetchCursorResp():
+        return fetchCursor(_that.entries, _that.done);
+      case SequenceResp():
+        return sequence();
+      case DescribeResp():
+        return describe(_that.result);
+      case StoreSqlResp():
+        return storeSql();
+      case CloseSqlResp():
+        return closeSql();
+      case GetAutocommitResp():
+        return getAutocommit(_that.isAutocommit);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? openStream,
+    TResult? Function()? closeStream,
+    TResult? Function(StmtResult result)? execute,
+    TResult? Function(BatchResult result)? batch,
+    TResult? Function()? openCursor,
+    TResult? Function()? closeCursor,
+    TResult? Function(List<CursorEntry> entries, bool done)? fetchCursor,
+    TResult? Function()? sequence,
+    TResult? Function(DescribeResult result)? describe,
+    TResult? Function()? storeSql,
+    TResult? Function()? closeSql,
+    TResult? Function(bool isAutocommit)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamResp() when openStream != null:
+        return openStream();
+      case CloseStreamResp() when closeStream != null:
+        return closeStream();
+      case ExecuteResp() when execute != null:
+        return execute(_that.result);
+      case BatchResp() when batch != null:
+        return batch(_that.result);
+      case OpenCursorResp() when openCursor != null:
+        return openCursor();
+      case CloseCursorResp() when closeCursor != null:
+        return closeCursor();
+      case FetchCursorResp() when fetchCursor != null:
+        return fetchCursor(_that.entries, _that.done);
+      case SequenceResp() when sequence != null:
+        return sequence();
+      case DescribeResp() when describe != null:
+        return describe(_that.result);
+      case StoreSqlResp() when storeSql != null:
+        return storeSql();
+      case CloseSqlResp() when closeSql != null:
+        return closeSql();
+      case GetAutocommitResp() when getAutocommit != null:
+        return getAutocommit(_that.isAutocommit);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class OpenStreamResp extends Response {
-  const OpenStreamResp({final String? $type})
+  const OpenStreamResp({String? $type})
       : $type = $type ?? 'open_stream',
         super._();
   factory OpenStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -5345,7 +9072,7 @@ class OpenStreamResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class CloseStreamResp extends Response {
-  const CloseStreamResp({final String? $type})
+  const CloseStreamResp({String? $type})
       : $type = $type ?? 'close_stream',
         super._();
   factory CloseStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -5380,7 +9107,7 @@ class CloseStreamResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class ExecuteResp extends Response {
-  const ExecuteResp({required this.result, final String? $type})
+  const ExecuteResp({required this.result, String? $type})
       : $type = $type ?? 'execute',
         super._();
   factory ExecuteResp.fromJson(Map<String, dynamic> json) =>
@@ -5415,7 +9142,9 @@ class ExecuteResp extends Response {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -5470,7 +9199,7 @@ class _$ExecuteRespCopyWithImpl<$Res> implements $ExecuteRespCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class BatchResp extends Response {
-  const BatchResp({required this.result, final String? $type})
+  const BatchResp({required this.result, String? $type})
       : $type = $type ?? 'batch',
         super._();
   factory BatchResp.fromJson(Map<String, dynamic> json) =>
@@ -5505,7 +9234,9 @@ class BatchResp extends Response {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -5559,7 +9290,7 @@ class _$BatchRespCopyWithImpl<$Res> implements $BatchRespCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class OpenCursorResp extends Response {
-  const OpenCursorResp({final String? $type})
+  const OpenCursorResp({String? $type})
       : $type = $type ?? 'open_cursor',
         super._();
   factory OpenCursorResp.fromJson(Map<String, dynamic> json) =>
@@ -5594,7 +9325,7 @@ class OpenCursorResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class CloseCursorResp extends Response {
-  const CloseCursorResp({final String? $type})
+  const CloseCursorResp({String? $type})
       : $type = $type ?? 'close_cursor',
         super._();
   factory CloseCursorResp.fromJson(Map<String, dynamic> json) =>
@@ -5630,9 +9361,7 @@ class CloseCursorResp extends Response {
 @JsonSerializable()
 class FetchCursorResp extends Response {
   const FetchCursorResp(
-      {required final List<CursorEntry> entries,
-      required this.done,
-      final String? $type})
+      {required List<CursorEntry> entries, required this.done, String? $type})
       : _entries = entries,
         $type = $type ?? 'fetch_cursor',
         super._();
@@ -5670,14 +9399,16 @@ class FetchCursorResp extends Response {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is FetchCursorResp &&
-            const DeepCollectionEquality().equals(other._entries, _entries) &&
+            const DeepCollectionEquality().equals(other.entries, _entries) &&
             (identical(other.done, done) || other.done == done));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_entries), done);
+  int get hashCode {
+    return Object.hash(
+        runtimeType, const DeepCollectionEquality().hash(_entries), done);
+  }
 
   @override
   String toString() {
@@ -5726,7 +9457,7 @@ class _$FetchCursorRespCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class SequenceResp extends Response {
-  const SequenceResp({final String? $type})
+  const SequenceResp({String? $type})
       : $type = $type ?? 'sequence',
         super._();
   factory SequenceResp.fromJson(Map<String, dynamic> json) =>
@@ -5761,7 +9492,7 @@ class SequenceResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class DescribeResp extends Response {
-  const DescribeResp({required this.result, final String? $type})
+  const DescribeResp({required this.result, String? $type})
       : $type = $type ?? 'describe',
         super._();
   factory DescribeResp.fromJson(Map<String, dynamic> json) =>
@@ -5796,7 +9527,9 @@ class DescribeResp extends Response {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -5851,7 +9584,7 @@ class _$DescribeRespCopyWithImpl<$Res> implements $DescribeRespCopyWith<$Res> {
 /// @nodoc
 @JsonSerializable()
 class StoreSqlResp extends Response {
-  const StoreSqlResp({final String? $type})
+  const StoreSqlResp({String? $type})
       : $type = $type ?? 'store_sql',
         super._();
   factory StoreSqlResp.fromJson(Map<String, dynamic> json) =>
@@ -5886,7 +9619,7 @@ class StoreSqlResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class CloseSqlResp extends Response {
-  const CloseSqlResp({final String? $type})
+  const CloseSqlResp({String? $type})
       : $type = $type ?? 'close_sql',
         super._();
   factory CloseSqlResp.fromJson(Map<String, dynamic> json) =>
@@ -5921,7 +9654,7 @@ class CloseSqlResp extends Response {
 /// @nodoc
 @JsonSerializable()
 class GetAutocommitResp extends Response {
-  const GetAutocommitResp({required this.isAutocommit, final String? $type})
+  const GetAutocommitResp({required this.isAutocommit, String? $type})
       : $type = $type ?? 'get_autocommit',
         super._();
   factory GetAutocommitResp.fromJson(Map<String, dynamic> json) =>
@@ -5957,7 +9690,9 @@ class GetAutocommitResp extends Response {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, isAutocommit);
+  int get hashCode {
+    return Object.hash(runtimeType, isAutocommit);
+  }
 
   @override
   String toString() {
@@ -6015,21 +9750,28 @@ mixin _$PipelineReq {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as PipelineReq;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PipelineReq &&
-            (identical(other.baton, baton) || other.baton == baton) &&
-            const DeepCollectionEquality().equals(other.requests, requests));
+            (identical(other.baton, _this.baton) ||
+                other.baton == _this.baton) &&
+            const DeepCollectionEquality()
+                .equals(other.requests, _this.requests));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, baton, const DeepCollectionEquality().hash(requests));
+  int get hashCode {
+    final _this = this as PipelineReq;
+    return Object.hash(runtimeType, _this.baton,
+        const DeepCollectionEquality().hash(_this.requests));
+  }
 
   @override
   String toString() {
-    return 'PipelineReq(baton: $baton, requests: $requests)';
+    final _this = this as PipelineReq;
+    return 'PipelineReq(baton: ${_this.baton}, requests: ${_this.requests})';
   }
 }
 
@@ -6057,7 +9799,7 @@ class _$PipelineReqCopyWithImpl<$Res> implements $PipelineReqCopyWith<$Res> {
     Object? baton = freezed,
     Object? requests = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(PipelineReq(
       baton: freezed == baton
           ? _self.baton
           : baton // ignore: cast_nullable_to_non_nullable
@@ -6070,10 +9812,167 @@ class _$PipelineReqCopyWithImpl<$Res> implements $PipelineReqCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [PipelineReq].
+extension PipelineReqPatterns on PipelineReq {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PipelineReq value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PipelineReq value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PipelineReq value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String? baton, List<StreamRequest> requests)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq() when $default != null:
+        return $default(_that.baton, _that.requests);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String? baton, List<StreamRequest> requests) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq():
+        return $default(_that.baton, _that.requests);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String? baton, List<StreamRequest> requests)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineReq() when $default != null:
+        return $default(_that.baton, _that.requests);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _PipelineReq extends PipelineReq {
-  const _PipelineReq({this.baton, required final List<StreamRequest> requests})
+  const _PipelineReq({this.baton, required List<StreamRequest> requests})
       : _requests = requests,
         super._();
   factory _PipelineReq.fromJson(Map<String, dynamic> json) =>
@@ -6110,13 +10009,15 @@ class _PipelineReq extends PipelineReq {
         (other.runtimeType == runtimeType &&
             other is _PipelineReq &&
             (identical(other.baton, baton) || other.baton == baton) &&
-            const DeepCollectionEquality().equals(other._requests, _requests));
+            const DeepCollectionEquality().equals(other.requests, _requests));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, baton, const DeepCollectionEquality().hash(_requests));
+  int get hashCode {
+    return Object.hash(
+        runtimeType, baton, const DeepCollectionEquality().hash(_requests));
+  }
 
   @override
   String toString() {
@@ -6214,10 +10115,289 @@ class $StreamRequestCopyWith<$Res> {
   $StreamRequestCopyWith(StreamRequest _, $Res Function(StreamRequest) __);
 }
 
+/// Adds pattern-matching-related methods to [StreamRequest].
+extension StreamRequestPatterns on StreamRequest {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CloseStreamStreamReq value)? close,
+    TResult Function(ExecuteStreamReq value)? execute,
+    TResult Function(BatchStreamReq value)? batch,
+    TResult Function(SequenceStreamReq value)? sequence,
+    TResult Function(DescribeStreamReq value)? describe,
+    TResult Function(StoreSqlStreamReq value)? storeSql,
+    TResult Function(CloseSqlStreamReq value)? closeSql,
+    TResult Function(GetAutocommitStreamReq value)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq() when close != null:
+        return close(_that);
+      case ExecuteStreamReq() when execute != null:
+        return execute(_that);
+      case BatchStreamReq() when batch != null:
+        return batch(_that);
+      case SequenceStreamReq() when sequence != null:
+        return sequence(_that);
+      case DescribeStreamReq() when describe != null:
+        return describe(_that);
+      case StoreSqlStreamReq() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlStreamReq() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitStreamReq() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CloseStreamStreamReq value) close,
+    required TResult Function(ExecuteStreamReq value) execute,
+    required TResult Function(BatchStreamReq value) batch,
+    required TResult Function(SequenceStreamReq value) sequence,
+    required TResult Function(DescribeStreamReq value) describe,
+    required TResult Function(StoreSqlStreamReq value) storeSql,
+    required TResult Function(CloseSqlStreamReq value) closeSql,
+    required TResult Function(GetAutocommitStreamReq value) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq():
+        return close(_that);
+      case ExecuteStreamReq():
+        return execute(_that);
+      case BatchStreamReq():
+        return batch(_that);
+      case SequenceStreamReq():
+        return sequence(_that);
+      case DescribeStreamReq():
+        return describe(_that);
+      case StoreSqlStreamReq():
+        return storeSql(_that);
+      case CloseSqlStreamReq():
+        return closeSql(_that);
+      case GetAutocommitStreamReq():
+        return getAutocommit(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CloseStreamStreamReq value)? close,
+    TResult? Function(ExecuteStreamReq value)? execute,
+    TResult? Function(BatchStreamReq value)? batch,
+    TResult? Function(SequenceStreamReq value)? sequence,
+    TResult? Function(DescribeStreamReq value)? describe,
+    TResult? Function(StoreSqlStreamReq value)? storeSql,
+    TResult? Function(CloseSqlStreamReq value)? closeSql,
+    TResult? Function(GetAutocommitStreamReq value)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq() when close != null:
+        return close(_that);
+      case ExecuteStreamReq() when execute != null:
+        return execute(_that);
+      case BatchStreamReq() when batch != null:
+        return batch(_that);
+      case SequenceStreamReq() when sequence != null:
+        return sequence(_that);
+      case DescribeStreamReq() when describe != null:
+        return describe(_that);
+      case StoreSqlStreamReq() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlStreamReq() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitStreamReq() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int? streamId)? close,
+    TResult Function(Stmt stmt)? execute,
+    TResult Function(Batch batch)? batch,
+    TResult Function(String? sql, int? sqlId)? sequence,
+    TResult Function(String? sql, int? sqlId)? describe,
+    TResult Function(int sqlId, String sql)? storeSql,
+    TResult Function(int sqlId)? closeSql,
+    TResult Function(int streamId)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq() when close != null:
+        return close(_that.streamId);
+      case ExecuteStreamReq() when execute != null:
+        return execute(_that.stmt);
+      case BatchStreamReq() when batch != null:
+        return batch(_that.batch);
+      case SequenceStreamReq() when sequence != null:
+        return sequence(_that.sql, _that.sqlId);
+      case DescribeStreamReq() when describe != null:
+        return describe(_that.sql, _that.sqlId);
+      case StoreSqlStreamReq() when storeSql != null:
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlStreamReq() when closeSql != null:
+        return closeSql(_that.sqlId);
+      case GetAutocommitStreamReq() when getAutocommit != null:
+        return getAutocommit(_that.streamId);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int? streamId) close,
+    required TResult Function(Stmt stmt) execute,
+    required TResult Function(Batch batch) batch,
+    required TResult Function(String? sql, int? sqlId) sequence,
+    required TResult Function(String? sql, int? sqlId) describe,
+    required TResult Function(int sqlId, String sql) storeSql,
+    required TResult Function(int sqlId) closeSql,
+    required TResult Function(int streamId) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq():
+        return close(_that.streamId);
+      case ExecuteStreamReq():
+        return execute(_that.stmt);
+      case BatchStreamReq():
+        return batch(_that.batch);
+      case SequenceStreamReq():
+        return sequence(_that.sql, _that.sqlId);
+      case DescribeStreamReq():
+        return describe(_that.sql, _that.sqlId);
+      case StoreSqlStreamReq():
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlStreamReq():
+        return closeSql(_that.sqlId);
+      case GetAutocommitStreamReq():
+        return getAutocommit(_that.streamId);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int? streamId)? close,
+    TResult? Function(Stmt stmt)? execute,
+    TResult? Function(Batch batch)? batch,
+    TResult? Function(String? sql, int? sqlId)? sequence,
+    TResult? Function(String? sql, int? sqlId)? describe,
+    TResult? Function(int sqlId, String sql)? storeSql,
+    TResult? Function(int sqlId)? closeSql,
+    TResult? Function(int streamId)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CloseStreamStreamReq() when close != null:
+        return close(_that.streamId);
+      case ExecuteStreamReq() when execute != null:
+        return execute(_that.stmt);
+      case BatchStreamReq() when batch != null:
+        return batch(_that.batch);
+      case SequenceStreamReq() when sequence != null:
+        return sequence(_that.sql, _that.sqlId);
+      case DescribeStreamReq() when describe != null:
+        return describe(_that.sql, _that.sqlId);
+      case StoreSqlStreamReq() when storeSql != null:
+        return storeSql(_that.sqlId, _that.sql);
+      case CloseSqlStreamReq() when closeSql != null:
+        return closeSql(_that.sqlId);
+      case GetAutocommitStreamReq() when getAutocommit != null:
+        return getAutocommit(_that.streamId);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class CloseStreamStreamReq extends StreamRequest {
-  const CloseStreamStreamReq({this.streamId, final String? $type})
+  const CloseStreamStreamReq({this.streamId, String? $type})
       : $type = $type ?? 'close',
         super._();
   factory CloseStreamStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6254,7 +10434,9 @@ class CloseStreamStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId);
+  }
 
   @override
   String toString() {
@@ -6298,7 +10480,7 @@ class _$CloseStreamStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class ExecuteStreamReq extends StreamRequest {
-  const ExecuteStreamReq({required this.stmt, final String? $type})
+  const ExecuteStreamReq({required this.stmt, String? $type})
       : $type = $type ?? 'execute',
         super._();
   factory ExecuteStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6333,7 +10515,9 @@ class ExecuteStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, stmt);
+  int get hashCode {
+    return Object.hash(runtimeType, stmt);
+  }
 
   @override
   String toString() {
@@ -6389,7 +10573,7 @@ class _$ExecuteStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class BatchStreamReq extends StreamRequest {
-  const BatchStreamReq({required this.batch, final String? $type})
+  const BatchStreamReq({required this.batch, String? $type})
       : $type = $type ?? 'batch',
         super._();
   factory BatchStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6424,7 +10608,9 @@ class BatchStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, batch);
+  int get hashCode {
+    return Object.hash(runtimeType, batch);
+  }
 
   @override
   String toString() {
@@ -6480,7 +10666,7 @@ class _$BatchStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class SequenceStreamReq extends StreamRequest {
-  const SequenceStreamReq({this.sql, this.sqlId, final String? $type})
+  const SequenceStreamReq({this.sql, this.sqlId, String? $type})
       : $type = $type ?? 'sequence',
         super._();
   factory SequenceStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6517,7 +10703,9 @@ class SequenceStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sql, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, sql, sqlId);
+  }
 
   @override
   String toString() {
@@ -6566,7 +10754,7 @@ class _$SequenceStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class DescribeStreamReq extends StreamRequest {
-  const DescribeStreamReq({this.sql, this.sqlId, final String? $type})
+  const DescribeStreamReq({this.sql, this.sqlId, String? $type})
       : $type = $type ?? 'describe',
         super._();
   factory DescribeStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6603,7 +10791,9 @@ class DescribeStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sql, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, sql, sqlId);
+  }
 
   @override
   String toString() {
@@ -6653,7 +10843,7 @@ class _$DescribeStreamReqCopyWithImpl<$Res>
 @JsonSerializable()
 class StoreSqlStreamReq extends StreamRequest {
   const StoreSqlStreamReq(
-      {required this.sqlId, required this.sql, final String? $type})
+      {required this.sqlId, required this.sql, String? $type})
       : $type = $type ?? 'store_sql',
         super._();
   factory StoreSqlStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6690,7 +10880,9 @@ class StoreSqlStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sqlId, sql);
+  int get hashCode {
+    return Object.hash(runtimeType, sqlId, sql);
+  }
 
   @override
   String toString() {
@@ -6739,7 +10931,7 @@ class _$StoreSqlStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class CloseSqlStreamReq extends StreamRequest {
-  const CloseSqlStreamReq({required this.sqlId, final String? $type})
+  const CloseSqlStreamReq({required this.sqlId, String? $type})
       : $type = $type ?? 'close_sql',
         super._();
   factory CloseSqlStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6774,7 +10966,9 @@ class CloseSqlStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sqlId);
+  int get hashCode {
+    return Object.hash(runtimeType, sqlId);
+  }
 
   @override
   String toString() {
@@ -6818,7 +11012,7 @@ class _$CloseSqlStreamReqCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class GetAutocommitStreamReq extends StreamRequest {
-  const GetAutocommitStreamReq({required this.streamId, final String? $type})
+  const GetAutocommitStreamReq({required this.streamId, String? $type})
       : $type = $type ?? 'get_autocommit',
         super._();
   factory GetAutocommitStreamReq.fromJson(Map<String, dynamic> json) =>
@@ -6855,7 +11049,9 @@ class GetAutocommitStreamReq extends StreamRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, streamId);
+  int get hashCode {
+    return Object.hash(runtimeType, streamId);
+  }
 
   @override
   String toString() {
@@ -6915,22 +11111,30 @@ mixin _$PipelineResp {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as PipelineResp;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PipelineResp &&
-            (identical(other.baton, baton) || other.baton == baton) &&
-            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
-            const DeepCollectionEquality().equals(other.results, results));
+            (identical(other.baton, _this.baton) ||
+                other.baton == _this.baton) &&
+            (identical(other.baseUrl, _this.baseUrl) ||
+                other.baseUrl == _this.baseUrl) &&
+            const DeepCollectionEquality()
+                .equals(other.results, _this.results));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, baton, baseUrl,
-      const DeepCollectionEquality().hash(results));
+  int get hashCode {
+    final _this = this as PipelineResp;
+    return Object.hash(runtimeType, _this.baton, _this.baseUrl,
+        const DeepCollectionEquality().hash(_this.results));
+  }
 
   @override
   String toString() {
-    return 'PipelineResp(baton: $baton, baseUrl: $baseUrl, results: $results)';
+    final _this = this as PipelineResp;
+    return 'PipelineResp(baton: ${_this.baton}, baseUrl: ${_this.baseUrl}, results: ${_this.results})';
   }
 }
 
@@ -6959,7 +11163,7 @@ class _$PipelineRespCopyWithImpl<$Res> implements $PipelineRespCopyWith<$Res> {
     Object? baseUrl = freezed,
     Object? results = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(PipelineResp(
       baton: freezed == baton
           ? _self.baton
           : baton // ignore: cast_nullable_to_non_nullable
@@ -6976,11 +11180,173 @@ class _$PipelineRespCopyWithImpl<$Res> implements $PipelineRespCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [PipelineResp].
+extension PipelineRespPatterns on PipelineResp {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PipelineResp value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PipelineResp value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PipelineResp value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String? baton, String? baseUrl, List<StreamResult> results)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp() when $default != null:
+        return $default(_that.baton, _that.baseUrl, _that.results);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String? baton, String? baseUrl, List<StreamResult> results)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp():
+        return $default(_that.baton, _that.baseUrl, _that.results);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String? baton, String? baseUrl, List<StreamResult> results)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PipelineResp() when $default != null:
+        return $default(_that.baton, _that.baseUrl, _that.results);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _PipelineResp extends PipelineResp {
   const _PipelineResp(
-      {this.baton, this.baseUrl, required final List<StreamResult> results})
+      {this.baton, this.baseUrl, required List<StreamResult> results})
       : _results = results,
         super._();
   factory _PipelineResp.fromJson(Map<String, dynamic> json) =>
@@ -7020,13 +11386,15 @@ class _PipelineResp extends PipelineResp {
             other is _PipelineResp &&
             (identical(other.baton, baton) || other.baton == baton) &&
             (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
-            const DeepCollectionEquality().equals(other._results, _results));
+            const DeepCollectionEquality().equals(other.results, _results));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, baton, baseUrl,
-      const DeepCollectionEquality().hash(_results));
+  int get hashCode {
+    return Object.hash(runtimeType, baton, baseUrl,
+        const DeepCollectionEquality().hash(_results));
+  }
 
   @override
   String toString() {
@@ -7118,10 +11486,181 @@ class $StreamResultCopyWith<$Res> {
   $StreamResultCopyWith(StreamResult _, $Res Function(StreamResult) __);
 }
 
+/// Adds pattern-matching-related methods to [StreamResult].
+extension StreamResultPatterns on StreamResult {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StreamResultOk value)? ok,
+    TResult Function(StreamResultError value)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk() when ok != null:
+        return ok(_that);
+      case StreamResultError() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StreamResultOk value) ok,
+    required TResult Function(StreamResultError value) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk():
+        return ok(_that);
+      case StreamResultError():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StreamResultOk value)? ok,
+    TResult? Function(StreamResultError value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk() when ok != null:
+        return ok(_that);
+      case StreamResultError() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(StreamResponse response)? ok,
+    TResult Function(StreamError error)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk() when ok != null:
+        return ok(_that.response);
+      case StreamResultError() when error != null:
+        return error(_that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(StreamResponse response) ok,
+    required TResult Function(StreamError error) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk():
+        return ok(_that.response);
+      case StreamResultError():
+        return error(_that.error);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(StreamResponse response)? ok,
+    TResult? Function(StreamError error)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case StreamResultOk() when ok != null:
+        return ok(_that.response);
+      case StreamResultError() when error != null:
+        return error(_that.error);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class StreamResultOk extends StreamResult {
-  const StreamResultOk(this.response, {final String? $type})
+  const StreamResultOk(this.response, {String? $type})
       : $type = $type ?? 'ok',
         super._();
   factory StreamResultOk.fromJson(Map<String, dynamic> json) =>
@@ -7157,7 +11696,9 @@ class StreamResultOk extends StreamResult {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode {
+    return Object.hash(runtimeType, response);
+  }
 
   @override
   String toString() {
@@ -7213,7 +11754,7 @@ class _$StreamResultOkCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class StreamResultError extends StreamResult {
-  const StreamResultError(this.error, {final String? $type})
+  const StreamResultError(this.error, {String? $type})
       : $type = $type ?? 'error',
         super._();
   factory StreamResultError.fromJson(Map<String, dynamic> json) =>
@@ -7248,7 +11789,9 @@ class StreamResultError extends StreamResult {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode {
+    return Object.hash(runtimeType, error);
+  }
 
   @override
   String toString() {
@@ -7354,10 +11897,307 @@ class $StreamResponseCopyWith<$Res> {
   $StreamResponseCopyWith(StreamResponse _, $Res Function(StreamResponse) __);
 }
 
+/// Adds pattern-matching-related methods to [StreamResponse].
+extension StreamResponsePatterns on StreamResponse {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OpenStreamStreamResp value)? opened,
+    TResult Function(CloseStreamStreamResp value)? close,
+    TResult Function(ExecuteStreamResp value)? execute,
+    TResult Function(BatchStreamResp value)? batch,
+    TResult Function(SequenceStreamResp value)? sequence,
+    TResult Function(DescribeStreamResp value)? describe,
+    TResult Function(StoreSqlStreamResp value)? storeSql,
+    TResult Function(CloseSqlStreamResp value)? closeSql,
+    TResult Function(GetAutocommitStreamResp value)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp() when opened != null:
+        return opened(_that);
+      case CloseStreamStreamResp() when close != null:
+        return close(_that);
+      case ExecuteStreamResp() when execute != null:
+        return execute(_that);
+      case BatchStreamResp() when batch != null:
+        return batch(_that);
+      case SequenceStreamResp() when sequence != null:
+        return sequence(_that);
+      case DescribeStreamResp() when describe != null:
+        return describe(_that);
+      case StoreSqlStreamResp() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlStreamResp() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitStreamResp() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OpenStreamStreamResp value) opened,
+    required TResult Function(CloseStreamStreamResp value) close,
+    required TResult Function(ExecuteStreamResp value) execute,
+    required TResult Function(BatchStreamResp value) batch,
+    required TResult Function(SequenceStreamResp value) sequence,
+    required TResult Function(DescribeStreamResp value) describe,
+    required TResult Function(StoreSqlStreamResp value) storeSql,
+    required TResult Function(CloseSqlStreamResp value) closeSql,
+    required TResult Function(GetAutocommitStreamResp value) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp():
+        return opened(_that);
+      case CloseStreamStreamResp():
+        return close(_that);
+      case ExecuteStreamResp():
+        return execute(_that);
+      case BatchStreamResp():
+        return batch(_that);
+      case SequenceStreamResp():
+        return sequence(_that);
+      case DescribeStreamResp():
+        return describe(_that);
+      case StoreSqlStreamResp():
+        return storeSql(_that);
+      case CloseSqlStreamResp():
+        return closeSql(_that);
+      case GetAutocommitStreamResp():
+        return getAutocommit(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OpenStreamStreamResp value)? opened,
+    TResult? Function(CloseStreamStreamResp value)? close,
+    TResult? Function(ExecuteStreamResp value)? execute,
+    TResult? Function(BatchStreamResp value)? batch,
+    TResult? Function(SequenceStreamResp value)? sequence,
+    TResult? Function(DescribeStreamResp value)? describe,
+    TResult? Function(StoreSqlStreamResp value)? storeSql,
+    TResult? Function(CloseSqlStreamResp value)? closeSql,
+    TResult? Function(GetAutocommitStreamResp value)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp() when opened != null:
+        return opened(_that);
+      case CloseStreamStreamResp() when close != null:
+        return close(_that);
+      case ExecuteStreamResp() when execute != null:
+        return execute(_that);
+      case BatchStreamResp() when batch != null:
+        return batch(_that);
+      case SequenceStreamResp() when sequence != null:
+        return sequence(_that);
+      case DescribeStreamResp() when describe != null:
+        return describe(_that);
+      case StoreSqlStreamResp() when storeSql != null:
+        return storeSql(_that);
+      case CloseSqlStreamResp() when closeSql != null:
+        return closeSql(_that);
+      case GetAutocommitStreamResp() when getAutocommit != null:
+        return getAutocommit(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? opened,
+    TResult Function()? close,
+    TResult Function(StmtResult result)? execute,
+    TResult Function(BatchResult result)? batch,
+    TResult Function()? sequence,
+    TResult Function(DescribeResult result)? describe,
+    TResult Function()? storeSql,
+    TResult Function()? closeSql,
+    TResult Function(bool isAutocommit)? getAutocommit,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp() when opened != null:
+        return opened();
+      case CloseStreamStreamResp() when close != null:
+        return close();
+      case ExecuteStreamResp() when execute != null:
+        return execute(_that.result);
+      case BatchStreamResp() when batch != null:
+        return batch(_that.result);
+      case SequenceStreamResp() when sequence != null:
+        return sequence();
+      case DescribeStreamResp() when describe != null:
+        return describe(_that.result);
+      case StoreSqlStreamResp() when storeSql != null:
+        return storeSql();
+      case CloseSqlStreamResp() when closeSql != null:
+        return closeSql();
+      case GetAutocommitStreamResp() when getAutocommit != null:
+        return getAutocommit(_that.isAutocommit);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() opened,
+    required TResult Function() close,
+    required TResult Function(StmtResult result) execute,
+    required TResult Function(BatchResult result) batch,
+    required TResult Function() sequence,
+    required TResult Function(DescribeResult result) describe,
+    required TResult Function() storeSql,
+    required TResult Function() closeSql,
+    required TResult Function(bool isAutocommit) getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp():
+        return opened();
+      case CloseStreamStreamResp():
+        return close();
+      case ExecuteStreamResp():
+        return execute(_that.result);
+      case BatchStreamResp():
+        return batch(_that.result);
+      case SequenceStreamResp():
+        return sequence();
+      case DescribeStreamResp():
+        return describe(_that.result);
+      case StoreSqlStreamResp():
+        return storeSql();
+      case CloseSqlStreamResp():
+        return closeSql();
+      case GetAutocommitStreamResp():
+        return getAutocommit(_that.isAutocommit);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? opened,
+    TResult? Function()? close,
+    TResult? Function(StmtResult result)? execute,
+    TResult? Function(BatchResult result)? batch,
+    TResult? Function()? sequence,
+    TResult? Function(DescribeResult result)? describe,
+    TResult? Function()? storeSql,
+    TResult? Function()? closeSql,
+    TResult? Function(bool isAutocommit)? getAutocommit,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case OpenStreamStreamResp() when opened != null:
+        return opened();
+      case CloseStreamStreamResp() when close != null:
+        return close();
+      case ExecuteStreamResp() when execute != null:
+        return execute(_that.result);
+      case BatchStreamResp() when batch != null:
+        return batch(_that.result);
+      case SequenceStreamResp() when sequence != null:
+        return sequence();
+      case DescribeStreamResp() when describe != null:
+        return describe(_that.result);
+      case StoreSqlStreamResp() when storeSql != null:
+        return storeSql();
+      case CloseSqlStreamResp() when closeSql != null:
+        return closeSql();
+      case GetAutocommitStreamResp() when getAutocommit != null:
+        return getAutocommit(_that.isAutocommit);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class OpenStreamStreamResp extends StreamResponse {
-  const OpenStreamStreamResp({final String? $type})
+  const OpenStreamStreamResp({String? $type})
       : $type = $type ?? 'opened',
         super._();
   factory OpenStreamStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7392,7 +12232,7 @@ class OpenStreamStreamResp extends StreamResponse {
 /// @nodoc
 @JsonSerializable()
 class CloseStreamStreamResp extends StreamResponse {
-  const CloseStreamStreamResp({final String? $type})
+  const CloseStreamStreamResp({String? $type})
       : $type = $type ?? 'close',
         super._();
   factory CloseStreamStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7427,7 +12267,7 @@ class CloseStreamStreamResp extends StreamResponse {
 /// @nodoc
 @JsonSerializable()
 class ExecuteStreamResp extends StreamResponse {
-  const ExecuteStreamResp({required this.result, final String? $type})
+  const ExecuteStreamResp({required this.result, String? $type})
       : $type = $type ?? 'execute',
         super._();
   factory ExecuteStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7462,7 +12302,9 @@ class ExecuteStreamResp extends StreamResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -7518,7 +12360,7 @@ class _$ExecuteStreamRespCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class BatchStreamResp extends StreamResponse {
-  const BatchStreamResp({required this.result, final String? $type})
+  const BatchStreamResp({required this.result, String? $type})
       : $type = $type ?? 'batch',
         super._();
   factory BatchStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7553,7 +12395,9 @@ class BatchStreamResp extends StreamResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -7609,7 +12453,7 @@ class _$BatchStreamRespCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class SequenceStreamResp extends StreamResponse {
-  const SequenceStreamResp({final String? $type})
+  const SequenceStreamResp({String? $type})
       : $type = $type ?? 'sequence',
         super._();
   factory SequenceStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7644,7 +12488,7 @@ class SequenceStreamResp extends StreamResponse {
 /// @nodoc
 @JsonSerializable()
 class DescribeStreamResp extends StreamResponse {
-  const DescribeStreamResp({required this.result, final String? $type})
+  const DescribeStreamResp({required this.result, String? $type})
       : $type = $type ?? 'describe',
         super._();
   factory DescribeStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7679,7 +12523,9 @@ class DescribeStreamResp extends StreamResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, result);
+  int get hashCode {
+    return Object.hash(runtimeType, result);
+  }
 
   @override
   String toString() {
@@ -7735,7 +12581,7 @@ class _$DescribeStreamRespCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class StoreSqlStreamResp extends StreamResponse {
-  const StoreSqlStreamResp({final String? $type})
+  const StoreSqlStreamResp({String? $type})
       : $type = $type ?? 'store_sql',
         super._();
   factory StoreSqlStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7770,7 +12616,7 @@ class StoreSqlStreamResp extends StreamResponse {
 /// @nodoc
 @JsonSerializable()
 class CloseSqlStreamResp extends StreamResponse {
-  const CloseSqlStreamResp({final String? $type})
+  const CloseSqlStreamResp({String? $type})
       : $type = $type ?? 'close_sql',
         super._();
   factory CloseSqlStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7805,8 +12651,7 @@ class CloseSqlStreamResp extends StreamResponse {
 /// @nodoc
 @JsonSerializable()
 class GetAutocommitStreamResp extends StreamResponse {
-  const GetAutocommitStreamResp(
-      {required this.isAutocommit, final String? $type})
+  const GetAutocommitStreamResp({required this.isAutocommit, String? $type})
       : $type = $type ?? 'get_autocommit',
         super._();
   factory GetAutocommitStreamResp.fromJson(Map<String, dynamic> json) =>
@@ -7843,7 +12688,9 @@ class GetAutocommitStreamResp extends StreamResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, isAutocommit);
+  int get hashCode {
+    return Object.hash(runtimeType, isAutocommit);
+  }
 
   @override
   String toString() {

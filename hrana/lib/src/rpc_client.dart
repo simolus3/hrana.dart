@@ -31,7 +31,7 @@ abstract interface class HranaStream {
 extension type SqlTextId(int id) {}
 
 extension type Value(Object? value) {
-  factory Value._fromJson(json.Value value) {
+  factory Value._fromJson(json.HranaValue value) {
     return switch (value) {
       json.NullValue() => Value(null),
       json.IntegerValue(:final value) => Value(value.toInt()),
@@ -41,13 +41,13 @@ extension type Value(Object? value) {
     };
   }
 
-  json.Value _toJson() {
+  json.HranaValue _toJson() {
     return switch (this) {
-      null => json.Value.null$(),
-      int i => json.Value.integer(Int64(i)),
-      double f => json.Value.float(f),
-      String t => json.Value.text(t),
-      List<int> b => json.Value.blob(Uint8List.fromList(b)),
+      null => json.HranaValue.null$(),
+      int i => json.HranaValue.integer(Int64(i)),
+      double f => json.HranaValue.float(f),
+      String t => json.HranaValue.text(t),
+      List<int> b => json.HranaValue.blob(Uint8List.fromList(b)),
       _ => throw UnsupportedError('Unsupported value $value'),
     };
   }
@@ -66,7 +66,7 @@ sealed class StatementDescription {
 
   json.Stmt toStatement();
 
-  List<json.Value> _encodeArgs() {
+  List<json.HranaValue> _encodeArgs() {
     return args.map((e) => e._toJson()).toList();
   }
 

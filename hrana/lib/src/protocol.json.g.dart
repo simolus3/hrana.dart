@@ -21,7 +21,7 @@ _Stmt _$StmtFromJson(Map<String, dynamic> json) => _Stmt(
       sql: json['sql'] as String?,
       sqlId: (json['sql_id'] as num?)?.toInt(),
       args: (json['args'] as List<dynamic>?)
-              ?.map((e) => Value.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => HranaValue.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       namedArgs: (json['named_args'] as List<dynamic>?)
@@ -41,7 +41,7 @@ Map<String, dynamic> _$StmtToJson(_Stmt instance) => <String, dynamic>{
 
 _NamedArg _$NamedArgFromJson(Map<String, dynamic> json) => _NamedArg(
       name: json['name'] as String,
-      value: Value.fromJson(json['value'] as Map<String, dynamic>),
+      value: HranaValue.fromJson(json['value'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$NamedArgToJson(_NamedArg instance) => <String, dynamic>{
@@ -106,7 +106,7 @@ _StmtResult _$StmtResultFromJson(Map<String, dynamic> json) => _StmtResult(
           const [],
       rows: (json['rows'] as List<dynamic>?)
               ?.map((e) => (e as List<dynamic>)
-                  .map((e) => Value.fromJson(e as Map<String, dynamic>))
+                  .map((e) => HranaValue.fromJson(e as Map<String, dynamic>))
                   .toList())
               .toList() ??
           const [],
@@ -317,7 +317,7 @@ Map<String, dynamic> _$StepErrorEntryToJson(StepErrorEntry instance) =>
 CursorEntryRow _$CursorEntryRowFromJson(Map<String, dynamic> json) =>
     CursorEntryRow(
       (json['row'] as List<dynamic>)
-          .map((e) => Value.fromJson(e as Map<String, dynamic>))
+          .map((e) => HranaValue.fromJson(e as Map<String, dynamic>))
           .toList(),
       $type: json['type'] as String?,
     );

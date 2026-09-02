@@ -32,7 +32,7 @@ abstract class Stmt with _$Stmt {
   const factory Stmt({
     String? sql,
     int? sqlId,
-    @Default([]) List<Value> args,
+    @Default([]) List<HranaValue> args,
     @Default([]) List<NamedArg> namedArgs,
     bool? wantRows,
   }) = _Stmt;
@@ -46,7 +46,7 @@ abstract class Stmt with _$Stmt {
 abstract class NamedArg with _$NamedArg {
   const factory NamedArg({
     required String name,
-    required Value value,
+    required HranaValue value,
   }) = _NamedArg;
 
   const NamedArg._();
@@ -78,26 +78,28 @@ class Int64Converter implements JsonConverter<Int64, String> {
 }
 
 @_union
-sealed class Value with _$Value {
+sealed class HranaValue with _$HranaValue {
   @FreezedUnionValue('null')
-  const factory Value.null$() = NullValue;
-  const factory Value.integer(@Int64Converter() Int64 value) = IntegerValue;
-  const factory Value.float(double value) = FloatValue;
-  const factory Value.text(String value) = TextValue;
-  const factory Value.blob(
+  const factory HranaValue.null$() = NullValue;
+  const factory HranaValue.integer(@Int64Converter() Int64 value) =
+      IntegerValue;
+  const factory HranaValue.float(double value) = FloatValue;
+  const factory HranaValue.text(String value) = TextValue;
+  const factory HranaValue.blob(
     @Uint8ListConverter() @JsonKey(name: 'base64') Uint8List value,
   ) = BlobValue;
 
-  const Value._();
+  const HranaValue._();
 
-  factory Value.fromJson(Map<String, Object?> json) => _$ValueFromJson(json);
+  factory HranaValue.fromJson(Map<String, Object?> json) =>
+      _$HranaValueFromJson(json);
 }
 
 @freezed
 abstract class StmtResult with _$StmtResult {
   const factory StmtResult({
     @Default([]) List<Col> cols,
-    @Default([]) List<List<Value>> rows,
+    @Default([]) List<List<HranaValue>> rows,
     required int affectedRowCount,
     @Int64Converter() Int64? lastInsertRowid,
     String? replicationIndex,
@@ -192,7 +194,7 @@ sealed class CursorEntry with _$CursorEntry {
     required int step,
     required StreamError error,
   }) = StepErrorEntry;
-  const factory CursorEntry.row(List<Value> row) = CursorEntryRow;
+  const factory CursorEntry.row(List<HranaValue> row) = CursorEntryRow;
   const factory CursorEntry.error(StreamError error) = CursorEntryError;
 
   const CursorEntry._();
