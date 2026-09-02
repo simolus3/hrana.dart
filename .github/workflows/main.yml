@@ -16,14 +16,14 @@ jobs:
       cache-key: dart-packages-${{ steps.deps-after.outputs.lockfiles }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         id: setup-dart
       # We would like to update the cache if the pubspec.lock file changes after running
       # pub upgrade. That requires including the pubspec.lock in the key, but it's not part
       # of the repository. So, we only restore here and then upload the cache if there was a
       # miss or if the pubspec.lock files have changed.
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: |
             ${{ env.PUB_CACHE }}
@@ -58,7 +58,7 @@ jobs:
 
       - name: "Update cache due to changed pubspec.lock"
         if: ${{ !failure() && ( steps.deps-after.outputs.lockfiles != steps.deps-before.outputs.lockfiles) }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             ${{ env.PUB_CACHE }}
@@ -75,11 +75,11 @@ jobs:
     needs: analyze
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ needs.analyze.outputs.dart-version }}
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: |
             ${{ env.PUB_CACHE }}
