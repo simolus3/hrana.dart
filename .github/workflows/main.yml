@@ -4,9 +4,6 @@ on:
   push:
     branches: [ main ]
   pull_request:
-  schedule:
-    # Make sure everything is still working by running the CI weekly.
-    - cron: "0 5 * * 1"
 
 env:
   PUB_ENVIRONMENT: bot.github
